@@ -7,7 +7,9 @@ var path = require('path')
 
 app.set('view engine', 'ejs')
 app.use('/public', express.static('public'))
-app.use(express.static(__dirname, { dotfiles: 'allow' } ));
+
+//expose to renew certs
+//app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 
 const options = {

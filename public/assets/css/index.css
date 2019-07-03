@@ -1,59 +1,37 @@
 body{
   background-color: black;
   color: #00ff00;
-  margin: 0 auto;
+  max-width: 500px;
+  margin: auto;
 }
 
-#main{
-margin: 0px auto;
-}
-
-div.header{
-  margin-left: 40%;
-}
-
-div.cryto{
-  margin-left: 38%;
-}
-
-ul.ruse-scroll{
-  list-style: none;
-  float: left;
-  margin-right: 20px;
-}
-
-li.ruse-scroll {
-  float: left;
-  border-bottom: 3px solid #00ff00;
-  padding: 20px 20px;
-  margin-right: 50px;
-}
-
-li:hover {
-  background-color: #111111;
-}
+/* ---------------- HEADER --------------------- */
 
 
 
+
+/* ---------------- cryto --------------------- */
+
+
+
+/*
+  ------------------- Nav Bar ---------------------
+*/
 
 ul#list-nav {
-  border: 3px solid #111111;
-  margin:0px;
-  padding: 10px 0px 10px 10px;
+
   list-style:none;
+  border-left: 1px solid #00ff00;
+  border-right: 1px solid #00ff00;
 }
 
 ul#list-nav li {
-
   display:inline
-
 }
 
 ul#list-nav li a {
  text-decoration:none;
- border: 1px solid #00ff00;
  margin: 0px 5px 0px 5px;
  padding: 3px 3px 3px;
-
  color: #00ff00;
 }
