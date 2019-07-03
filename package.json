@@ -11,6 +11,9 @@
   "dependencies": {
     "ejs": "^2.6.2",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "helmet": "^3.18.0",
+    "https": "^1.0.0",
     "nodemon": "^1.19.1",
     "package.json": "^2.0.1"
   }
