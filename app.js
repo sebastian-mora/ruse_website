@@ -9,7 +9,7 @@ app.set('view engine', 'ejs')
 app.use('/public', express.static('public'))
 
 //expose to renew certs
-//app.use(express.static(__dirname, { dotfiles: 'allow' } ));
+app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 
 const options = {
@@ -18,15 +18,15 @@ const options = {
 };
 
 app.get('/', function (req, res) {
-    res.render('pages/index')
+    res.render('pages/main/index')
 })
 
 app.get('/about', function (req, res) {
-    res.render('pages/about')
+    res.render('pages//main/about')
 })
 
 app.get('/blog', function (req, res) {
-    res.render('pages/blog')
+    res.render('pages/main/blog')
 })
 
 
