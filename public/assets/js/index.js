@@ -10,8 +10,6 @@ $(document).ready(function() {
 
 function guessPassword(){
 
-
-
     (function theLoop (i) {
       setTimeout(function () {
         $('li.ruse-brute').each(function(i){brute($(this))})
@@ -23,9 +21,8 @@ function guessPassword(){
         else{
           //cracked()
         }
-      }, 50);
-    })(100);
-
+      }, 80);
+    })(26);
 }
 
 
@@ -37,8 +34,7 @@ function brute(li) {
       else if(li.index() === 1 && li.text() === "U"){li.removeClass("ruse-brute")}
       else if(li.index() === 2 && li.text() === "S"){li.removeClass("ruse-brute")}
       else if(li.index() === 3 && li.text() === "E"){li.removeClass("ruse-brute")}
-      else{ li.text(randomChar())}
-
+      else{ var char = li.text(); li.text(nextChar(char))}
       // DO SOMETHING WITH data AND stuff
       if (--i) {                  // If i > 0, keep going
         theLoop(i);  // Call the loop again
@@ -48,9 +44,12 @@ function brute(li) {
 
 }
 
+function nextChar(currentChar){
+  var char_code = currentChar.charCodeAt(0)
+  char_code = char_code + 1
+  if(char_code >= 90){return 'A'}
+  return String.fromCharCode(char_code)
 
-function randomChar(){
-  return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 1).toUpperCase();
 }
 
 function cracked(){
