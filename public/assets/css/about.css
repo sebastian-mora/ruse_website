@@ -9,8 +9,10 @@ body{
 /* ---------------- HEADER --------------------- */
 
 h1{
-  margin-top: 20%;
-  clear: left;
+  margin-top: 10%;
+  border-left: 2px solid #00ff00;
+  padding-left: 10px;
+
 }
 
 
@@ -18,12 +20,14 @@ h1{
 
 
 .center {
-
-  margin-top: 50%;
-  padding: 10px 10px 10px 10px;
-  clear: left;
+  padding-left: 25px;
 }
 
+p.boxed {
+  background-color: #1e1e1e;
+  padding: 10px 10px 10px 10px;
+  line-height: 150%;
+}
 
 
 /*
