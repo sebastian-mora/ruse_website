@@ -21,7 +21,7 @@ function guessPassword(){
           console.log("call");
         }
         else{
-          cracked()
+          //cracked()
         }
       }, 50);
     })(100);
