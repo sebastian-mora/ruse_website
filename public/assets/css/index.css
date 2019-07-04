@@ -1,16 +1,44 @@
 body{
   background-color: black;
   color: #00ff00;
-  max-width: 500px;
+  max-width: 1000px;
   margin: auto;
+  font-family: 'Ubuntu Mono', monospace;
 }
 
 /* ---------------- HEADER --------------------- */
 
-
-
+h1{
+  margin-top: 20%;
+}
 
 /* ---------------- cryto --------------------- */
+
+html body div.cryto{
+  display: inline-block;
+}
+
+ul.ruse-scroll{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li.ruse-scroll{
+  float: left;
+}
+
+
+/* ------------- Main Body --------------- */
+
+
+.main {
+  background-color: #1e1e1e;
+  color: white;
+  margin-top: 15%;
+  padding: 10px 10px 10px 10px;
+  clear: left;
+}
 
 
 
@@ -19,19 +47,20 @@ body{
 */
 
 ul#list-nav {
-
   list-style:none;
-  border-left: 1px solid #00ff00;
-  border-right: 1px solid #00ff00;
+  border-left: 2px solid #00ff00;
+  border-right: 2px solid #00ff00;
+  padding-left: 30%;
+  padding-bottom: 2%;
 }
 
 ul#list-nav li {
-  display:inline
+  font-size: 15px;
+  display:inline;
+  padding: 0 20% 0 0;
 }
 
 ul#list-nav li a {
  text-decoration:none;
- margin: 0px 5px 0px 5px;
- padding: 3px 3px 3px;
  color: #00ff00;
 }
