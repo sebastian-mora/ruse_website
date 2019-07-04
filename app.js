@@ -35,4 +35,3 @@ http.createServer(app).listen(8080);
 // Create an HTTPS service identical to the HTTP service.
 https.createServer(options, app).listen(8443);
 console.log("Started the servers");
-console.log(options.cert);
