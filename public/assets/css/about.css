@@ -29,6 +29,9 @@ p.boxed {
   line-height: 150%;
 }
 
+pre {
+  padding-left: 30%;
+}
 
 /*
   ------------------- Nav Bar ---------------------
