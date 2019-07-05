@@ -22,11 +22,15 @@ app.get('/', function (req, res) {
 })
 
 app.get('/about', function (req, res) {
-    res.render('pages//main/about')
+    res.render('pages/main/about')
 })
 
 app.get('/blog', function (req, res) {
     res.render('pages/main/blog')
+})
+
+app.get('/blog/:id' , function (req, res) {
+  res.render('pages/blogs/' + req.params.id)
 })
 
 
