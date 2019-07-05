@@ -9,13 +9,15 @@ app.set('view engine', 'ejs')
 app.use('/public', express.static('public'))
 
 //expose to renew certs
-app.use(express.static(__dirname, { dotfiles: 'allow' } ));
+//app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 
 const options = {
     cert: fs.readFileSync('./sslcert/fullchain.pem'),
     key: fs.readFileSync('./sslcert/privkey.pem')
 };
+
+
 
 app.get('/', function (req, res) {
     res.render('pages/main/index')
