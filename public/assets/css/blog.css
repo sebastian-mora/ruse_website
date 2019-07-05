@@ -9,26 +9,35 @@ body{
 /* ------------- Main Body --------------- */
 
 div.center h1{
-  margin-left: 5%;
+  color: white;
+  margin-left: 2%;
+  margin-top: 7%;
+  padding-left: 10px;
+  border-left: 2px solid #00ff00
 }
 
 #root{
   margin-left: 10%;
   padding-top: 2%;
+  padding-bottom: 2%;
+  background-color: #1e1e1e;
 }
 
+
 ul li{
-    padding: 10px 10px;
+    padding: 15px 10px;
 }
 
 ul.sub li{
   text-decoration: underline;
   padding: 10px 10px;
+  color: white;
 }
 
 ul.sub li a{
-  color: #00ff00;
+  color: #white;
 }
+
 
 
 
