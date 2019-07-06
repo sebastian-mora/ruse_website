@@ -2,13 +2,138 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="/public/assets/css/blog.css">
+    <link rel="stylesheet" href="/public/assets/css/blogpost.css">
     <title></title>
   </head>
   <body>
     <% include ../../partials/header %>
+    <div class="title">
 
-    <p>BLOG 1</p>
+    </div>
+    <a href="https://github.com/seb1055/BorderProbe">
+        <h1>BorderProbe</h1>
+    </a>
+    <h4>7/3/2019</h4>
+
+  </div>
+
+    <div class="post">
+
+      <p>
+          Welcome to the first blog post. At the time of writing this, I am about halfway
+          through my first internship. I am working as an Intern on a Red team and a
+          finical institution. BorderProbe was my first project. After about a week of
+          orientation and receiving access to software and privileges, I was assigned
+          BorderProbe. The tool was the brainchild of my manager and another pentest on
+          the team — the objective of the tool to test out internal network segmentation
+           and format any findings in a self-generated report.
+      </p>
+
+      <p>
+           At first, I was a bit intimidated. I had free range to use any language
+           and any libraries or existing tools to aid in the process. I decided
+           to use python, which is my goto for almost anything. I had the previous
+           experience using Nmap and different types of scanning techniques with
+           the tool. With those two things in mind, I began building a python
+           program that would be a wrapper for Nmap to and generate results.
+           I would have the whole ten weeks of my internship to complete the
+           project. I finished in a week and a half ;)
+      </p>
+
+      <p>
+          The primary objective of the tool was
+          <ul>
+            <li>Accept Cidr Range, IP, or both from file</li>
+            <li> Discover Live Hosts</li>
+            <li>Use different Scan techniques</li>
+            <ul>
+              <li>ICMP Only</li>
+              <li>TCP Syn or Syn/ACK</li>
+              <li>Firewall evasion</li>
+              <li>Spoofing MAC and SRC</li>
+            </ul>
+            <li>Port Scan and Service Scan on Live Hosts</li>
+            <li>Produce Report</li>
+          </ul>
+      </p>
+
+      <p>
+
+          I started by referencing a book I own called the Read Team Feild Manual
+          <a href="https://www.amazon.com/Rtfm-Red-Team-Field-Manual/dp/1494295504">RTMF</a>
+          which an excellent resource for powerful one-liners. While they did have
+          some helpful stuff on passing targets through STDIN, I need to go more
+          in-depth. So I headed over the Nmap documentation which is a great
+          supplemental resource to learn about different Nmap flags as well as
+          scanning techniques
+          (<a href="https://nmap.org/book/man.html">Nmap Docs</a>)
+
+      </p>
+
+      <p>
+          After spending about the day reading the documentation, I began on the first
+          phase of the tool, which is the host discovery. The user can choose the input
+          type and an output file name. Then the user selects the type of scan they wish
+          and any evasion techniques they want. The phase one results are returned in
+          XML format by Nmap. If the subnet is more significant than a /24, then the
+          tool will divide the subnet down to /24 and randomize the order in which
+          each segment is scanned. I then convert the XML to a dictionary using the
+          lib XMLtoDic with a structure of {subnet:[ips]} This data is later used for
+          Phase 2
+      </p>
+
+      <p>
+          The discovered hosts from Phase 1 are passed into Phase 2. Phase 2 performs the
+          Port, Service, and OS detection. The results of this scan are saved to induvial
+          XML files, and the function returns a list of those file names. To be used in
+          Phase 3
+      </p>
+
+      <p>
+          Phase 3 generates the report. I was able to do this easily using
+          Beatituflsoup4. The lib allowed me to create HTML table elements that
+          I was able to dynamically fill out with the results and append to one
+          main report HTML document.
+      </p>
+
+      <p>
+           Overall I am happy about the way to tool turned out. It was my first
+           project that I was able to see aid in our methodology. We used it the
+           following week to complete out segmentation report which typically takes
+           a week to compile by hand. Instead, I started my tool Monday afternoon
+           and scanned about 300,000 hosts overnight, and on Tuesday, the report
+           was done ready to be sent off to compliance.
+      </p>
+
+      <p>
+         There will always be things to learn and improve. I want to revisit the
+         tool and make it more generic to fit more use-cases. Also, I learned that
+         pen and paper shouldn't be skipped over. If I would have spent more time
+         planning and designing I could have saved myself a lot of headaches,
+         wasted time, and probably a more coherence result but, as I've heard
+         so many times in my CS department 'hey it runs.'
+      </p>
+
+      <p>
+          Here is the final results of the scan.
+          <ul>
+            <li>
+                <a href="/public/blogs/tools/borderprobe/imgs/runningbp.png"> Bordeprobe Running </a>
+            </li>
+            <li>
+                <a href="/public/blogs/tools/borderprobe/files/Final_Report.html">The Report</a>
+            </li>
+
+            <li>
+              <a href="https://github.com/seb1055/BorderProbe">Find it on Github</a>
+            </li>
+          </ul>
+
+
+      </p>
+
+
+    </div>
 
   </body>
 </html>
