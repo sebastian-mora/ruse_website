@@ -23,6 +23,13 @@ div.center h1{
   background-color: #1e1e1e;
 }
 
+a {
+  color: white;
+  border-style: none;
+}
+a:visited{
+  color: white;
+}
 
 ul li{
     padding: 15px 10px;
