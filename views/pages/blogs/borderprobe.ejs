@@ -21,23 +21,23 @@
 
       <p>
           Welcome to the first blog post. At the time of writing this, I am about halfway
-          through my first internship. I am working as an Intern on a Red team and a
+          through my first internship. I am working as an Intern on a Red team at a
           finical institution. BorderProbe was my first project. After about a week of
           orientation and receiving access to software and privileges, I was assigned
-          BorderProbe. The tool was the brainchild of my manager and another pentest on
+          BorderProbe. The tool was the brainchild of my manager and another pentester on
           the team — the objective of the tool to test out internal network segmentation
-           and format any findings in a self-generated report.
+          and format any findings in a self-generated report.
       </p>
 
       <p>
            At first, I was a bit intimidated. I had free range to use any language
-           and any libraries or existing tools to aid in the process. I decided
-           to use python, which is my goto for almost anything. I had the previous
+           or libraries to aid in the process. I decided
+           on python, which is my goto for almost anything. I had the previous
            experience using Nmap and different types of scanning techniques with
            the tool. With those two things in mind, I began building a python
-           program that would be a wrapper for Nmap to and generate results.
+           program that would be a wrapper for Nmap.
            I would have the whole ten weeks of my internship to complete the
-           project. I finished in a week and a half ;)
+           project but finished in a week and a half.
       </p>
 
       <p>
@@ -47,7 +47,7 @@
             <li> Discover Live Hosts</li>
             <li>Use different Scan techniques</li>
             <ul>
-              <li>ICMP Only</li>
+              <li>Ping Only</li>
               <li>TCP Syn or Syn/ACK</li>
               <li>Firewall evasion</li>
               <li>Spoofing MAC and SRC</li>
@@ -59,45 +59,46 @@
 
       <p>
 
-          I started by referencing a book I own called the Read Team Feild Manual
+          I started by referencing a book called the Read Team Field Manual
           <a href="https://www.amazon.com/Rtfm-Red-Team-Field-Manual/dp/1494295504">RTMF</a>
           which an excellent resource for powerful one-liners. While they did have
           some helpful stuff on passing targets through STDIN, I need to go more
           in-depth. So I headed over the Nmap documentation which is a great
           supplemental resource to learn about different Nmap flags as well as
-          scanning techniques
+          scanning techniques.
           (<a href="https://nmap.org/book/man.html">Nmap Docs</a>)
 
       </p>
 
       <p>
-          After spending about the day reading the documentation, I began on the first
-          phase of the tool, which is the host discovery. The user can choose the input
+          After spending a day reading the documentation, I started the first
+          phase, which is the host discovery. The user can choose the input
           type and an output file name. Then the user selects the type of scan they wish
           and any evasion techniques they want. The phase one results are returned in
-          XML format by Nmap. If the subnet is more significant than a /24, then the
+          XML format by Nmap. If the subnet is larger than a /24, then the
           tool will divide the subnet down to /24 and randomize the order in which
-          each segment is scanned. I then convert the XML to a dictionary using the
-          lib XMLtoDic with a structure of {subnet:[ips]} This data is later used for
+          each segment is scanned. The results are converted to XML to a dictionary using the
+          lib XMLtoDic with a structure of {subnet:[ips]}. This data is later used for
           Phase 2
       </p>
 
       <p>
           The discovered hosts from Phase 1 are passed into Phase 2. Phase 2 performs the
-          Port, Service, and OS detection. The results of this scan are saved to induvial
+          Port, Service, and OS detection. The results of this scan is saved to
           XML files, and the function returns a list of those file names. To be used in
           Phase 3
       </p>
 
       <p>
-          Phase 3 generates the report. I was able to do this easily using
-          Beatituflsoup4. The lib allowed me to create HTML table elements that
-          I was able to dynamically fill out with the results and append to one
+          Phase 3 generates the report.This is done easily using
+          <a href="https://www.crummy.com/software/BeautifulSoup/">Beatituflsoup4</a>.
+          With custom HTML templates the lib allowed me to dynamically fill out
+          with the tables to append to the
           main report HTML document.
       </p>
 
       <p>
-           Overall I am happy about the way to tool turned out. It was my first
+           Overall I'm happy about the way to tool turned out. It was my first
            project that I was able to see aid in our methodology. We used it the
            following week to complete out segmentation report which typically takes
            a week to compile by hand. Instead, I started my tool Monday afternoon
