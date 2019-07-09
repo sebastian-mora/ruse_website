@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/public/assets/css/blogpost.css">
+    <title>Ru$e</title>
+  </head>
+  <body>
+    <% include ../../partials/header %>
+    <div class="title">
+
+    </div>
+    <a href="https://github.com/seb1055/BorderProbe">
+        <h1>WebScout</h1>
+    </a>
+    <h4>7/3/2019</h4>
+
+  </div>
+
+    <div class="post">
+
+        <p>
+          After completing Borderprobe I was ask by a teammemer at my intership
+          if I would devlope him a program that could scan a subnet for webservers,
+          screenshot their landing pages, and create a report. After talking
+          for a bit about my teammemeber suggestion that I go check out the
+          tool <a href="https://github.com/FortyNorthSecurity/EyeWitness">Eyewitness</a>
+          from the same creators of Veil-Evasion.
+        </p>
+
+        <p>
+          Reading over their documentation it was clear that what my teammate wanted
+          was mostly done but lacked automation. Eyewitness does include some basic scanning
+          but I wasn't statisifed on how it was implemetned and the lack of control
+          over the scans. So I decided to chain Nmap and Eyewitness together to
+          get the best of both worlds.
+        </p>
+
+        <p>
+          I was able to steal some code from my previosu project and in two methods
+          I had Webscout done. The first method leverages Nmap to discover
+          Webservers and then the results are passed into Eyewitness and the
+          report is genereated.
+        </p>
+
+        <p>
+          Not every project needs to be flashy or the most complex. Somtimes it
+          is the simple ones that make your life easier. With this script we are
+          able to quickly scan a subnet and see what type of interal webservers
+          are running. Often interal webservers are forgotten or never reccived
+          the proper configurations, making them prime targets.
+        </p>
+
+        <p>
+          To top it all off I added some cool ASCII art because no tool
+          is complete without ASCII art.
+        </p>
+
+        <p>
+          Here are some screenshots
+          <ul>
+            <li>Webspoit</li>
+            <li>Report</li>
+            <li><a href="">Find it on Github</a></li>
+          </ul>
+        </p>
+
+    </div>
+
+  </body>
+</html>
