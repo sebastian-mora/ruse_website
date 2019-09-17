@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/public/assets/css/blogpost.css">
+    <title>Ru$e</title>
+  </head>
+  <body>
+    <% include ../../../partials/header %>
+    <div class="title">
+        <h1>Finding XSS in Ford.com</h1>
+    </div>
+
+      <h4>9/15/2019</h4>
+
+    </div>
+
+    <div class="post">
+
+        <p>
+          I saw Ford's Bug bounty program on Hacker1 and decided to check it out.
+          It wasn't long before I was able to refected XSS on one of Ford's subdomains.
+
+          I first started off by enumerating Ford subdomains. I like this approach
+          because I can quickly begin canvasing the structure of the organization.
+          Often through subdomain enumeration, you can find an old or depreciated website
+          that have vulnarlites or as some like to call it low hanging fruit.
+
+        </p>
+
+        <p>
+            To start enumerating subdomains, I used a tool called Amass. It's a
+            great tool that can use passive and brute force techniques to find subdomains. After getting a list of subdomains, I feed the results back through Httprobe to see which of the domains are life. After doing this, I started combing through the results. Eventually, I landed on a
+            page that had interesting behaviors when changing some of the URL parameters.
+            This inconsistent behavior was my first indication that there might be something more on the page.
+        </p>
+
+        <p><a href="/public/blogs/general/fordxss/page.png"> Page </a></p>
+
+
+
+        <p>
+            Anywhere with user input is a good place to start as that is where many vulns arise, so I started looking at the source. Looking through
+            the code I found a hidden form field that looked a bit sus
+
+            <a href="/public/blogs/general/fordxss/vuln_form.png"> hidden form </a>
+
+            Looking at this form, we can see there are a few hidden parameters,
+            two wichs are blank. To manipulate them we can submit the URL as
+            <i>website.ford.com?URLBrand=testdata</i>
+
+            After inserting some data and loading the page, I saw the data was reflected in the value of the HTML form. YEET we are close. So I Then check to make sure there was no filtering going on, so I tried adding double quote and >, and sure enough, they were not filtered.
+        </p>
+
+        <p>
+            After finding the attack vetor It is simple to escape the value paramter
+            and inject some JS! To this this we first escape the paramter by starting
+            they payload with <i> "> </i> this escape the paramter and then we append <i>alert("RUSE");</i>
+
+            The final payload being <i>">alert("RUSE");</i>
+
+        </p>
+
+        <p>
+           <a href="/public/blogs/general/fordxss/executed_blur.png"> BIG OOF </a>
+        </p>
+
+        <p>Why did they choose to make the page dynamic bypassing hidden form values?
+          Moral of the story never trusts user input.
+        </p>
+
+    </div>
+
+  </body>
+</html>
