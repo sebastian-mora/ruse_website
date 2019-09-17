@@ -16,6 +16,10 @@ h1{
 
 }
 
+img#ruse_dark{
+
+  margin-left: 33%
+}
 
 /* ------------- Main Body --------------- */
 
@@ -34,6 +38,14 @@ p.boxed {
 pre {
   margin-top: 5%;
   padding-left: 30%;
+}
+
+a {
+  color: #00ff00;
+  border-style: none;
+}
+a:visited{
+  color: #00ff00;
 }
 
 /*

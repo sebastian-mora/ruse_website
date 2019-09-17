@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/public/assets/css/blogpost.css">
+    <title>Ru$e</title>
+  </head>
+  <body>
+    <% include ../../../partials/header %>
+    <div class="title">
+        <h1>Finding XSS in Ford.com</h1>
+    </div>
+
+      <h4>9/15/2019</h4>
+
+    </div>
+
+    <div class="post">
+
+        <p>
+          I saw Ford's Bug bounty program on Hacker1 and decided to check it out.
+          It wasn't long before I was able to Reflected XSS in a Ford subdomains.
+
+          I first started off by enumerating Ford subdomains. I like this approach
+          because I can quickly begin canvasing the structure of the organization.
+          Often through subdomain enumeration, you can find an old or depreciated website
+          that have vulnarlites or as some like to call it low hanging fruit.
+
+        </p>
+
+        <p>
+            To start enumerating subdomains, I used a tool called Amass. It's a
+            great tool that can use passive and brute force techniques to find subdomains. After getting a list of subdomains,
+            I feed the results back through Httprobe to see which of the domains are live to speed up the process.
+            After, I started combing through the results. Eventually, I landed on a
+            page that had interesting URL parameters on load. I quickly changed on paramter to a random number
+            and the page changed from Ford Branding to Lincond Branding. That was odd?
+            This inconsistent behavior was my first indication that there might be something more on the page.
+            Maybe somthing that I could control via input.
+        </p>
+
+        <p><a class="img"  href="/public/blogs/general/fordxss/page.png"> Page </a></p>
+
+
+
+        <p>
+            Anywhere with user input is a good place to start as that is where many vulns arise,
+            so I started looking at the form fields in the source.
+            Then I found hidden form field with the paramter I changed ealier and
+            it looked a bit suspicious.
+        </p>
+
+            <a class="img" href="/public/blogs/general/fordxss/vuln_form.png"> Hidden Form </a>
+        <p>
+            Looking at this form, we can see there are a few hidden parameters,
+            that seem to control what content is displayed on the page.
+            To manipulate them we can submit the URL as
+
+            <i>website.ford.com?URLBrand=testdata</i>
+
+            After inserting some data and loading the page,
+            I saw the data was reflected in the value of the HTML form. Now that
+            there is a way to get text in the page we can start exploiting.
+        </p>
+
+        <p>
+            To take advantage of this odd behavior we just need to escape the
+            <i>Value=""</i> paramter. To do this we first escape the parameter by starting
+            they payload with <i> "> </i> the <i>"</i> closes the string
+            and the <i>></i> close the input tag. Now it's time to inject some
+            JavaScript! To do this we can test it by adding <i>alert("RUSE");</i>
+
+            Final payload being <i>">&lt;script&gt;alert("RUSE");&lt;/script&gt;</i>
+
+        </p>
+
+        <p>
+           <a class="img" href="/public/blogs/general/fordxss/executed_blur.png"> BIG OOF </a>
+        </p>
+
+        <p>
+          And that's why never trust user input. Even if you don't expect anyone
+          to every touch it.
+        </p>
+
+        <ul>
+          <li>TOOLS USED</li>
+          <ul>
+              <li><a href="https://github.com/caffix/amass"> Amass</a></li>
+              <li><a href="https://github.com/tomnomnom/httprobe">Httprobe</a></li>
+          </ul>
+
+        </ul>
+
+    </div>
+
+  </body>
+</html>

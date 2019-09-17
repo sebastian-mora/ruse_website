@@ -6,6 +6,13 @@ body{
   font-family: 'Ubuntu Mono', monospace;
 }
 
+
+img.resize {
+    width:540px; /* you can use % */
+    height: 540px;
+}
+
+
 /* ------------- Title ------------------ */
 
 div.title{

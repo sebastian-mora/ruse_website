@@ -1,12 +1,8 @@
 $(document).ready(function() {
-
+  //IF YOU KNOW JS PLS FIX THIS MESS LMAO
   guessPassword()
 
-
-
 });
-
-
 
 function guessPassword(){
 
@@ -49,7 +45,6 @@ function nextChar(currentChar){
   char_code = char_code + 1
   if(char_code >= 90){return 'A'}
   return String.fromCharCode(char_code)
-
 }
 
 function cracked(){
