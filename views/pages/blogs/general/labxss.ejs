@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/public/assets/css/blogpost.css">
+    <title>Ru$e</title>
+  </head>
+
+  <body>
+    <% include ../../../partials/header %>
+
+    <div class="title">
+        <h1>Xss Lab</h1>
+    </div>
+
+    <h3>WELCOME DATA</h3>
+    <h4>9/15/2019</h4>
+
+    <div class="post">
+
+        <div class="test_1">
+          <p>Enter your name!</p>
+          <form class="" action="" method="get">
+            <input type="text" name="" value="">
+            <button type="button" name="button">Submit</button>
+          </form>
+        </div>
+
+        <div class="test_2">
+            <p>Load an image. Add a url</p>
+            <form class="" action="index.html" method="post">
+              <input type="text" name="" value="">
+              <button type="button" name="button">Submit</button>
+            </form>
+            <a href="#">Some image HERE </a>
+        </div>
+
+        <div class="test_3">
+            <p>Can you bypass me?</p>
+            <form class="" action="index.html" method="post">
+              <input type="text" name="" value="">
+              <button type="button" name="button">Submit</button>
+            </form>
+        </div>
+
+    </div>
+
+  </body>
+</html>
