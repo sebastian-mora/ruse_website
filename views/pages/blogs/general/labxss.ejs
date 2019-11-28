@@ -13,31 +13,45 @@
         <h1>Xss Lab</h1>
     </div>
 
-    <h3>WELCOME DATA</h3>
+    <h3></h3>
+
+    <% if (locals.welcome) { %>
+        <h3><%- welcome %></h3
+    <% } %>
     <h4>9/15/2019</h4>
+
+
 
     <div class="post">
 
         <div class="test_1">
-          <p>Enter your name!</p>
-          <form class="" action="" method="get">
-            <input type="text" name="" value="">
-            <button type="button" name="button">Submit</button>
+          <p>Change the Welcome Message</p>
+          <form action="/blog/general/labxss/challenge1" method="POST" >
+            <input id="query" name="welcome" value="Enter query here..." onfocus="this.value=''">
+            <input id="button" type="submit" value="Submit">
           </form>
         </div>
 
         <div class="test_2">
-            <p>Load an image. Add a url</p>
-            <form class="" action="index.html" method="post">
-              <input type="text" name="" value="">
-              <button type="button" name="button">Submit</button>
+            <p>Change the Image</p>
+            <form class="" action="/blog/general/labxss/challenge2" method="post">
+              <input id="image" type="text" name="image" value="">
+              <input type="submit" name="" value="Submit">
             </form>
-            <a href="#">Some image HERE </a>
+
+            <% if(locals.image){ %>
+               <img src=<%= image %>></a>
+             <% } else{ %>
+               <img src="https://freepngimg.com/thumb/skull/3-2-skull-png-hd-thumb.png">
+            <% } %>
+
+
+
         </div>
 
         <div class="test_3">
             <p>Can you bypass me?</p>
-            <form class="" action="index.html" method="post">
+            <form class="" action="/blog/general/labxss/challenge3" method="post">
               <input type="text" name="" value="">
               <button type="button" name="button">Submit</button>
             </form>
