@@ -33,19 +33,15 @@
         </div>
 
         <div class="test_2">
-            <p>Change the Image</p>
-            <form class="" action="/blog/general/labxss/challenge2" method="post">
-              <input id="image" type="text" name="image" value="">
-              <input type="submit" name="" value="Submit">
-            </form>
+          <p>Open Me</p>
 
-            <% if(locals.image){ %>
-               <img src=<%= image %>></a>
-             <% } else{ %>
-               <img src="https://freepngimg.com/thumb/skull/3-2-skull-png-hd-thumb.png">
-            <% } %>
-
-
+          <script>
+          	var pos=document.URL.indexOf("context=")+8;
+          	var s =  document.createElement('script')
+            var command  = document.createTextNode(document.URL.substring(pos,document.URL.length));
+            s.appendChild(command);
+            document.body.appendChild(s);
+          </script>
 
         </div>
 
