@@ -17,14 +17,19 @@ router.post('/challenge1', function (req, res) {
   res.render('../views/pages/blogs/general/labxss.ejs', {welcome: req.body.welcome})
 })
 
-router.post('/challenge2', function (req, res) {
-  res.render('../views/pages/blogs/general/labxss.ejs', {image: req.body.image})
-})
 
 router.post('/challenge3', function (req, res) {
-  console.log("HIT");
-  console.log(req.body);
-  res.render('../views/pages/blogs/general/labxss.ejs', {chal3: req.body.chal3})
+
+  var text = req.body.chal3
+
+  text = text.replace(/script/i ,'');
+  text = text.replace(/script/i ,'');
+  text = text.replace(/script/i ,'');
+  text = text.replace(/script/i ,'');
+  text = text.replace(/script/i ,'');
+  text = text.replace(/alert/i, 'Im_A_HaX0r')
+
+  res.render('../views/pages/blogs/general/labxss.ejs', {chal3: text})
 })
 
 module.exports = router;

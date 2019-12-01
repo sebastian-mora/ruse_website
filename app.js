@@ -29,14 +29,13 @@ app.use('/blog/general/labxss', xsslab)
 
 
 app.use (function (req, res, next) {
-        // if (req.secure) {
-        //         // request was via https, so do no special handling
-        //         next();
-        // } else {
-        //         // request was via http, so redirect to https
-        //         res.redirect('https://' + req.headers.host + req.url);
-        // }
-        next();
+        if (req.secure) {
+                // request was via https, so do no special handling
+                next();
+        } else {
+                // request was via http, so redirect to https
+                res.redirect('https://' + req.headers.host + req.url);
+        }
 });
 
 
@@ -74,5 +73,5 @@ app.use(function(err, req, res, next) {
 // Create an HTTP service.
 http.createServer(app).listen(8080);
 // Create an HTTPS service identical to the HTTP service.
-//https.createServer(options, app).listen(8443);
+https.createServer(options, app).listen(8443);
 console.log("Started the servers");
