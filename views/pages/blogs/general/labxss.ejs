@@ -35,6 +35,8 @@
         <div class="test_2">
           <p>Open Me</p>
 
+          <input type="text" name="" value="" dis>
+
           <script>
           	var pos=document.URL.indexOf("context=")+8;
           	var s =  document.createElement('script')
@@ -47,11 +49,18 @@
 
         <div class="test_3">
             <p>Can you bypass me?</p>
-            <form class="" action="/blog/general/labxss/challenge3" method="post">
-              <input type="text" name="" value="">
-              <button type="button" name="button">Submit</button>
+            <form class="" action="/blog/general/labxss/challenge3" method="POST">
+              <input name="chal3" type="text" name="" value="">
+              <input id="button" type="submit" name="button">
             </form>
+
+            <% if (locals.chal3) { %>
+                <h3><%- chal3 %></h3
+            <% } %>
+
         </div>
+
+
 
     </div>
 

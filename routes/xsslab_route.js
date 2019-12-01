@@ -18,13 +18,13 @@ router.post('/challenge1', function (req, res) {
 })
 
 router.post('/challenge2', function (req, res) {
-  console.log(req.body);
-  console.log("HIT");
-res.render('../views/pages/blogs/general/labxss.ejs', {image: req.body.image})
+  res.render('../views/pages/blogs/general/labxss.ejs', {image: req.body.image})
 })
 
 router.post('/challenge3', function (req, res) {
-
+  console.log("HIT");
+  console.log(req.body);
+  res.render('../views/pages/blogs/general/labxss.ejs', {chal3: req.body.chal3})
 })
 
 module.exports = router;
