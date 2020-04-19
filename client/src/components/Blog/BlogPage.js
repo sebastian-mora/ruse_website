@@ -15,9 +15,8 @@ const BlogPage = (props) => {
     axios
       .get(`/blog/${id}`)
       .then(result => setBlog(result.data));
-  },[]);
+  }, []);
 
-  console.log(blog);
   return(
     <div>
       <div className={style.title}><h1>{blog.title}</h1></div>
