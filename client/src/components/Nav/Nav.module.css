@@ -1,0 +1,30 @@
+div.container{
+  
+}
+
+ul.container{
+  list-style:none;
+  border-left: 2px solid #00ff00;
+  border-right: 2px solid #00ff00;
+  padding-left: 30%;
+  padding-bottom: 2%;
+}
+
+li.container{
+  font-size: 15px;
+  display:inline;
+  float: left;
+  color: #00ff00;
+}
+
+
+.text-link li a{
+  text-decoration:none;
+  color: #00ff00;
+}
+
+.text-link  li {
+  font-size: 15px;
+  display:inline;
+  padding: 0 20% 0 0;
+}

@@ -1,0 +1,46 @@
+div.title{
+  margin-top: 7%;
+}
+a {
+  color: #00ff00;
+  border-style: none;
+}
+a:visited{
+  color: #00ff00;
+}
+
+
+/* ------------- Main Body --------------- */
+
+.title{
+  color: white;
+  padding-left: 5%
+}
+
+.date{
+  padding-left: 5%;
+}
+
+
+div.post{
+  color: white;
+  background-color: #1e1e1e;
+  padding: 10px 10px 10px 10px;
+  margin-left: 5%;
+  margin-top: 5%;
+  margin-right: 5%;
+  padding-left: 10px;
+  border-left: 2px solid #00ff00
+}
+
+div p{
+  line-height: 1.7em;
+}
+
+div p:first-of-type{
+  text-indent: 2em;
+}
+
+div ul li {
+  padding-bottom: 2%;
+}
