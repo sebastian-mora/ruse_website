@@ -8,18 +8,31 @@ import axios from 'axios';
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
+  const [fetchErr, setFetchErr] = useState(false);
 
   useEffect(() => {
     axios
       .get("/blog")
-      .then(result => setBlogs(result.data));
+      .then(result => setBlogs(result.data))
+      .catch(err => {
+        console.log(err);
+        setFetchErr(true);
+        return null
+      })
   }, []);
 
   return (
     <div>
+    
+      
       {blogs.map(({id,title}) =>{
-        return <Link key={id} to={`blog/${id+1}`}><li>{title}</li></Link>
+        return <Link key={id} to={`blog/${id}`}><li>{title}</li></Link>
       })}
+
+      {
+        fetchErr && <p>Failed to get blogs</p>
+      }
+
     </div>
   )
 }

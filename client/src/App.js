@@ -10,6 +10,7 @@ import About from './components/About/About'
 import Blog from './components/Blog/Blog'
 import BlogPage from './components/Blog/BlogPage'
 import Login from './components/Login/Login'
+import Admin from './components/Admin/Admin'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route exact path = "/blog"  component={Blog} />
           <Route  path={"/blog/:id"} component={BlogPage}/>
           <Route  path={"/login"} component={Login}/>
+          <Route  path={"/admin"} component={Admin}/>
         </Switch>
       </div>
     </Router>
