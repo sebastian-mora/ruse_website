@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var db  = require('../database/database')
+const verifyToken = require('./middleware/Auth')
 
 router.use(express.json())
 
@@ -8,17 +9,6 @@ const sanitize_hash = (input) =>{
   return input.replace('\b[A-Fa-f0-9]{64}\b', '')
 }
 
-data = [
-  {
-    "id": 0,
-    "title": "Blog 1"
-  },
-  {
-    "id": 1,
-    "title": "Blog 2"
-  }
-
-]
 
 
 function getAllBlogs(){
@@ -60,10 +50,24 @@ function getBlogByID(id){
 }
 
 
+function addBlog(blog){
+  return new Promise((resolve, reject) => {
+    var query_str = `INSERT INTO blogs (title, date_created, post) VALUES('${blog.title}', '1/1/1', '${blog.post}');`
+
+    db.query(query_str, (err)=>{
+      if(err)
+        return reject(err);
+      
+      resolve();
+    })
+  })
+}
+
+
 
 // create a GET route
 router.get('/', async (req, res) => {
-  
+
   getAllBlogs() 
   .then( (results) => {
     res.send(results)
@@ -83,8 +87,8 @@ router.get('/:id', (req, res) =>{
 
   getBlogByID(id)
   .then( (results) => {
-    console.log(results);
-    
+
+    // check out why this uses a zero
     res.send(results[0])
   })
   .catch((err) => {
@@ -95,7 +99,7 @@ router.get('/:id', (req, res) =>{
 });
 
 
-router.post('/', (req,res) =>{
+router.post('/create', verifyToken, (req,res) =>{
 
   const title = req.body.blog.title
   const date = req.body.blog.date
@@ -116,5 +120,30 @@ router.post('/', (req,res) =>{
   res.sendStatus(200)
   
 });
+
+router.post('/update',verifyToken ,(req,res) =>{
+
+  const title = req.body.blog.title
+  const date = req.body.blog.date
+  const post = req.body.blog.post
+
+  const blog = {
+    title,
+    date,
+    post
+  }
+
+  addBlog(blog).then(()=>{
+    res.sendStatus(200);
+  })
+  .err((err) =>{
+    console.log(err);
+    res.send(500)
+  })
+
+
+});
+
+
 
 module.exports = router;

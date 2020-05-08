@@ -3,8 +3,13 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import './App.css';
 
-import Nav from './components/Nav/Nav'
+// configs
+import PrivateRoute from './utils/PrivateRoute';
+import setAuthToken from './utils/setAuthToken';
 
+
+// Add comps
+import Nav from './components/Nav/Nav'
 import Index from './components/Index/index'
 import About from './components/About/About'
 import Blog from './components/Blog/Blog'
@@ -14,6 +19,8 @@ import Admin from './components/Admin/Admin'
 
 
 function App() {
+
+  setAuthToken(localStorage.jwt)
   return (
     <Router>
       <div >
@@ -24,7 +31,9 @@ function App() {
           <Route exact path = "/blog"  component={Blog} />
           <Route  path={"/blog/:id"} component={BlogPage}/>
           <Route  path={"/login"} component={Login}/>
-          <Route  path={"/admin"} component={Admin}/>
+
+          <PrivateRoute path={"/admin"} component={Admin}/>
+
         </Switch>
       </div>
     </Router>

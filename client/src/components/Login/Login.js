@@ -1,5 +1,5 @@
 import React, {useState}from 'react';
-
+import setAuthToken from '../../utils/setAuthToken'
 
 import axios from 'axios';
 
@@ -28,10 +28,13 @@ const Login = () => {
       password
     })
     .then(function (response) {
-      if(response.data.status){ sessionStorage.setItem("jwt", response.data.accessToken)}
+      if(response.data.status){ 
+        const token =  response.data.accessToken
+        sessionStorage.setItem("jwt", token)
+        setAuthToken(token)
+      }
       else{
         console.log("NO");
-        
       }
       
     })
