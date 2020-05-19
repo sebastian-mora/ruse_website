@@ -26,18 +26,24 @@ const Scroller = () => {
 
   // Create the state and init the letter
   const [letters, setLetters] = useState(seedLetters(4));
+  const [completed, setCompleted] = useState(false);
 
 
   useEffect(() => {
-    setTimeout(() => {
-      setLetters(crack())
+    setTimeout(() => {   
+      if(!completed){
+        setLetters(crack())
+      }
+      if (letters.toString() === match_letters.toString()){
+        setCompleted(true);
+        return
+      }
     }, 100);
   });
 
   const crack = () => {
 
     const new_letters = []
-
     letters.forEach((letter, i) => {
 
       if (letter === match_letters[i]) {
