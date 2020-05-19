@@ -13,16 +13,13 @@ function verifyToken(req, res, next) {
     // Set the token
     req.token = bearerToken;
 
-    console.log("before");
-    
-
-
     jwt.verify(req.token, 'accessTokenSecret', (err, authData) => {
       if (err){
-        res.sendStatus(403);
+        res.send(403);
       }
       else {
         res.authData = authData
+        console.log("Token validated");
         next();
       }
     })
@@ -32,7 +29,7 @@ function verifyToken(req, res, next) {
     
   } else {
     // Forbidden
-    res.sendStatus(403);
+    res.send(403);
   }
 }
 

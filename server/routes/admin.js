@@ -5,7 +5,12 @@ const verifyToken = require('./middleware/Auth')
 router.use(verifyToken)
 
 router.get('/', (req, res) =>{
-  res.sendStatus(200).statusMessage("Authd");
+  res.status(200)
+})
+
+
+router.get('/authd', (req, res) =>{
+  res.sendStatus(200)
 })
 
 

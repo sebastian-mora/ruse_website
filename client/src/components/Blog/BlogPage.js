@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import style from './BlogPage.module.css'
 
-import axios from 'axios';
+import {getBlog} from '../../api/blogsApi';
 
 
 
@@ -12,12 +12,14 @@ const BlogPage = (props) => {
   const id = props.match.params.id;
 
   useEffect(() => {
-    axios
-      .get(`/blog/${id}`)
-      .then(result => setBlog(result.data));
-  }, []);
 
-  console.log(blog);
+    getBlog(id).then(res => {
+      setBlog(res)
+      
+    })
+    .catch(err => { 
+    });
+  }, [id]);
   
   return(
     <div>
