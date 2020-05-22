@@ -20,7 +20,9 @@ export function getBlog(id){
 
 
 export function addBlog(blog){
-  return axios.get(`/blog`).then(res => {
+
+
+  return axios.post(`blog/create`, blog).then(res => {
     return res.data
   })
   .catch(err => {

@@ -16,8 +16,8 @@ import Admin from './components/Admin/Admin'
 
 //redux 
 import store from './redux/store'
-import {Provider, connect} from 'react-redux';
-import {fetchData} from './redux/actions/authActions';
+import {Provider} from 'react-redux';
+import {checkToken} from './redux/actions/authActions';
 
 
 
@@ -26,7 +26,7 @@ import {fetchData} from './redux/actions/authActions';
 class App extends Component{
 
   componentWillMount(){
-    store.dispatch(fetchData())
+    store.dispatch(checkToken())
   }
 
   render(){

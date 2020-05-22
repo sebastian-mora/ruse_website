@@ -8,8 +8,25 @@ import {
 
 
 
+export const loginFailed = () =>{
+  return{
+    type: LOGIN_FAIL
+  }
+}
 
-export const fetchData = () => {
+
+export const loginUser = (user) =>{
+
+  // Store the JWT in the session
+  sessionStorage.setItem('jwt', user.jwt)
+
+  return {
+    type: LOGIN_SUCCESS,
+    payload: user
+  }
+}
+
+export const checkToken = () => {
 
   const token = sessionStorage.getItem('jwt');
   const config = {
@@ -22,14 +39,12 @@ export const fetchData = () => {
     config.headers["fuckyou-key"] = token
   }
 
-  console.log(config);
-  
 
   return (dispatch) =>{
     axios.get('/api/auth/user', config)
     .then(res => {
       const data = res.data
-      dispatch({type: LOGIN_SUCCESS,
+      dispatch({type: USER_LOADED,
       payload: data})
     })
   }

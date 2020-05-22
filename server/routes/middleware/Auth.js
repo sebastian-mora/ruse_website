@@ -11,9 +11,7 @@ function verifyToken(req, res, next) {
   if(typeof bearerHeader !== 'undefined') {
 
     jwt.verify(bearerHeader, 'accessTokenSecret', (err, authData) => {
-      if (err){
-        console.log("NOPE");
-        
+      if (err){        
         res.send(403);
       }
       else {

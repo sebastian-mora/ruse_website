@@ -1,83 +1,43 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import {updateNewBlog, postBlog} from '../../../redux/actions/blogActions'
 import RichTextEditor from 'react-rte';
 import style from './BlogEditor.module.css'
 
-export default class BlogEditor extends Component {
+class BlogEditor extends Component {
 
-  state = {
-    editorValue: RichTextEditor.createEmptyValue(),
-    post: "",
-    date: "",
-    title: ""
-  }
-
-   
-  saveBlogUpdate = this.saveBlogUpdate.bind(this);
-
-
-
-  editorOnChange = (editorValue) => {
-    this.setState({editorValue});
+  
+  
+  editorOnChange = (e) => {
+    this.props.dispatch(updateNewBlog({...this.props.blog,
+      post: e.target.value
+    }))
   };
 
-
-  changeTitle = (e) =>{
-    this.setState({title:e.target.value})
+  saveClick = () => {
+    this.props.dispatch(postBlog(this.props.blog))
   }
 
-  changeDate = (e) =>{
-    this.setState({date:e.target.value})
-  }
-
-
-  componentWillReceiveProps(nextProps) {
-    const {blog} = nextProps
-
-    let editorValue = this.state.editorValue
-
-    if(editorValue.toString('html') !== blog.post){
-      editorValue = RichTextEditor.createValueFromString(blog.post, 'html')
-      this.setState(
-        { editorValue,
-          title: blog.title,
-          date: blog.date,
-          post: blog.post
-        }
-       )
-      
-    }
-
-    return null;
-
-  }
-
-  saveBlogUpdate(){
-    let {title, date, post} = this.state
-      this.props.editorSave({
-        title, date, post
-      });
-  }
-
-  render () {
-
-    console.log(this.state);
-    
+  render () {    
     return (
       <div>
-        <input type="text" name="name" onChange={this.changeTitle} value={this.state.title}></input>
-        <input type="date" name="blog.date" onChange={this.changeDate} value={this.state.date}></input>
-        <RichTextEditor
-          className={style.Editor}
-          value={this.state.editorValue}
-          onChange={this.editorOnChange}
-        />
-
-        <button onClick={this.saveBlogUpdate}>Save</button>
-        
+        <textarea value={this.props.blog.post}  onChange={this.editorOnChange}/>
+        <button onClick={this.saveClick}>Save</button>
       </div>
-
-      
     );
   }
 }
 
+const mapToProps= (state) =>{
+
+  let {post, title, date} = state.editor.newBlog
+  return {
+    blog:{
+      post,
+      title,
+      date
+    }
+  }
+}
+
+export default connect(mapToProps)(BlogEditor)

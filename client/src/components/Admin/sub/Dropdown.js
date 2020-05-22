@@ -1,16 +1,23 @@
 import React, {} from 'react';
 
 
-const Dropdown = ({blogs, updateBlog}) => {
+import { connect, useSelector } from 'react-redux';
+import {selectBlog} from '../../../redux/actions/blogActions'
+
+
+
+const Dropdown = ({dispatch}) => {
+
+  const blogs = useSelector(state => state.editor.blogs)
 
   function setBlog(e){
-    updateBlog(e.target.value)
+   dispatch(selectBlog(e.target.value))
   }
   
   return (
     <div>
-      <select onChange={e => setBlog(e)}id="blogs">
-        {blogs.map(({id, title}) =>{
+      <select onChange={e => setBlog(e)} id="blogs">
+        {blogs.map(({title, id}) =>{
           return <option key={id} value={id}>{title}</option>
         })}
       </select>
@@ -18,4 +25,4 @@ const Dropdown = ({blogs, updateBlog}) => {
   )
 }
 
-export default Dropdown;
+export default connect()(Dropdown);

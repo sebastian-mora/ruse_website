@@ -7,23 +7,18 @@ import {getBlogs} from '../../api/blogsApi';
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
-  const [loadErr, setErr] = useState(false);
+  const [loadErr, setErr] = useState(null);
 
  
   useEffect(() => {
-    
-      console.log("CALLED");
-      
       getBlogs().then(res => {
         setBlogs(res)
       })
       .catch(err => {
-        setErr(!loadErr)
-        
+        setErr(err)
       });
-  }, blogs);
+  }, []);
 
-    console.log(blogs);
     
   return (
     <div>

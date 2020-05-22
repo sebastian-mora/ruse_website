@@ -1,9 +1,11 @@
-import React, {useState}from 'react';
+import React, {useState} from 'react';
 
+import { connect } from 'react-redux';
+import {loginUser, loginFailed} from '../../redux/actions/authActions'
 
 import axios from 'axios';
 
-const Login = ({check}) => {
+const Login = ({dispatch}) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,16 +31,18 @@ const Login = ({check}) => {
     })
     .then(function (response) {
       if(response.data.status){ 
-        const token =  response.data.accessToken
-        sessionStorage.setItem("jwt", token)
-      }
-      else{
-        console.log("NO");
+        const user =  {
+          jwt: response.data.accessToken,
+          username: response.data.username,
+          login_time: response.data.login_time
+        }
+        dispatch(loginUser(user))
       }
       
     })
     .catch(function (error) {
       console.log(error);
+      dispatch(loginFailed())
     });
   }
 
@@ -55,4 +59,5 @@ const Login = ({check}) => {
   )
 }
 
-export default Login;
+
+export default connect()(Login);

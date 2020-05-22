@@ -99,11 +99,14 @@ router.get('/:id', (req, res) =>{
 });
 
 
-router.post('/create', verifyToken, (req,res) =>{
+router.post('/create', (req,res) =>{
 
-  const title = req.body.blog.title
-  const date = req.body.blog.date
-  const post = req.body.blog.post
+  const title = req.body.title
+  const date = req.body.date
+  const post = req.body.post
+
+  console.log(req.body);
+  
 
   const command = `INSERT INTO blogs (title, date_created, post) VALUES('${title}', '1/1/1', '${post}');`
   db.query(command, (error, results, fields) => {
