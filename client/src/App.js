@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 
@@ -15,34 +15,40 @@ import Login from './components/Login/Login'
 import Admin from './components/Admin/Admin'
 
 //redux 
-import {createStore} from 'redux';
-import { Provider } from 'react-redux';
-import rootReducer from './redux/reducers'
-import { composeWithDevTools } from 'redux-devtools-extension';
-
-const store = createStore(rootReducer, composeWithDevTools());
+import store from './redux/store'
+import {Provider, connect} from 'react-redux';
+import {fetchData} from './redux/actions/authActions';
 
 
-function App() {
 
-  return (
-    <Provider store={store}>
-      <Router>
-        <div >
-          <Nav />
-          <Switch>
-            <Route path ="/" exact component={Index} />
-            <Route path ="/about" exact component={About} />
-            <Route exact path = "/blog"  component={Blog} />
-            <Route  path={"/blog/:id"} component={BlogPage}/>
-            <Route  path={"/login"} component={Login}/>
-            <Route path={"/admin"} component={Admin}/>
 
-          </Switch>
-        </div>
-      </Router>
-      </Provider>
-  );
+
+class App extends Component{
+
+  componentWillMount(){
+    store.dispatch(fetchData())
+  }
+
+  render(){
+    return (
+      <Provider store={store}>
+        <Router>
+          <div >
+            <Nav />
+            <Switch>
+              <Route path ="/" exact component={Index} />
+              <Route path ="/about" exact component={About} />
+              <Route exact path = "/blog"  component={Blog} />
+              <Route  path={"/blog/:id"} component={BlogPage}/>
+              <Route  path={"/login"} component={Login}/>
+              <Route path={"/admin"} component={Admin}/>
+
+            </Switch>
+          </div>
+        </Router>
+        </Provider>
+    );
+  }
 }
 
 export default App;

@@ -8,9 +8,11 @@ const port = process.env.PORT || 5000;
 const blog = require('./routes/blog.js')
 const login = require('./routes/login.js')
 const admin = require('./routes/admin.js')
+const api = require('./routes/api.js')
 app.use('/blog', blog)
 app.use('/login', login)
 app.use('/admin', admin)
+app.use('/api', api)
 
 
 

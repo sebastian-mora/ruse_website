@@ -2,19 +2,18 @@ const jwt = require('jsonwebtoken');
 
 // Verify Token
 function verifyToken(req, res, next) {
+
+  
   // Get auth header value
-  const bearerHeader = req.headers['authorization'];
+  const bearerHeader = req.headers['fuckyou-key'];
+
   // Check if bearer is undefined
   if(typeof bearerHeader !== 'undefined') {
-    // Split at the space
-    const bearer = bearerHeader.split(' ');
-    // Get token from array
-    const bearerToken = bearer[1];
-    // Set the token
-    req.token = bearerToken;
 
-    jwt.verify(req.token, 'accessTokenSecret', (err, authData) => {
+    jwt.verify(bearerHeader, 'accessTokenSecret', (err, authData) => {
       if (err){
+        console.log("NOPE");
+        
         res.send(403);
       }
       else {

@@ -19,17 +19,21 @@ const Blog = () => {
       })
       .catch(err => {
         setErr(!loadErr)
+        
       });
-  }, []);
+  }, blogs);
 
+    console.log(blogs);
+    
   return (
     <div>
     
+      
       {blogs.map(({id,title}) =>{
         return <Link key={id} to={`blog/${id}`}><li>{title}</li></Link>
       })}
 
-      
+
 
     </div>
   )

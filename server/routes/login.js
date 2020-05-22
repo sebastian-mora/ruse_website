@@ -2,30 +2,10 @@ const express = require('express')
 const router = express.Router()
 const db = require('../database/database')
 const jwt = require('jsonwebtoken');
-const verifyToken = require('./middleware/Auth')
 var cookieParser = require('cookie-parser');
 
 
 router.use(express.json())
-
-const checkToken = async (token) =>{
-  // const authHeader = req.headers.authorization;
-
-  if (true) {
-      // const token = authHeader.split(' ')[1];
-      console.log(token);
-      
-      jwt.verify(token, "accessTokenSecret", (err) => {
-          if (err) {
-              console.log(err);
-              return false
-          }
-
-          return true;
-          
-      });
-  } 
-}
 
 router.post('/',  (req, res) =>{
 
@@ -59,13 +39,5 @@ router.post('/',  (req, res) =>{
     res.end();
   }
 });
-
-
-router.post('/check', verifyToken, (req, res) =>{
-
-  res.json(res.authData.username)
-
-});
-
 
 module.exports = router;
