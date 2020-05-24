@@ -46,7 +46,7 @@ function addBlog(blog){
     db.query(query_str, (err)=>{
       if(err)
         return reject(err);
-      
+  
       resolve();
     })
   })

@@ -43,34 +43,23 @@ router.get('/:id', (req, res) =>{
 
 router.post('/create', (req,res) =>{
 
-  const title = req.body.title
-  const date = req.body.date
-  const post = req.body.post
+  const {title, date, post} = req.body;
 
-  console.log(req.body);
-  
+  const blog = {
+    title,
+    date,
+    post
+  }
 
-  const command = `INSERT INTO blogs (title, date_created, post) VALUES('${title}', '1/1/1', '${post}');`
-  db.query(command, (error, results, fields) => {
-      if(error){
-        console.log(error);
-        res.sendStatus(500)
-      }
-
-      else{
-        console.log(results);
-      }
+  addBlog(blog).then( () =>{
+    res.send(200)
   })
-
-  res.sendStatus(200)
   
 });
 
 router.post('/update',verifyToken ,(req,res) =>{
 
-  const title = req.body.blog.title
-  const date = req.body.blog.date
-  const post = req.body.blog.post
+  const {title, date, post} = req.body;
 
   const blog = {
     title,
