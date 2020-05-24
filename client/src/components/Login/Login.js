@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import {loginUser, loginFailed} from '../../redux/actions/authActions'
@@ -10,6 +11,7 @@ const Login = ({dispatch}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);
+  const history = useHistory();
 
   function validateForm() {
     if (username.length > 0 && password.length > 0){
@@ -36,7 +38,9 @@ const Login = ({dispatch}) => {
           username: response.data.username,
           login_time: response.data.login_time
         }
+        history.push('/')
         dispatch(loginUser(user))
+
       }
       
     })

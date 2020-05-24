@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 
 
 import './App.css';
@@ -14,41 +14,71 @@ import BlogPage from './components/Blog/BlogPage'
 import Login from './components/Login/Login'
 import Admin from './components/Admin/Admin'
 
-//redux 
-import store from './redux/store'
-import {Provider} from 'react-redux';
-import {checkToken} from './redux/actions/authActions';
 
-
+import {connect} from 'react-redux';
+import {checkToken} from './redux/actions/authActions'
 
 
 
 class App extends Component{
 
-  componentWillMount(){
-    store.dispatch(checkToken())
+  componentDidMount(){
+    this.props.dispatch(checkToken())
   }
 
   render(){
+    const a = {
+      color: "white"
+    }
+    const isAuthd = this.props.user.isAuthd
+    console.log(isAuthd);
+    
+
     return (
-      <Provider store={store}>
+
         <Router>
           <div >
-            <Nav />
+         <Nav />
             <Switch>
               <Route path ="/" exact component={Index} />
               <Route path ="/about" exact component={About} />
               <Route exact path = "/blog"  component={Blog} />
               <Route  path={"/blog/:id"} component={BlogPage}/>
               <Route  path={"/login"} component={Login}/>
-              <Route path={"/admin"} component={Admin}/>
-
+              <PrivateRoute  component={Admin} isAuthd={isAuthd} path={"/admin"}/>
             </Switch>
           </div>
         </Router>
-        </Provider>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state){
+  return {
+    user: state.user
+  }
+}
+
+const PrivateRoute = ({ component: Component,  isAuthd, ...rest }) => {  
+  return(
+    <Route
+    {...rest}
+    render={props =>
+      isAuthd? (
+        <Component {...props} />
+      ) : (
+        <Route to="/login" component={Login} />
+      )
+    }
+  />
+);
+  
+}
+
+
+
+
+
+
+
+export default connect(mapStateToProps)(App);

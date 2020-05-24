@@ -1,10 +1,11 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_NEW_BLOG} from '../actions/types'
+import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG} from '../actions/types'
 
 const intialState = {
   "blogs": [],
   "selectedBlog": null,
   "editorShow": false,
-  "newBlog": {}
+  "editorBlog": {},
+  "isNewPost": true
 }
 
 
@@ -23,13 +24,27 @@ export default function(state=intialState, action){
         ...state,
         selectedBlog: action.payload,
         editorShow: true,
-        newBlog: state.blogs.find(blog => blog.id === parseInt(action.payload))
+        editorBlog: state.blogs.find(blog => blog.id === parseInt(action.payload))
       }
     
-    case UPDATE_NEW_BLOG:
+    case UPDATE_EDITOR_BLOG:
       return {
         ...state,
-        newBlog: action.payload
+        editorBlog: action.payload
+      }
+
+    case CLOSE_EDITOR_BLOG:
+      return {
+        ...state,
+        editorShow: false,
+        editorBlog: null
+      }
+    
+    case OPEN_NEW_BLOG:
+      return {
+        ...state,
+        editorShow: true,
+        editorBlog: {}
       }
     
     default:

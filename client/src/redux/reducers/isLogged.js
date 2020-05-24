@@ -2,7 +2,7 @@ import {LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCESSS, USER_LOADED} from '../actions
 
 
 const intialState = {
-  "username": null,
+  "username": "BEFORE",
   "login_time": null,
   "isAuthd": false
 }

@@ -12,7 +12,7 @@ function verifyToken(req, res, next) {
 
     jwt.verify(bearerHeader, 'accessTokenSecret', (err, authData) => {
       if (err){        
-        res.send(403);
+        res.sendStatus(403);
       }
       else {
         res.authData = authData
@@ -26,7 +26,7 @@ function verifyToken(req, res, next) {
     
   } else {
     // Forbidden
-    res.send(403);
+    res.sendStatus(403);
   }
 }
 
