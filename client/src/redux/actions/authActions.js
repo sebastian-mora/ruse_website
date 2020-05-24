@@ -15,16 +15,45 @@ export const loginFailed = () =>{
 }
 
 
-export const loginUser = (user) =>{
+export const loginUser = (username, password) =>{
 
   // Store the JWT in the session
-  sessionStorage.setItem('jwt', user.jwt)
+  
 
-  return {
-    type: LOGIN_SUCCESS,
-    payload: user
+  return (dispatch) => {
+    axios.post('/login', {
+      username,
+      password
+    })
+    .then(function (response) {
+      if(response.data.status){ 
+        const user =  {
+          jwt: response.data.accessToken,
+          username: response.data.username,
+          login_time: response.data.login_time
+        }
+
+        sessionStorage.setItem('jwt', user.jwt)
+ 
+        dispatch({
+          type: LOGIN_SUCCESS,
+          payload: user
+        });
+
+      }
+      
+    })
+    .catch(function () {
+      dispatch({
+          type: LOGIN_FAIL
+      });
+
+    });
   }
 }
+
+  
+
 
 export const checkToken = () => {
 

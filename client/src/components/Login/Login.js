@@ -2,9 +2,7 @@ import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import {loginUser, loginFailed} from '../../redux/actions/authActions'
-
-import axios from 'axios';
+import {loginUser} from '../../redux/actions/authActions'
 
 const Login = ({dispatch}) => {
 
@@ -21,33 +19,10 @@ const Login = ({dispatch}) => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if(valid){
-      login()
+    if(valid){  
+      dispatch(loginUser(username, password))
+      history.push('/admin')
     }
-  }
-
-  function login (){
-    axios.post('/login', {
-      username,
-      password
-    })
-    .then(function (response) {
-      if(response.data.status){ 
-        const user =  {
-          jwt: response.data.accessToken,
-          username: response.data.username,
-          login_time: response.data.login_time
-        }
-        history.push('/')
-        dispatch(loginUser(user))
-
-      }
-      
-    })
-    .catch(function (error) {
-      console.log(error);
-      dispatch(loginFailed())
-    });
   }
 
   return (

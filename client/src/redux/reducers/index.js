@@ -1,11 +1,10 @@
-import loggedReducer from './isLogged';
 import blogReducer from './blogReducer';
+import authReducer from './authReducer';
 
 import {combineReducers} from 'redux';
 
-
 const rootReducer = combineReducers({
-  user: loggedReducer,
+  user: authReducer,
   editor: blogReducer
 }
 )
