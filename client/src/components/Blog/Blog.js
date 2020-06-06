@@ -12,6 +12,7 @@ const Blog = () => {
  
   useEffect(() => {
       getBlogs().then(res => {
+        console.log("HERE" + res);
         setBlogs(res)
       })
       .catch(err => {
@@ -27,6 +28,8 @@ const Blog = () => {
       {blogs.map(({id,title}) =>{
         return <Link key={id} to={`blog/${id}`}><li>{title}</li></Link>
       })}
+
+      {loadErr&& <p>Error Fetching Blogs</p>}
 
 
 

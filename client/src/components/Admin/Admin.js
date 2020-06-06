@@ -5,7 +5,7 @@ import Dropdown from './sub/Dropdown'
 import BlogEditor from './sub/BlogEditor';
 
 import { connect } from 'react-redux';
-import {loadBlogs, closeEditorBlog, newBlog, openNewBlog} from '../../redux/actions/blogActions'
+import {loadBlogs, closeEditorBlog, openNewBlog} from '../../redux/actions/blogActions'
 
 
 
