@@ -13,3 +13,27 @@ div.Editor {
 .Editor{
   color: black;
 }
+
+.container {
+  background-color: grey;
+}
+
+.editorHeader{
+  margin-top: 5%;
+}
+
+.container label {
+  color: black;
+  margin-left: 5%;
+  padding-right: 1%;
+}
+
+.container textarea {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  width: 500px;
+  height: 500px;
+  border: 2px solid black;
+}
