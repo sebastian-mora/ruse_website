@@ -13,14 +13,14 @@ router.post('/',  (req, res) =>{
   const password = req.body.password
   
   if (username && password){
-    db.query('SELECT userid FROM accounts WHERE email = ? AND password = ?', [username, password], function(err, results, fields) {
+    db.query('SELECT userid FROM users WHERE email = ? AND password = ?', [username, password], function(err, results, fields) {
 
         if(err){
           console.log(err);
           res.send(401)
         }
         
-        if (results.length > 0){
+        if (results){
           const accessToken = jwt.sign({results}, 'accessTokenSecret', {expiresIn: '1h'});
           res.json({
               status: true,

@@ -5,7 +5,7 @@ const intialState = {
   "selectedBlog": null,
   "editorShow": false,
   "editorBlog": {},
-  "isNewPost": true
+  "isNewPost": false
 }
 
 
@@ -24,6 +24,7 @@ export default function(state=intialState, action){
         ...state,
         selectedBlog: action.payload,
         editorShow: true,
+        isNewPost: false,
         editorBlog: state.blogs.find(blog => blog.id === parseInt(action.payload))
       }
     
@@ -44,6 +45,7 @@ export default function(state=intialState, action){
       return {
         ...state,
         editorShow: true,
+        isNewPost: true,
         editorBlog: {}
       }
     

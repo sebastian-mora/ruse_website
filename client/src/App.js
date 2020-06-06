@@ -29,8 +29,6 @@ class App extends Component{
   render(){
 
     const isAuthd = this.props.user.isAuthd
-    console.log(isAuthd);
-    
 
     return (
 

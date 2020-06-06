@@ -19,12 +19,18 @@ class BlogEditor extends Component {
 
   render () {    
     return (
-      <div>
-        <input type="text" value={this.props.blog.title}/>
-        <input type="date" value={this.props.blog.date}/>
-        <input type="checkbox"/>
+      <div className={style.container}>
+        <div className={style.editorHeader}>
+          <label>Title</label>
+          <input type="text" value={this.props.blog.title}/>
+          <label>Date</label>
+          <input type="date" value={this.props.blog.date}/>
+          <label>IsPosted</label>
+          <input type="checkbox"/>
+          <button onClick={this.saveClick}>Save</button>
+        </div>
         <textarea value={this.props.blog.post}  onChange={this.editorOnChange}/>
-        <button onClick={this.saveClick}>Save</button>
+
       </div>
     );
   }

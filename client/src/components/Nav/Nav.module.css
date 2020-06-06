@@ -1,3 +1,8 @@
+.liButton {
+  display: inline;
+  padding-right: 10%;
+}
+
 div.container{
   
 }
@@ -12,7 +17,7 @@ ul.container{
 
 li.container{
   font-size: 15px;
-  display:inline;
+
   float: left;
   color: #00ff00;
 }
@@ -25,6 +30,6 @@ li.container{
 
 .text-link  li {
   font-size: 15px;
-  display:inline;
   padding: 0 20% 0 0;
+  display: inline;
 }
