@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {updateEditorBlog, postBlog} from '../../../redux/actions/blogActions'
-import RichTextEditor from 'react-rte';
 import style from './BlogEditor.module.css'
 
 class BlogEditor extends Component {

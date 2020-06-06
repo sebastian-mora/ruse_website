@@ -14,7 +14,7 @@ export function getBlog(id){
     return res.data
   })
   .catch(err => {
-    return err
+   return err
   });
 }
 

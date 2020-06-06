@@ -1,4 +1,4 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, SAVE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG} from './types'
+import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG} from './types'
 import {getBlogs, addBlog} from '../../api/blogsApi';
 
 export const loadBlogs = () => {
