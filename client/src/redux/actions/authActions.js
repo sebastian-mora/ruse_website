@@ -66,7 +66,10 @@ export const checkToken = () => {
 
   if(token){
     config.headers["fuckyou-key"] = token
+    axios.defaults.headers.common['fuckyou-key'] = token
   }
+
+  
 
 
   return (dispatch) =>{

@@ -3,6 +3,7 @@ var router = express.Router()
 
 const verifyToken = require('./middleware/Auth')
 const {getAllBlogs, getBlogByID, addBlog}  = require('../database/blogInterface')
+const jwt = require('jsonwebtoken');
 
 router.use(express.json())
 
@@ -10,7 +11,26 @@ router.use(express.json())
 // create a GET route
 router.get('/', async (req, res) => {
 
-  getAllBlogs() 
+  // Get auth header value
+  const bearerHeader = req.headers['fuckyou-key'];
+  var isAdmin  = false
+
+  // Check if bearer is undefined
+  if(typeof bearerHeader !== 'undefined') {
+
+    jwt.verify(bearerHeader, 'accessTokenSecret', (err, authData) => {
+      if (err){        
+        
+      }
+      else {
+        res.authData = authData
+        console.log("Token validated");
+        isAdmin = true
+      }
+    })
+  }
+
+  getAllBlogs(isAdmin) 
   .then( (results) => {
     res.send(results)
   })
@@ -41,7 +61,7 @@ router.get('/:id', (req, res) =>{
 });
 
 
-router.post('/create', (req,res) =>{
+router.post('/create', verifyToken, (req,res) =>{
 
   const {title, date, post} = req.body;
 
