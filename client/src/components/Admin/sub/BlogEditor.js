@@ -1,15 +1,32 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {updateEditorBlog, postBlog} from '../../../redux/actions/blogActions'
+import {updateEditorBlog, postBlog, updateBlog} from '../../../redux/actions/blogActions'
 import style from './BlogEditor.module.css'
 
 class BlogEditor extends Component {
 
   editorOnChange = (e) => {
+ 
+    //TODO
+    // This works to toggle isPosted but is not the general soultion
+    if(e.target.name === "isPosted")
+    {
+      console.log(!this.props.blog.isPosted);
+      e.target.value = Boolean(!this.props.blog.isPosted);
 
-    console.log(e.target.name);
+
+      this.props.dispatch(  
+        updateEditorBlog({...this.props.blog,
+          isPosted: !this.props.blog.isPosted
+      }))
+      return
+    }
+
+
     
-    this.props.dispatch(updateEditorBlog({...this.props.blog,
+    
+    this.props.dispatch(  
+      updateEditorBlog({...this.props.blog,
       [e.target.name] : e.target.value
     }))
   };
@@ -17,11 +34,17 @@ class BlogEditor extends Component {
 
 
   saveClick = () => {
-    this.props.dispatch(postBlog(this.props.blog))
+    if(this.props.isNewPost)
+    {
+      this.props.dispatch(postBlog(this.props.blog))
+    } 
+    else 
+    {
+      this.props.dispatch(updateBlog(this.props.blog))
+    }
   }
 
   render () { 
-
     return (
       <div className={style.container}>
         <div className={style.editorHeader}>
@@ -30,7 +53,7 @@ class BlogEditor extends Component {
           <label>Date</label>
           <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
           <label>IsPosted</label>
-          <input name="isPosted" type="checkbox" onChange={this.editorOnChange} checked={this.props.blog.isPosted}/>
+          <input name="isPosted" type="checkbox" checked={Boolean(this.props.blog.isPosted)}  onChange={this.editorOnChange} />
           <button onClick={this.saveClick}>Save</button>
         </div>
         <textarea name="post" value={this.props.blog.post}  onChange={this.editorOnChange}/>
@@ -42,14 +65,17 @@ class BlogEditor extends Component {
 
 const mapToProps= (state) =>{
 
-  let {post, title, date ,isPosted} = state.editor.editorBlog
+  let {post, title, date ,isPosted, id} = state.editor.editorBlog
+  let {isNewPost} = state.editor;
   return {
     blog:{
       post,
       title,
       date,
-      isPosted
-    }
+      isPosted,
+      id
+    },
+    isNewPost
   }
 }
 

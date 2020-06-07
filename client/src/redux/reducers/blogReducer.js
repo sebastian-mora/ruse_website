@@ -4,7 +4,15 @@ const intialState = {
   "blogs": [],
   "selectedBlog": null,
   "editorShow": false,
-  "editorBlog": {},
+  "editorBlog": {
+    id: null,
+    title: "",
+    date: "",
+    isPosted: false,
+    views: 0
+
+
+  },
   "isNewPost": false
 }
 
@@ -29,6 +37,9 @@ export default function(state=intialState, action){
       }
     
     case UPDATE_EDITOR_BLOG:
+
+      console.log(action.payload);
+      
       return {
         ...state,
         editorBlog: action.payload
@@ -38,6 +49,7 @@ export default function(state=intialState, action){
       return {
         ...state,
         editorShow: false,
+        isNewPost: false,
         editorBlog: null
       }
     
