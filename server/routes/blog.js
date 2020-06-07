@@ -32,6 +32,10 @@ router.get('/', async (req, res) => {
 
   getAllBlogs(isAdmin) 
   .then( (results) => {
+    // Convert DateTime to Date for HTML 
+    results.map((blog) =>{
+      blog.date = blog.date.getFullYear() + '-' + ('0' + ( blog.date.getMonth()+1)).slice(-2) + '-' + ('0' +  blog.date.getDate()).slice(-2);
+    })
     res.send(results)
   })
   .catch((err) => {
@@ -63,12 +67,13 @@ router.get('/:id', (req, res) =>{
 
 router.post('/create', verifyToken, (req,res) =>{
 
-  const {title, date, post} = req.body;
+  const {title, date, post, isPosted} = req.body;
 
   const blog = {
     title,
     date,
-    post
+    post,
+    isPosted
   }
 
   addBlog(blog).then( () =>{
@@ -79,12 +84,13 @@ router.post('/create', verifyToken, (req,res) =>{
 
 router.post('/update',verifyToken ,(req,res) =>{
 
-  const {title, date, post} = req.body;
+  const {title, date, post, isPosted} = req.body;
 
   const blog = {
     title,
     date,
-    post
+    post,
+    isPosted
   }
 
   addBlog(blog).then(()=>{
