@@ -77,9 +77,26 @@ function updateBlog(blog)
   })
 }
 
+
+function deleteBlog(id)
+{
+  return new Promise((resolve, reject) =>{ 
+    var query_str = `DELETE FROM blogs WHERE id=${id};`
+
+    db.query(query_str, (err)=>{
+      if(err)
+        return reject(err);
+  
+      resolve();
+    })
+
+  })
+}
+
 module.exports = {
   addBlog,
   getAllBlogs,
   getBlogByID,
-  updateBlog
+  updateBlog,
+  deleteBlog
 }

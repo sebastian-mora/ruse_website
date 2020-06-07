@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 const verifyToken = require('./middleware/Auth')
-const {getAllBlogs, getBlogByID, addBlog, updateBlog}  = require('../database/blogInterface')
+const {getAllBlogs, getBlogByID, addBlog, updateBlog, deleteBlog}  = require('../database/blogInterface')
 const jwt = require('jsonwebtoken');
 
 router.use(express.json())
@@ -105,8 +105,17 @@ router.post('/update',verifyToken ,(req,res) =>{
   updateBlog(blog).then(()=>{
     res.sendStatus(200);
   })
+});
 
-
+router.post('/delete', verifyToken, (req, res) => {
+  const id = req.body;
+  deleteBlog(id).then(() =>{
+    res.sendStatus(200);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.sendStatus(500);
+  })
 });
 
 
