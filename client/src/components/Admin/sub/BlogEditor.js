@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {updateEditorBlog, postBlog, updateBlog} from '../../../redux/actions/blogActions'
+import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs} from '../../../redux/actions/blogActions'
 import style from './BlogEditor.module.css'
 
 class BlogEditor extends Component {
@@ -22,9 +22,7 @@ class BlogEditor extends Component {
       return
     }
 
-
-    
-    
+    // for all other values update
     this.props.dispatch(  
       updateEditorBlog({...this.props.blog,
       [e.target.name] : e.target.value
@@ -44,6 +42,12 @@ class BlogEditor extends Component {
     }
   }
 
+  deleteClick = () =>{
+    this.props.dispatch(deleteBlog(this.props.blog))
+    this.props.dispatch(closeEditorBlog())
+    this.props.dispatch(loadBlogs())
+  }
+
   render () { 
     return (
       <div className={style.container}>
@@ -55,6 +59,9 @@ class BlogEditor extends Component {
           <label>IsPosted</label>
           <input name="isPosted" type="checkbox" checked={Boolean(this.props.blog.isPosted)}  onChange={this.editorOnChange} />
           <button onClick={this.saveClick}>Save</button>
+          <label>Delete</label>
+          <button onClick={this.deleteClick}>Delete</button>
+
         </div>
         <textarea name="post" value={this.props.blog.post}  onChange={this.editorOnChange}/>
 
