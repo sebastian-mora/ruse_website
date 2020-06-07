@@ -31,8 +31,8 @@ export function addBlog(blog){
 }
 
 
-export function updateBlog(blog){
-  return axios.get(`/blog`).then(res => {
+export function updateBlogApi(blog){
+  return axios.post(`blog/update`, blog).then(res => {
     return res.data
   })
   .catch(err => {

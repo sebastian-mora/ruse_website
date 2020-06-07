@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 const verifyToken = require('./middleware/Auth')
-const {getAllBlogs, getBlogByID, addBlog}  = require('../database/blogInterface')
+const {getAllBlogs, getBlogByID, addBlog, updateBlog}  = require('../database/blogInterface')
 const jwt = require('jsonwebtoken');
 
 router.use(express.json())
@@ -32,10 +32,18 @@ router.get('/', async (req, res) => {
 
   getAllBlogs(isAdmin) 
   .then( (results) => {
-    // Convert DateTime to Date for HTML 
+    // Convert DateTime to Date for HTML
+    // Convert 1/0 to boolean
     results.map((blog) =>{
       blog.date = blog.date.getFullYear() + '-' + ('0' + ( blog.date.getMonth()+1)).slice(-2) + '-' + ('0' +  blog.date.getDate()).slice(-2);
+      
+      if(blog.isPosted != null){
+        blog.isPosted = Boolean(blog.isPosted)     
+      }
+      
     })
+
+    
     res.send(results)
   })
   .catch((err) => {
@@ -65,14 +73,14 @@ router.get('/:id', (req, res) =>{
 });
 
 
-router.post('/create', verifyToken, (req,res) =>{
+router.post('/create', (req,res) =>{
 
   const {title, date, post, isPosted} = req.body;
 
   const blog = {
     title,
     date,
-    post,
+    post, 
     isPosted
   }
 
@@ -84,21 +92,18 @@ router.post('/create', verifyToken, (req,res) =>{
 
 router.post('/update',verifyToken ,(req,res) =>{
 
-  const {title, date, post, isPosted} = req.body;
+  const {id, title, date, post, isPosted} = req.body;
 
   const blog = {
+    id,
     title,
     date,
-    post,
+    post, 
     isPosted
   }
 
-  addBlog(blog).then(()=>{
+  updateBlog(blog).then(()=>{
     res.sendStatus(200);
-  })
-  .err((err) =>{
-    console.log(err);
-    res.send(500)
   })
 
 
