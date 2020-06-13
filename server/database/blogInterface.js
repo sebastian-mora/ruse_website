@@ -1,4 +1,4 @@
-var db  = require('../database/database')
+var pool  = require('../database/database')
 
 function getAllBlogs(isAdmin=false){
   return new Promise(function(resolve, reject) {
@@ -11,7 +11,7 @@ function getAllBlogs(isAdmin=false){
       var query_str = 'SELECT * FROM  blogs'
     }
 
-    db.query(query_str, function (err, rows, fields) {
+    pool.query(query_str, function (err, rows, fields) {
         // Call reject on error states,
         // call resolve with results
         if (err) {
@@ -30,7 +30,7 @@ function getBlogByID(id){
 
     var query_str = `SELECT * FROM  blogs WHERE id=${id} AND isPosted=true`
 
-    db.query(query_str, function (err, rows, fields) {
+    pool.query(query_str, function (err, rows, fields) {
         // Call reject on error states,
         // call resolve with results
         if (err) {
@@ -42,12 +42,12 @@ function getBlogByID(id){
 }
 
 
-function addBlog(blog){
+function adpoollog(blog){
   const {title, date, post, isPosted} = blog;
   return new Promise((resolve, reject) => {
     var query_str = `INSERT INTO blogs (title, date, post, isPosted) VALUES('${title}', '${date}', '${post}', '${isPosted}');`
 
-    db.query(query_str, (err)=>{
+    pool.query(query_str, (err)=>{
       if(err)
         return reject(err);
   
@@ -68,7 +68,7 @@ function updateBlog(blog)
   return new Promise((resolve, reject) => {
     var query_str = `UPDATE blogs SET title='${title}', post='${post}', date= '${date}', isPosted=${isPosted} WHERE id=${id};`
 
-    db.query(query_str, (err)=>{
+    pool.query(query_str, (err)=>{
       if(err)
         return reject(err);
   
@@ -83,7 +83,7 @@ function deleteBlog(id)
   return new Promise((resolve, reject) =>{ 
     var query_str = `DELETE FROM blogs WHERE id=${id};`
 
-    db.query(query_str, (err)=>{
+    pool.query(query_str, (err)=>{
       if(err)
         return reject(err);
   
@@ -94,7 +94,7 @@ function deleteBlog(id)
 }
 
 module.exports = {
-  addBlog,
+  adpoollog,
   getAllBlogs,
   getBlogByID,
   updateBlog,
