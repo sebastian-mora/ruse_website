@@ -108,7 +108,9 @@ router.post('/update',verifyToken ,(req,res) =>{
 });
 
 router.post('/delete', verifyToken, (req, res) => {
-  const id = req.body;
+
+  const id = req.body.id;
+  
   deleteBlog(id).then(() =>{
     res.sendStatus(200);
   })

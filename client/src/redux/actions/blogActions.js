@@ -1,5 +1,5 @@
 import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG} from './types'
-import {getBlogs, addBlog, updateBlogApi} from '../../api/blogsApi';
+import {getBlogs, addBlog, updateBlogApi, deleteBlogApi} from '../../api/blogsApi';
 
 export const loadBlogs = () => {
   return (dispatch) =>{
@@ -33,6 +33,15 @@ export const postBlog = (blog) =>{
 export const updateBlog = (blog) => {
   return (dispatch) =>{ 
     updateBlogApi(blog)
+  }
+}
+
+export const deleteBlog = (blog) =>{
+  
+  const id = blog.id;
+
+  return (dispatch) =>{
+    deleteBlogApi(id)
   }
 }
 

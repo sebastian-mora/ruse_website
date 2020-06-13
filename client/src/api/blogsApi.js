@@ -40,5 +40,15 @@ export function updateBlogApi(blog){
   });
 }
 
+export function deleteBlogApi(id){
+ 
+  return axios.post(`blog/delete`, {id}).then(res => {
+    return res.data
+  })
+  .catch( err=> {
+    return err;
+  })
+}
+
 
 
