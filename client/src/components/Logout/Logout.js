@@ -6,13 +6,13 @@ import {Redirect} from 'react-router-dom';
 const Logout = () => {
 
   sessionStorage.clear();
-  console.log("HERE");
+  
   
 
   return (
 
     <div>
-
+      <Redirect to="/"></Redirect>
     </div>
 
   )
