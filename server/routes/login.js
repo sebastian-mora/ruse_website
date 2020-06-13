@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const db = require('../database/database')
+const pool = require('../database/database')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -17,7 +17,7 @@ router.post('/',  (req, res) =>{
   if (username && password){
 
     // Get password hash from DB
-    db.query('SELECT pw_hash FROM users WHERE username = ?', [username], function(err, results) {
+    pool.query('SELECT pw_hash FROM users WHERE username = ?', [username], function(err, results) {
 
         if(err){
           console.log(err);
