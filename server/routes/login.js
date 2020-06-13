@@ -2,10 +2,12 @@ const express = require('express')
 const router = express.Router()
 const db = require('../database/database')
 const jwt = require('jsonwebtoken');
-var cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
 
 
 router.use(express.json())
+
+
 
 router.post('/',  (req, res) =>{
 
@@ -13,33 +15,52 @@ router.post('/',  (req, res) =>{
   const password = req.body.password
   
   if (username && password){
-    db.query('SELECT userid FROM users WHERE email = ? AND password = ?', [username, password], function(err, results, fields) {
+
+    // Get password hash from DB
+    db.query('SELECT pw_hash FROM users WHERE username = ?', [username], function(err, results) {
 
         if(err){
           console.log(err);
           res.send(401)
         }
+
+        // Prob not the best way to do this 
+        const pw_hash = results[0].pw_hash;
         
-        if (results){
-          const accessToken = jwt.sign({results}, 'accessTokenSecret', {expiresIn: '1h'});
-          res.json({
-              status: true,
-              username: username,
-              login_time: Date.now(),
-              accessToken
-          });
+        // Compare the hash vs plain text 
+        bcrypt.compare(password, pw_hash, function(err, isMatch) {
+       
+          if (err) 
+          {
+            throw err
+          } 
           
-        } 
-        else {
-          res.status(401).send("Wrong username or password")
-        }
-        res.end()
+          else if (!isMatch) 
+          {
+            res.status(401).send("Wrong username or password")
+          } 
+          
+          // If is correct generate and send a JWT
+          else 
+          {
+            const accessToken = jwt.sign({results}, 'accessTokenSecret', {expiresIn: '1h'});
+            res.json({
+                status: true,
+                username: username,
+                login_time: Date.now(),
+                accessToken
+            });
+          }
+        }) 
     });
   }
-  else{
+
+  else
+  {
     res.status(401).send("No info provided")
     res.end();
   }
+  
 });
 
 module.exports = router;
