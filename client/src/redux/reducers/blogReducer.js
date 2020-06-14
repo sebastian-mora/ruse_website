@@ -35,9 +35,6 @@ export default function(state=intialState, action){
       }
     
     case UPDATE_EDITOR_BLOG:
-
-      console.log(action.payload);
-      
       return {
         ...state,
         editorBlog: action.payload
@@ -46,9 +43,16 @@ export default function(state=intialState, action){
     case CLOSE_EDITOR_BLOG:
       return {
         ...state,
-        editorShow: false,
-        isNewPost: false,
-        editorBlog: null
+        "selectedBlog": null,
+        "editorShow": false,
+        "editorBlog": {
+          id: null,
+          title: "",
+          date: "",
+          isPosted: false,
+          views: 0
+        },
+        "isNewPost": false
       }
     
     case OPEN_NEW_BLOG:

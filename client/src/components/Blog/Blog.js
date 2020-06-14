@@ -12,11 +12,7 @@ const Blog = () => {
  
   useEffect(() => {
       getBlogs().then(res => {
-
-        if(res){
-          setBlogs(res)
-        }
-        
+        setBlogs(res)
       })
       .catch(err => {
         setErr(err)

@@ -11,10 +11,8 @@ class BlogEditor extends Component {
     // This works to toggle isPosted but is not the general soultion
     if(e.target.name === "isPosted")
     {
-      console.log(!this.props.blog.isPosted);
+      
       e.target.value = Boolean(!this.props.blog.isPosted);
-
-
       this.props.dispatch(  
         updateEditorBlog({...this.props.blog,
           isPosted: !this.props.blog.isPosted
