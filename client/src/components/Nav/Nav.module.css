@@ -1,6 +1,6 @@
 .liButton {
   display: inline;
-  margin-right: 10%;
+  padding-right: 20%;
 }
 
 div.container{
@@ -11,7 +11,7 @@ ul.container{
   list-style:none;
   border-left: 2px solid #00ff00;
   border-right: 2px solid #00ff00;
-  padding-left: 30%;
+  padding-left: 35%;
   padding-bottom: 2%;
 }
 
@@ -26,11 +26,10 @@ li.container{
 .text-link li a{
   text-decoration:none;
   color: #00ff00;
-  margin-right: 1%;
 }
 
 .text-link  li {
   font-size: 15px;
-  margin-right: 0 20% 0 0;
+  padding: 0 20% 0 0;
   display: inline;
 }
