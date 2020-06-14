@@ -1,21 +1,17 @@
-div.Editor {
-  background-color: #fffef7;
-  width:80%;
-  margin:auto;
-  box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.5);
-  height:300px;
-  overflow-y: scroll;
-  padding:20px;
-  font-size: 18px;
-  font-family: 'calibri', sans-serif;
-}
 
 .Editor{
-  color: black;
+  width:80%;
+  margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.Editor textarea{
+  width: 100%;
 }
 
 .container {
-  background-color: grey;
+  /* background-color: #131216; */
 }
 
 .editorHeader{
@@ -23,17 +19,7 @@ div.Editor {
 }
 
 .container label {
-  color: black;
+  color: white;
   margin-left: 5%;
   padding-right: 1%;
-}
-
-.container textarea {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5%;
-  width: 500px;
-  height: 500px;
-  border: 2px solid black;
 }
