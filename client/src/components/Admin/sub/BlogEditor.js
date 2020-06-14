@@ -1,11 +1,22 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs} from '../../../redux/actions/blogActions'
+import AceEditor from "react-ace";
+
 import style from './BlogEditor.module.css'
+import "ace-builds/src-noconflict/mode-html";
+import "ace-builds/src-noconflict/theme-monokai";
 
 class BlogEditor extends Component {
 
   editorOnChange = (e) => {
+
+    // ACE editor triggers this without a target?
+    // Add this to filter that out to prevent crash
+    if(!e.target){
+      return
+    }
+    
  
     //TODO
     // This works to toggle isPosted but is not the general soultion
@@ -64,7 +75,18 @@ class BlogEditor extends Component {
           <button onClick={this.deleteClick}>Delete</button>
 
         </div>
-        <textarea name="post" value={this.props.blog.post}  onChange={this.editorOnChange}/>
+        <AceEditor
+          mode="html"
+          theme="monokai"
+          onChange={this.editorOnChange}
+          value={this.props.blog.post}
+          name="Editor"
+          enableBasicAutocompletion="false"
+          enableLiveAutocompletion="true"
+          className={style.Editor}
+          width="1000"
+          heigh="700"
+          />
 
       </div>
     );
