@@ -5,7 +5,7 @@ function getAllBlogs(isAdmin=false){
     // The Promise constructor should catch any errors thrown on
     // this tick. Alternately, try/catch and reject(err) on catch.
 
-    var query_str = 'SELECT title,id,post,date,views FROM  blogs WHERE isPosted=true'
+    var query_str = 'SELECT title,id,post,date,views,catagory FROM  blogs WHERE isPosted=true'
 
     if(isAdmin){
       var query_str = 'SELECT * FROM  blogs'
@@ -24,7 +24,7 @@ function getAllBlogs(isAdmin=false){
 
 function getBlogByID(id){
   return new Promise(function(resolve, reject) {
-    pool.query('SELECT title,id,post,date,views FROM  blogs WHERE id=? AND isPosted=true', id, function (err, rows, fields) {
+    pool.query('SELECT title,id,post,date,views,catagory FROM  blogs WHERE id=? AND isPosted=true', id, function (err, rows, fields) {
         if (err) {
             return reject(err);
         }
@@ -52,7 +52,7 @@ function updateBlog(blog)
 {
   return new Promise((resolve, reject) => {
 
-    pool.query('UPDATE blogs SET ? WHERE id=?', [{title,date,post,isPosted}=blog, blog.id] , (err)=>{
+    pool.query('UPDATE blogs SET ? WHERE id=?', [{title,date,post,isPosted,catagory}=blog, blog.id] , (err)=>{
       if(err)
         return reject(err);
   
