@@ -42,10 +42,13 @@ function getBlogByID(id){
 }
 
 
-function adpoollog(blog){
+function addBlog(blog){
   const {title, date, post, isPosted} = blog;
+
+  console.log(blog);
+  
   return new Promise((resolve, reject) => {
-    var query_str = `INSERT INTO blogs (title, date, post, isPosted) VALUES('${title}', '${date}', '${post}', '${isPosted}');`
+    var query_str = `INSERT INTO blogs (title, date, post, isPosted) VALUES('${title}', '${date}', '${post}', '${+ isPosted}');`
 
     pool.query(query_str, (err)=>{
       if(err)
@@ -94,7 +97,7 @@ function deleteBlog(id)
 }
 
 module.exports = {
-  adpoollog,
+  addBlog,
   getAllBlogs,
   getBlogByID,
   updateBlog,

@@ -85,7 +85,7 @@ router.post('/create', (req,res) =>{
   }
 
   addBlog(blog).then( () =>{
-    res.send(200)
+    res.sendStatus(200)
   })
   
 });
