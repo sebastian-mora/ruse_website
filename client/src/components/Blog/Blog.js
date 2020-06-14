@@ -7,13 +7,16 @@ import {getBlogs} from '../../api/blogsApi';
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
-  const [loadErr, setErr] = useState(null);
+  const [loadErr, setErr] = useState(false);
 
  
   useEffect(() => {
       getBlogs().then(res => {
-        console.log("HERE" + res);
-        setBlogs(res)
+
+        if(res){
+          setBlogs(res)
+        }
+        
       })
       .catch(err => {
         setErr(err)
@@ -23,8 +26,7 @@ const Blog = () => {
     
   return (
     <div>
-    
-      
+
       {blogs.map(({id,title}) =>{
         return <Link key={id} to={`blog/${id}`}><li>{title}</li></Link>
       })}
