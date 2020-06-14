@@ -10,8 +10,6 @@ const intialState = {
     date: "",
     isPosted: false,
     views: 0
-
-
   },
   "isNewPost": false
 }
@@ -57,8 +55,7 @@ export default function(state=intialState, action){
       return {
         ...state,
         editorShow: true,
-        isNewPost: true,
-        editorBlog: {}
+        isNewPost: true
       }
     
     default:

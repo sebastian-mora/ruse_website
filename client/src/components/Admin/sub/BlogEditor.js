@@ -35,10 +35,13 @@ class BlogEditor extends Component {
     if(this.props.isNewPost)
     {
       this.props.dispatch(postBlog(this.props.blog))
+      this.props.dispatch(closeEditorBlog())
+      this.props.dispatch(loadBlogs())
     } 
     else 
     {
       this.props.dispatch(updateBlog(this.props.blog))
+      this.props.dispatch(closeEditorBlog())
     }
   }
 
