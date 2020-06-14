@@ -11,9 +11,14 @@ class BlogEditor extends Component {
 
   editorOnChange = (e) => {
 
-    // ACE editor triggers this without a target?
-    // Add this to filter that out to prevent crash
+    // ACE editor returns value from event rather than the event. SMH
+    // 
     if(!e.target){
+      this.props.dispatch(
+        updateEditorBlog({...this.props.blog,
+          post: e
+        })
+      )
       return
     }
     
