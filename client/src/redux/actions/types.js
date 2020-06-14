@@ -2,6 +2,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT_SUCESSS = 'LOGOUT_SUCESSS';
 export const USER_LOADED = 'USER_LOADED';
+export const FAILED_AUTH_CHECK = 'FAILED_AUTH_CHECK';
 
 
 

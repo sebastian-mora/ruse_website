@@ -3,7 +3,8 @@ import axios from 'axios'
 import {
   LOGIN_FAIL,
   USER_LOADED,
-  LOGIN_SUCCESS
+  LOGIN_SUCCESS,
+  FAILED_AUTH_CHECK
 } from '../actions/types'
 
 
@@ -45,7 +46,7 @@ export const loginUser = (username, password) =>{
     })
     .catch(function () {
       dispatch({
-          type: LOGIN_FAIL
+          type: FAILED_AUTH_CHECK
       });
 
     });
@@ -69,15 +70,17 @@ export const checkToken = () => {
     axios.defaults.headers.common['fuckyou-key'] = token
   }
 
-  
-
-
   return (dispatch) =>{
     axios.get('/api/auth/user', config)
     .then(res => {
       const data = res.data
       dispatch({type: USER_LOADED,
       payload: data})
+    })
+    .catch(() =>{
+        dispatch({
+          type: FAILED_AUTH_CHECK
+        })
     })
   }
 }

@@ -1,9 +1,7 @@
-import {LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCESSS, USER_LOADED} from '../actions/types'
+import {LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCESSS, USER_LOADED, FAILED_AUTH_CHECK} from '../actions/types'
 
 
 const intialState = {
-  "username": "BEFORE",
-  "login_time": null,
   "isAuthd": false
 }
 
@@ -43,6 +41,15 @@ export default function(state=intialState, action){
         token: null,
         isAuthd: false,
         user:null
+      }
+    
+    case FAILED_AUTH_CHECK:
+      localStorage.removeItem('jwt');
+      return {
+        ...state,
+        token: null,
+        isAuthd: false,
+        user: null
       }
 
     default:
