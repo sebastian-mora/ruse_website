@@ -1,7 +1,8 @@
 import axios from 'axios';
+import {API_ENDPOINT} from '../config'
 
 export function getBlogs(){
-  return axios.get('/blog').then(res => {
+  return axios.get(`${API_ENDPOINT}/blog`).then(res => {
     return res.data
   })
   .catch(err => {
@@ -10,7 +11,7 @@ export function getBlogs(){
 }
 
 export function getBlog(id){
-  return axios.get(`/blog/${id}`).then(res => {
+  return axios.get(`${API_ENDPOINT}/blog/${id}`).then(res => {
     return res.data
   })
   .catch(err => {
@@ -22,7 +23,7 @@ export function getBlog(id){
 export function addBlog(blog){
 
 
-  return axios.post(`blog/create`, blog).then(res => {
+  return axios.post(`${API_ENDPOINT}/blog/create`, blog).then(res => {
     return res.data
   })
   .catch(err => {
@@ -32,7 +33,7 @@ export function addBlog(blog){
 
 
 export function updateBlogApi(blog){
-  return axios.post(`blog/update`, blog).then(res => {
+  return axios.post(`${API_ENDPOINT}/blog/update`, blog).then(res => {
     return res.data
   })
   .catch(err => {
@@ -42,7 +43,7 @@ export function updateBlogApi(blog){
 
 export function deleteBlogApi(id){
  
-  return axios.post(`blog/delete`, {id}).then(res => {
+  return axios.post(`${API_ENDPOINT}/blog/delete`, {id}).then(res => {
     return res.data
   })
   .catch( err=> {

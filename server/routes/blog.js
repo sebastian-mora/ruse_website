@@ -10,7 +10,7 @@ router.use(express.json())
 
 // create a GET route
 router.get('/', async (req, res) => {
-
+  
   // Get auth header value
   const bearerHeader = req.headers['fuckyou-key'];
   var isAdmin  = false

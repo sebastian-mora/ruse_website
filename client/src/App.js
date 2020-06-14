@@ -74,10 +74,4 @@ const PrivateRoute = ({ component: Component,  isAuthd, ...rest }) => {
   
 }
 
-
-
-
-
-
-
 export default connect(mapStateToProps)(App);
