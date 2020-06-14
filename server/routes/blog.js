@@ -24,7 +24,6 @@ router.get('/', async (req, res) => {
       }
       else {
         res.authData = authData
-        console.log("Token validated");
         isAdmin = true
       }
     })

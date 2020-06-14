@@ -20,11 +20,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 }
 
-const called = () =>{
-  console.log("CALLED");
-  return true
-  
-}
-
-
 export default PrivateRoute;

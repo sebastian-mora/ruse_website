@@ -11,14 +11,13 @@ function verifyToken(req, res, next) {
   if(typeof bearerHeader !== 'undefined') {
 
     jwt.verify(bearerHeader, 'accessTokenSecret', (err, authData) => {
-      if (err){        
-
-        
+      if (err){
+        console.log("Token failed to verifiy");
+           
         res.sendStatus(403);
       }
       else {
         res.authData = authData
-        console.log("Token validated");
         next();
       }
     })
@@ -28,8 +27,7 @@ function verifyToken(req, res, next) {
     
   } else {
     // Forbidden
-
-    
+ 
     res.sendStatus(403);
   }
 }
