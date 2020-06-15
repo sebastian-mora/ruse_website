@@ -9,6 +9,7 @@ const intialState = {
     title: "",
     date: "",
     isPosted: false,
+    category: "",
     views: 0
   },
   "isNewPost": false

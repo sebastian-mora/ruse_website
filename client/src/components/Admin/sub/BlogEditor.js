@@ -73,6 +73,8 @@ class BlogEditor extends Component {
           <input type="text" name="title" onChange={this.editorOnChange} value={this.props.blog.title}/>
           <label>Date</label>
           <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
+          <label>Category</label>
+          <input type="text" name = "category" onChange={this.editorOnChange} value={this.props.blog.category}/>
           <label>IsPosted</label>
           <input name="isPosted" type="checkbox" checked={Boolean(this.props.blog.isPosted)}  onChange={this.editorOnChange} />
           <button onClick={this.saveClick}>Save</button>
@@ -100,7 +102,7 @@ class BlogEditor extends Component {
 
 const mapToProps= (state) =>{
 
-  let {post, title, date ,isPosted, id} = state.editor.editorBlog
+  let {post, title, date ,isPosted, id, category} = state.editor.editorBlog
   let {isNewPost} = state.editor;
   return {
     blog:{
@@ -108,7 +110,8 @@ const mapToProps= (state) =>{
       title,
       date,
       isPosted,
-      id
+      id,
+      category
     },
     isNewPost
   }
