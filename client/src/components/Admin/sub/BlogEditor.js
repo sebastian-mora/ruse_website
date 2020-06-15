@@ -88,8 +88,6 @@ class BlogEditor extends Component {
           onChange={this.editorOnChange}
           value={this.props.blog.post}
           name="Editor"
-          enableBasicAutocompletion="false"
-          enableLiveAutocompletion="true"
           className={style.Editor}
           width="1000"
           heigh="700"
