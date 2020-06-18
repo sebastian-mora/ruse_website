@@ -7,14 +7,16 @@ import style from './Blog.module.css'
 
 
 const Blog = () => {
+
+  // store the blogs from the api in blogs
   const [blogs, setBlogs] = useState({});
   const [loadErr, setErr] = useState(false);
 
  
   useEffect(() => {
       getBlogs().then(res => {
-        setBlogs(processCategories(res));
-        
+        // When the blogs are loaded sort them into their catagories 
+        setBlogs(processCategories(res));  
       })
       .catch(err => {
         setErr(err)
@@ -26,7 +28,6 @@ const Blog = () => {
 
     let sortedBlogs = {}
     
-
     // Generate an organized Blogs Object
     blogs.map(({category, title, id}) => {
 
@@ -57,6 +58,13 @@ const Blog = () => {
 
       <ul className={style.root}>
 
+      {/* 
+      
+        Loop through the sorted blog object keys.
+        For each key create a new catagory then iterate over the blogs
+        in that catagoire and create a link
+      
+      */}
       {Object.keys(blogs).map((keyName, i) => (
         <React.Fragment key={keyName}>
         <li>{keyName}</li>
@@ -68,12 +76,10 @@ const Blog = () => {
         </React.Fragment>
       ))}
       
+      {/* If the client fails to load the blogs display this  */}
         {loadErr&& <p>Error Fetching Blogs</p>}
 
       </ul>
-
-
-
     </div>
   )
 }
