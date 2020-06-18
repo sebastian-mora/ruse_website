@@ -1,5 +1,6 @@
 const express = require('express');
 var cors = require('cors');
+const rateLimit = require("express-rate-limit");
 
 //set up CORS whitelist
 var whitelist = ['http://localhost:3000']
@@ -13,6 +14,12 @@ var corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
 
+//set up ratelimit
+const limiter = rateLimit({
+  windowMs: 15*60*1000, //15 mins
+  max: 100 // limit each IP to 100 requests per windowMs
+})
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -21,6 +28,8 @@ const port = process.env.PORT || 5000;
 
 // add CORS
 app.use(cors(corsOptionsDelegate));
+//  apply ratelimit to all requests
+app.use(limiter);
 
 //routes
 const blog = require('./routes/blog.js')
