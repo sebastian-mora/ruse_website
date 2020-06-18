@@ -29,10 +29,6 @@ const Blog = () => {
 
     return delta <= 30
   }
-
-  console.log(blogs.filter(lessThan30Days));
-  
-
   return (
     <div className={style.center}>
 
