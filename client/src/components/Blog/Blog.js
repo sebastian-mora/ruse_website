@@ -49,14 +49,23 @@ const Blog = () => {
   }
 
 
-  
+  function lessThan30Days(blog){
+
+    var blog_date = new Date(blog.date)
+    var current_date = new Date()
+    var delta = (current_date - blog_date)/(1000*60*60*24.0)
+
+    return delta <= 30
+  }
+
   return (
     <div className={style.center}>
 
       <h1>Blogs:</h1>
 
-
+  
       <ul className={style.root}>
+
 
       {/* 
       
@@ -72,6 +81,14 @@ const Blog = () => {
           {blogs[keyName].map((blog) => {
             return <Link key={blog.id} to={`blog/${blog.id}`}><li key={i+2}>{blog.title}</li></Link>
           } )}
+
+        <li>Last 30 Days: </li>
+        <ul className={style.sub}>
+          {blogs.filter(lessThan30Days).map(({id,title, date}) => {
+            return <Link key={id} to={`blog/${id}`}><li>{title} - {date}</li></Link>
+          })}
+        </ul>
+
         </ul>
         </React.Fragment>
       ))}
