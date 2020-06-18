@@ -58,14 +58,14 @@ const Blog = () => {
       <ul className={style.root}>
 
       {Object.keys(blogs).map((keyName, i) => (
-        <>
-        <li key={i}>{keyName}</li>
+        <React.Fragment key={keyName}>
+        <li>{keyName}</li>
         <ul className={style.sub}> 
           {blogs[keyName].map((blog) => {
-            return <Link key={blog.id} to={`blog/${blog.id}`}><li>{blog.title}</li></Link>
+            return <Link key={blog.id} to={`blog/${blog.id}`}><li key={i+2}>{blog.title}</li></Link>
           } )}
         </ul>
-        </>
+        </React.Fragment>
       ))}
       
         {loadErr&& <p>Error Fetching Blogs</p>}
