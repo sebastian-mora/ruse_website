@@ -10,17 +10,15 @@ const Nav = () => {
 
   return (
     <div className={style.container}>
-      <ul className={style.container}>
-      <Link className='text-link' to="/"><li className={style.liButton}>RU$E</li></Link>
-      <Link className='text-link' to="/blog"><li className={style.liButton}>Blog</li></Link>
-      <Link className='text-link' to="/about"><li className={style.liButton}>About</li></Link>
+      <Link className={style.link} to="/">RU$E</Link>
+      <Link className={style.link} to="/blog">Blog</Link>
+      <Link className={style.link} to="/about">About</Link>
       {isAuthd && 
         <>
-          <Link className='text-link' to="/admin"><li className={style.liButton}>Admin</li></Link>
-          <Link className='text-link' to="/logout"><li className={style.liButton}>Logout</li></Link>
+          <Link className={style.link} to="/admin">Admin</Link>
+          <Link className={style.link} to="/logout">Logout</Link>
         </>
       }
-      </ul>
     </div>
 
   )
