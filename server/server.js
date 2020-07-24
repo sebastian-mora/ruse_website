@@ -1,6 +1,7 @@
 const express = require('express');
 var cors = require('cors');
 const rateLimit = require("express-rate-limit");
+const path = require('path');
 
 //set up CORS whitelist
 var whitelist = ['http://localhost:3000']
@@ -41,6 +42,14 @@ app.use('/login', login)
 app.use('/admin', admin)
 app.use('/api', api)
 
+
+app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
+
+// Handles any requests that don't match the ones above
+app.get('/*', (req,res) =>{
+  console.log("CALLE");
+  res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'));
+});
 
 
 
