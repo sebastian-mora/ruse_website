@@ -89,17 +89,7 @@ router.post('/create', (req,res) =>{
 
 router.post('/update',verifyToken ,(req,res) =>{
 
-  const {id, title, date, post, isPosted} = req.body;
-
-  const blog = {
-    id,
-    title,
-    date,
-    post, 
-    isPosted
-  }
-
-  updateBlog(blog).then(()=>{
+  updateBlog(req.body).then(()=>{
     res.sendStatus(200);
   })
 });
