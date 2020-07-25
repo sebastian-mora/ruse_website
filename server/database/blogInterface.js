@@ -11,10 +11,10 @@ function getAllBlogs(isAdmin=false){
 
 
     if(isAdmin){
-      var query_str = 'SELECT * FROM  blogs'
+      var query_str = 'select blogs.title, blogs.id, blogs.post, blogs.date, blogs.views, c1.name category from blogs left join catagories c1 on (blogs.category=c1.id)'
     }
 
-    pool.query(query_str, function (err, rows, fields) {
+    pool.query(query_str, function (err, rows) {
         // Call reject on error states,
         // call resolve with results
         if (err) {
@@ -27,7 +27,7 @@ function getAllBlogs(isAdmin=false){
 
 function getBlogByID(id){
   return new Promise(function(resolve, reject) {
-    pool.query('SELECT title,id,post,date,views,category FROM  blogs WHERE id=? AND isPosted=true', id, function (err, rows, fields) {
+    pool.query('select blogs.title, blogs.id, blogs.post, blogs.date, blogs.views, c1.name category from blogs left join catagories c1 on (blogs.category=c1.id) WHERE id=? AND isPosted=true', id, function (err, rows) {
         if (err) {
             return reject(err);
         }

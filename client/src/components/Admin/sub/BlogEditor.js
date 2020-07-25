@@ -6,6 +6,7 @@ import AceEditor from "react-ace";
 import style from './BlogEditor.module.css'
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/theme-monokai";
+import Dropdown from './Dropdown'
 
 class BlogEditor extends Component {
 
@@ -65,7 +66,8 @@ class BlogEditor extends Component {
     this.props.dispatch(loadBlogs())
   }
 
-  render () { 
+  render () {
+
     return (
       <div className={style.container}>
         <div className={style.editorHeader}>
@@ -74,7 +76,8 @@ class BlogEditor extends Component {
           <label>Date</label>
           <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
           <label>Category</label>
-          <input type="text" name = "category" onChange={this.editorOnChange} value={this.props.blog.category}/>
+          {/* <Dropdown options={this.props.}/> */}
+          
           <label>IsPosted</label>
           <input name="isPosted" type="checkbox" checked={Boolean(this.props.blog.isPosted)}  onChange={this.editorOnChange} />
           <button onClick={this.saveClick}>Save</button>
@@ -102,6 +105,7 @@ const mapToProps= (state) =>{
 
   let {post, title, date ,isPosted, id, category} = state.editor.editorBlog
   let {isNewPost} = state.editor;
+
   return {
     blog:{
       post,
