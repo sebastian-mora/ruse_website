@@ -2,6 +2,7 @@ import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW
 
 const intialState = {
   "blogs": [],
+  "categories":[],
   "selectedBlog": null,
   "editorShow": false,
   "editorBlog": {
@@ -20,10 +21,13 @@ const intialState = {
 export default function(state=intialState, action){
 
   switch(action.type){
+    
     case LOAD_BLOGS:
+
       return {
         ...state,
         blogs: action.payload,
+        categories: action.payload.filter( (blog) => {return blog.category}).map((blog) => {return blog.category})
       }
 
     case SELECT_BLOG:
