@@ -5,7 +5,7 @@ import Dropdown from './sub/Dropdown'
 import BlogEditor from './sub/BlogEditor';
 
 import { connect } from 'react-redux';
-import {loadBlogs, closeEditorBlog, openNewBlog} from '../../redux/actions/blogActions'
+import {loadBlogs, closeEditorBlog, openNewBlog, selectBlog} from '../../redux/actions/blogActions'
 
 
 
@@ -24,10 +24,15 @@ class Admin extends Component {
 
     const onCloseClick = () =>{this.props.dispatch(closeEditorBlog())}
     const onNewClick = () =>{this.props.dispatch(openNewBlog())}
+    const onBlogSelectClick = (id) =>{this.props.dispatch(selectBlog(id))}
+
 
     return (
         <div>
-          <Dropdown />
+          {/* Blog title selector */}
+          <Dropdown options={this.props.blogs} onChange={onBlogSelectClick} />
+
+          
           {this.props.editorShow &&
             <div>
               <BlogEditor/>
@@ -46,7 +51,8 @@ class Admin extends Component {
 
 const mapStateToProps = (state) =>{
   return {
-    editorShow: state.editor.editorShow
+    editorShow: state.editor.editorShow,
+    blogs: state.editor.blogs
   }
 }
 

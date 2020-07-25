@@ -41,8 +41,6 @@ router.get('/', async (req, res) => {
       }
       
     })
-
-    
     res.send(results)
   })
   .catch((err) => {
