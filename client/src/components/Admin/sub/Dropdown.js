@@ -6,9 +6,9 @@ const Dropdown = (props) => {
 
   return (
     <div>
-      <select onChange={e => props.onChange(e.target.value)} id="blogs">
+      <select name={props.name} onChange={e => props.onChange(e)}>
         {props.options.map(({title, id}) =>{
-          return <option key={id} value={id}>{title}</option>
+          return <option  key={id} value={id}>{title}</option>
         })}
       </select>
     </div>

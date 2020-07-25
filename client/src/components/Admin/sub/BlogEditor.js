@@ -36,7 +36,8 @@ class BlogEditor extends Component {
       }))
       return
     }
-
+    
+    console.log(e.target.name);
     // for all other values update
     this.props.dispatch(  
       updateEditorBlog({...this.props.blog,
@@ -66,6 +67,8 @@ class BlogEditor extends Component {
     this.props.dispatch(loadBlogs())
   }
 
+
+
   render () {
 
     return (
@@ -76,7 +79,7 @@ class BlogEditor extends Component {
           <label>Date</label>
           <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
           <label>Category</label>
-          {/* <Dropdown options={this.props.}/> */}
+          <Dropdown name={"category"}options={this.props.categories.map((cat) => {return {title:cat, id:cat}})} onChange={this.editorOnChange}/>
           
           <label>IsPosted</label>
           <input name="isPosted" type="checkbox" checked={Boolean(this.props.blog.isPosted)}  onChange={this.editorOnChange} />
@@ -104,7 +107,7 @@ class BlogEditor extends Component {
 const mapToProps= (state) =>{
 
   let {post, title, date ,isPosted, id, category} = state.editor.editorBlog
-  let {isNewPost} = state.editor;
+  let {isNewPost, categories} = state.editor;
 
   return {
     blog:{
@@ -115,7 +118,8 @@ const mapToProps= (state) =>{
       id,
       category
     },
-    isNewPost
+    isNewPost,
+    categories
   }
 }
 

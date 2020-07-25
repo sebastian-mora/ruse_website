@@ -24,13 +24,13 @@ class Admin extends Component {
 
     const onCloseClick = () =>{this.props.dispatch(closeEditorBlog())}
     const onNewClick = () =>{this.props.dispatch(openNewBlog())}
-    const onBlogSelectClick = (id) =>{this.props.dispatch(selectBlog(id))}
+    const onBlogSelectClick = (e) =>{this.props.dispatch(selectBlog(e.target.value))}
 
 
     return (
         <div>
           {/* Blog title selector */}
-          <Dropdown options={this.props.blogs} onChange={onBlogSelectClick} />
+          <Dropdown name={"titles"} options={this.props.blogs} onChange={onBlogSelectClick} />
 
           
           {this.props.editorShow &&
