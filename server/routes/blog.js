@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 const verifyToken = require('./middleware/Auth')
-const {getAllBlogs, getBlogByID, addBlog, updateBlog, deleteBlog}  = require('../database/blogInterface')
+const {getAllBlogs, getBlogByID, getCategories, addBlog, updateBlog, deleteBlog}  = require('../database/blogInterface')
 const jwt = require('jsonwebtoken');
 
 router.use(express.json())
@@ -51,10 +51,22 @@ router.get('/', async (req, res) => {
 });
 
 
+router.get('/categories', (req, res) => {
+  getCategories().then( (result) => {
+    res.send(result)
+  })
+  .catch((err) => {
+    console.log(err);
+    res.sendStatus(500)
+  })
+});
+
+
 
 router.get('/:id', (req, res) =>{
 
   const id = req.params.id;
+
 
   getBlogByID(id)
   .then( (results) => {
@@ -72,16 +84,7 @@ router.get('/:id', (req, res) =>{
 
 router.post('/create', (req,res) =>{
 
-  const {title, date, post, isPosted} = req.body;
-
-  const blog = {
-    title,
-    date,
-    post, 
-    isPosted
-  }
-
-  addBlog(blog).then( () =>{
+  addBlog(req.body).then( () =>{
     res.sendStatus(200)
   })
   

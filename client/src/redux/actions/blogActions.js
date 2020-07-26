@@ -1,4 +1,4 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG} from './types'
+import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, LOAD_CATEGORIES} from './types'
 import {getBlogs, addBlog, updateBlogApi, deleteBlogApi} from '../../api/blogsApi';
 
 export const loadBlogs = () => {
@@ -7,6 +7,15 @@ export const loadBlogs = () => {
     .then(data => {
       dispatch({type: LOAD_BLOGS,
       payload: data})
+    })
+  }
+}
+
+export const loadCategories = () =>{
+  return (dispatch) =>{
+    loadCategories()
+    .then(data => {
+      dispatch({type: LOAD_CATEGORIES, payload: data})
     })
   }
 }

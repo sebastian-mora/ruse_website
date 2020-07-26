@@ -1,4 +1,4 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG} from '../actions/types'
+import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, LOAD_CATEGORIES} from '../actions/types'
 
 const intialState = {
   "blogs": [],
@@ -23,11 +23,15 @@ export default function(state=intialState, action){
   switch(action.type){
     
     case LOAD_BLOGS:
-
       return {
         ...state,
-        blogs: action.payload,
-        categories: action.payload.filter( (blog) => {return blog.category}).map((blog) => {return blog.category})
+        blogs: action.payload
+      }
+    
+    case LOAD_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload
       }
 
     case SELECT_BLOG:

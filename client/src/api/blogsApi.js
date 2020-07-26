@@ -19,6 +19,14 @@ export function getBlog(id){
   });
 }
 
+export function getCategoriesApi(){
+  return axios.get(`${API_ENDPOINT}/blog/categories`).then(res => {
+    return res.data
+  })
+  .catch(err => {
+    throw err
+  });
+}
 
 export function addBlog(blog){
 

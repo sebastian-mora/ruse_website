@@ -1,4 +1,5 @@
-var pool  = require('../database/database')
+var pool  = require('../database/database');
+
 
 function getAllBlogs(isAdmin=false){
   return new Promise(function(resolve, reject) {
@@ -25,6 +26,16 @@ function getAllBlogs(isAdmin=false){
   }); 
 }
 
+function getCategories(){
+  return new Promise((resolve, reject) => {
+    pool.query('SELECT name from categories', (err, rows) => {
+      if(err){ reject(err) }
+      rows = rows.map( (row) => {return row.name})
+      resolve(rows)
+    })
+  })
+}
+
 function getBlogByID(id){
   return new Promise(function(resolve, reject) {
     pool.query('select blogs.title, blogs.id, blogs.post, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? AND isPosted=true', id, function (err, rows) {
@@ -40,12 +51,22 @@ function getBlogByID(id){
 function addBlog(blog){
   console.log(blog);
   return new Promise((resolve, reject) =>
+
+  find_or_create_category(blog.category).then((result)=>{
+
+    blog = {...blog,
+      category: category_id
+    }
+    delete blog.id
+
     pool.query('INSERT INTO blogs SET ?', blog, (err) =>{
       if(err){
         return reject(err)
       }
       resolve()
-    }))
+    })
+  }))
+    
 }
 
 
@@ -107,6 +128,7 @@ module.exports = {
   addBlog,
   getAllBlogs,
   getBlogByID,
+  getCategories,
   updateBlog,
   deleteBlog
 }
