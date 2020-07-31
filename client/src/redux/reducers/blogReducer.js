@@ -1,7 +1,8 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG} from '../actions/types'
+import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, LOAD_CATEGORIES} from '../actions/types'
 
 const intialState = {
   "blogs": [],
+  "categories":[],
   "selectedBlog": null,
   "editorShow": false,
   "editorBlog": {
@@ -20,10 +21,17 @@ const intialState = {
 export default function(state=intialState, action){
 
   switch(action.type){
+    
     case LOAD_BLOGS:
       return {
         ...state,
-        blogs: action.payload,
+        blogs: action.payload
+      }
+    
+    case LOAD_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload
       }
 
     case SELECT_BLOG:
