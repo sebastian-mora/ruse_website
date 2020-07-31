@@ -10,6 +10,8 @@ import Dropdown from './Dropdown'
 
 class BlogEditor extends Component {
 
+  
+
   editorOnChange = (e) => {
 
     // ACE editor returns value from event rather than the event. SMH
@@ -37,7 +39,6 @@ class BlogEditor extends Component {
       return
     }
     
-    console.log(e.target.name);
     // for all other values update
     this.props.dispatch(  
       updateEditorBlog({...this.props.blog,
@@ -52,13 +53,14 @@ class BlogEditor extends Component {
     {
       this.props.dispatch(postBlog(this.props.blog))
       this.props.dispatch(closeEditorBlog())
-      this.props.dispatch(loadBlogs())
     } 
     else 
     {
       this.props.dispatch(updateBlog(this.props.blog))
       this.props.dispatch(closeEditorBlog())
     }
+
+    this.props.dispatch(loadBlogs())
   }
 
   deleteClick = () =>{
