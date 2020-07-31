@@ -12,7 +12,7 @@ function getAllBlogs(isAdmin=false){
 
 
     if(isAdmin){
-      var query_str = 'select blogs.title, blogs.id, blogs.post, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id)'
+      var query_str = 'select blogs.title, blogs.id, blogs.post, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id)'
     }
 
     pool.query(query_str, function (err, rows) {
@@ -78,6 +78,8 @@ function updateBlog(blog)
 
     find_or_create_category(blog.category).then((result)=>{
       let category_id = result[0].id
+
+      console.log(category_id);
 
       blog = {...blog,
         category: category_id

@@ -5,7 +5,7 @@ import Dropdown from './sub/Dropdown'
 import BlogEditor from './sub/BlogEditor';
 
 import { connect } from 'react-redux';
-import {loadBlogs, closeEditorBlog, openNewBlog, selectBlog} from '../../redux/actions/blogActions'
+import {loadBlogs, closeEditorBlog, openNewBlog, selectBlog, loadCategories} from '../../redux/actions/blogActions'
 
 
 
@@ -16,6 +16,7 @@ class Admin extends Component {
   // Get all the blogs on load
   componentWillMount() {
     this.props.dispatch(loadBlogs())
+    this.props.dispatch(loadCategories())
   }
 
 
