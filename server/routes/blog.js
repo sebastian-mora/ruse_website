@@ -98,6 +98,9 @@ router.post('/update',verifyToken ,(req,res) =>{
 
   updateBlog(req.body).then(()=>{
     res.sendStatus(200);
+  }).catch( (err) => {
+    console.log(err);
+    res.sendStatus(500)
   })
 });
 
