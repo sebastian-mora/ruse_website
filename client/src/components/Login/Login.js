@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom';
 
 import { connect, useSelector } from 'react-redux';
 import {loginUser} from '../../redux/actions/authActions'
+import style from './Login.module.css'
 
 const Login = ({dispatch}) => {
   const isAuthd = useSelector(state => state.user.isAuthd)
@@ -35,9 +36,11 @@ const Login = ({dispatch}) => {
   }
 
   return (
-    <div className="Login">
+    <div className={style.loginBox}>
       <form onSubmit={handleSubmit} onChange={validateForm}>
+      <label>Username</label>
         <input type="username" value={username} onChange={e => setUsername(e.target.value)}></input>
+        <label>Password</label>
         <input type="password" value={password} onChange={e => setPassword(e.target.value)}></input>
         <input type="submit" value="Submit" />
       </form>
