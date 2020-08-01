@@ -49,10 +49,11 @@ function getBlogByID(id){
 
 
 function addBlog(blog){
-  console.log(blog);
+  
   return new Promise((resolve, reject) =>
 
   find_or_create_category(blog.category).then((result)=>{
+    let category_id = result[0].id
 
     blog = {...blog,
       category: category_id

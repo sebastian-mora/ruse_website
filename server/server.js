@@ -43,13 +43,13 @@ app.use('/admin', admin)
 app.use('/api', api)
 
 
-app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
+// app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
 
-// Handles any requests that don't match the ones above
-app.get('/*', (req,res) =>{
-  console.log("CALLE");
-  res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'));
-});
+// // Handles any requests that don't match the ones above
+// app.get('/*', (req,res) =>{
+//   console.log("CALLE");
+//   res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'));
+// });
 
 
 
