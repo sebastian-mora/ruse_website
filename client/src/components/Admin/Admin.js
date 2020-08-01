@@ -15,7 +15,7 @@ class Admin extends Component {
   //
   
   // Get all the blogs on load
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(loadBlogs())
     this.props.dispatch(loadCategories())
   }

@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/categories', verifyToken, (req, res) => {
+router.get('/categories', (req, res) => {
   getCategories().then( (result) => {
     res.send(result)
   })
@@ -87,6 +87,10 @@ router.post('/create', verifyToken, (req,res) =>{
   addBlog(req.body).then( () =>{
     res.sendStatus(200)
   })
+  .catch((err) => {
+    console.log(err);
+    res.status(400).send("Missing some data")
+  });
   
 });
 
@@ -94,6 +98,9 @@ router.post('/update',verifyToken ,(req,res) =>{
 
   updateBlog(req.body).then(()=>{
     res.sendStatus(200);
+  }).catch( (err) => {
+    console.log(err);
+    res.sendStatus(500)
   })
 });
 

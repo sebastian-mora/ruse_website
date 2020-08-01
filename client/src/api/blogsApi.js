@@ -6,7 +6,7 @@ export function getBlogs(){
     return res.data
   })
   .catch(err => {
-    throw err
+    console.log(err.request);
   });
 }
 
@@ -15,7 +15,7 @@ export function getBlog(id){
     return res.data
   })
   .catch(err => {
-    throw err
+    console.log(err.request);
   });
 }
 
@@ -24,7 +24,7 @@ export function getCategoriesApi(){
     return res.data
   })
   .catch(err => {
-    throw err
+    console.log(err);
   });
 }
 
@@ -35,7 +35,7 @@ export function addBlog(blog){
     return res.data
   })
   .catch(err => {
-    throw err
+    console.log(err.request);
   });
 }
 
@@ -45,7 +45,7 @@ export function updateBlogApi(blog){
     return res.data
   })
   .catch(err => {
-    throw err
+    console.log(err.request);
   });
 }
 
@@ -55,7 +55,7 @@ export function deleteBlogApi(id){
     return res.data
   })
   .catch( err=> {
-    throw err;
+    console.log(err.request);
   })
 }
 

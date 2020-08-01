@@ -1,4 +1,4 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, LOAD_CATEGORIES} from '../actions/types'
+import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, LOAD_CATEGORIES, TOGGLE_PREVIEW} from '../actions/types'
 
 const intialState = {
   "blogs": [],
@@ -13,7 +13,8 @@ const intialState = {
     category: "",
     views: 0
   },
-  "isNewPost": false
+  "isNewPost": false,
+  "preview": false
 }
 
 
@@ -69,6 +70,12 @@ export default function(state=intialState, action){
         ...state,
         editorShow: true,
         isNewPost: true
+      }
+
+    case TOGGLE_PREVIEW:
+      return {
+        ...state,
+        preview: !state.preview
       }
     
     default:

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs} from '../../../redux/actions/blogActions'
+import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs, togglePreview} from '../../../redux/actions/blogActions'
 import AceEditor from "react-ace";
+import Preview from './Preview'
 
 import style from './BlogEditor.module.css'
 import "ace-builds/src-noconflict/mode-html";
@@ -69,6 +70,29 @@ class BlogEditor extends Component {
     this.props.dispatch(loadBlogs())
   }
 
+  previewClick = () =>{
+    this.props.dispatch(togglePreview())
+  }
+
+  renderEditor = () =>{
+    if(this.props.preview){
+      return <Preview></Preview>
+    }
+
+    return <AceEditor
+      mode="html"
+      theme="monokai"
+      onChange={this.editorOnChange}
+      value={this.props.blog.post}
+      name="Editor"
+      fontSize= {16}
+      className={style.Editor}
+      width="1000"
+      heigh="700"
+      />
+    
+  }
+
 
 
   render () {
@@ -82,28 +106,25 @@ class BlogEditor extends Component {
             <input type="text" name="title" onChange={this.editorOnChange} value={this.props.blog.title}/>
             <label>Date</label>
             <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
+
             <label>Category</label>
             <Dropdown name={"category"}options={this.props.categories.map((cat) => {return {title:cat, id:cat}})} onChange={this.editorOnChange}/>
 
 
+
             <label>IsPosted</label>
             <input name="isPosted" type="checkbox"  checked={Boolean(this.props.blog.isPosted)}  onChange={this.editorOnChange} />
-
+            
             <button onClick={this.saveClick}>Save</button>
             <button onClick={this.deleteClick}>Delete</button>
+            <button onClick={this.previewClick}>Preview</button>
             </div>
+
+          
+          {this.renderEditor()}
+          
+
         
-        <AceEditor
-          mode="html"
-          theme="monokai"
-          onChange={this.editorOnChange}
-          value={this.props.blog.post}
-          name="Editor"
-          fontSize= {16}
-          className={style.Editor}
-          width="1000"
-          heigh="700"
-          />
 
      
 
@@ -115,7 +136,7 @@ class BlogEditor extends Component {
 const mapToProps= (state) =>{
 
   let {post, title, date ,isPosted, id, category} = state.editor.editorBlog
-  let {isNewPost, categories} = state.editor;
+  let {isNewPost, categories, preview} = state.editor;
 
   return {
     blog:{
@@ -127,7 +148,8 @@ const mapToProps= (state) =>{
       category
     },
     isNewPost,
-    categories
+    categories,
+    preview
   }
 }
 

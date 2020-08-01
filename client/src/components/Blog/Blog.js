@@ -36,7 +36,7 @@ const Blog = () => {
     var current_date = new Date()
     
     // Generate an organized Blogs Object
-    blogs.map(({category, title, id, date}) => {
+    blogs.forEach(({category, title, id, date}) => {
 
       var blog_date = new Date(date)
       var post_delta = (current_date - blog_date)/(1000*60*60*24.0)
