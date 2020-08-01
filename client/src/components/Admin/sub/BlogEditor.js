@@ -75,31 +75,37 @@ class BlogEditor extends Component {
 
     return (
       <div className={style.container}>
-        <div className={style.editorHeader}>
-          <label>Title</label>
-          <input type="text" name="title" onChange={this.editorOnChange} value={this.props.blog.title}/>
-          <label>Date</label>
-          <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
-          <label>Category</label>
-          <Dropdown name={"category"}options={this.props.categories.map((cat) => {return {title:cat, id:cat}})} onChange={this.editorOnChange}/>
-          
-          <label>IsPosted</label>
-          <input name="isPosted" type="checkbox" checked={Boolean(this.props.blog.isPosted)}  onChange={this.editorOnChange} />
-          <button onClick={this.saveClick}>Save</button>
-          <label>Delete</label>
-          <button onClick={this.deleteClick}>Delete</button>
 
-        </div>
+        <div className={style.form}>
+
+            <label>Title</label>
+            <input type="text" name="title" onChange={this.editorOnChange} value={this.props.blog.title}/>
+            <label>Date</label>
+            <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
+            <label>Category</label>
+            <Dropdown name={"category"}options={this.props.categories.map((cat) => {return {title:cat, id:cat}})} onChange={this.editorOnChange}/>
+
+
+            <label>IsPosted</label>
+            <input name="isPosted" type="checkbox"  checked={Boolean(this.props.blog.isPosted)}  onChange={this.editorOnChange} />
+
+            <button onClick={this.saveClick}>Save</button>
+            <button onClick={this.deleteClick}>Delete</button>
+            </div>
+        
         <AceEditor
           mode="html"
           theme="monokai"
           onChange={this.editorOnChange}
           value={this.props.blog.post}
           name="Editor"
+          fontSize= {16}
           className={style.Editor}
           width="1000"
           heigh="700"
           />
+
+     
 
       </div>
     );
