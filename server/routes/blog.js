@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/categories', (req, res) => {
+router.get('/categories', verifyToken, (req, res) => {
   getCategories().then( (result) => {
     res.send(result)
   })
@@ -82,7 +82,7 @@ router.get('/:id', (req, res) =>{
 });
 
 
-router.post('/create', (req,res) =>{
+router.post('/create', verifyToken, (req,res) =>{
 
   addBlog(req.body).then( () =>{
     res.sendStatus(200)
