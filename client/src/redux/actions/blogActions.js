@@ -1,4 +1,4 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, LOAD_CATEGORIES} from './types'
+import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, LOAD_CATEGORIES, TOGGLE_PREVIEW} from './types'
 import {getBlogs, addBlog, updateBlogApi, deleteBlogApi, getCategoriesApi} from '../../api/blogsApi';
 
 export const loadBlogs = () => {
@@ -69,6 +69,12 @@ export const openNewBlog = () =>{
       type: OPEN_NEW_BLOG
     })
   }
+}
+
+export const togglePreview = () => {
+  return (dispatch => {
+    dispatch({type: TOGGLE_PREVIEW})
+  })
 }
 
 

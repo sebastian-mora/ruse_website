@@ -4,10 +4,7 @@ var router = express.Router()
 const jwt = require('jsonwebtoken');
 const {authenticate_user} = require("../database/authInterface")
 
-
-
 router.use(express.json())
-
 
 
 router.post('/',  (req, res) =>{

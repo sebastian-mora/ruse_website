@@ -15,4 +15,6 @@ export const CLOSE_EDITOR_BLOG = "CLOSE_NEW_BLOG";
 export const OPEN_NEW_BLOG = "OPEN_NEW_BLOG";
 export const DELETE_BLOG = "DELETE_BLOG";
 export const LOAD_CATEGORIES = "LOAD_CATEGORIES";
+export const TOGGLE_PREVIEW = "TOGGLE_PREVIEW"
+
 
