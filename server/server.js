@@ -25,6 +25,7 @@ const limiter = rateLimit({
 
 const app = express();
 const port = process.env.PORT || 5000;
+const host =  process.env.HOST || 'localhost';
 
 
 
@@ -56,4 +57,4 @@ app.use('/api', api)
 
 
 // console.log that your server is up and running
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, host, () => console.log(`Listening on port ${port}`));
