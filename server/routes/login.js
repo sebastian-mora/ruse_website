@@ -16,7 +16,7 @@ router.post('/',  (req, res) =>{
 
     authenticate_user(username, password).then( (isAuthd) =>{
         if(isAuthd){
-          const accessToken = jwt.sign({username}, 'accessTokenSecret', {expiresIn: '1h'});
+          const accessToken = jwt.sign({username}, process.env.JWT_SECERT, {expiresIn: '1h'});
           res.json({
               status: true,
               username: username,
