@@ -1,5 +1,5 @@
 var pool  = require('../database/database');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 function authenticate_user(username, password){ 
   
