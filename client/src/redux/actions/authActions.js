@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {loginApi, checkTokenApi} from '../../api/authApi'
 
 import {
   LOGIN_FAIL,
@@ -22,16 +23,14 @@ export const loginUser = (username, password) =>{
   
 
   return (dispatch) => {
-    axios.post('/login', {
-      username,
-      password
-    })
-    .then(function (response) {
-      if(response.data.status){ 
+
+    loginApi(username, password).then( (response) => {
+
+      if(response){ 
         const user =  {
-          jwt: response.data.accessToken,
-          username: response.data.username,
-          login_time: response.data.login_time
+          jwt: response.accessToken,
+          username: response.username,
+          login_time: response.login_time
         }
 
         sessionStorage.setItem('jwt', user.jwt)
@@ -43,14 +42,14 @@ export const loginUser = (username, password) =>{
 
       }
       
-    })
-    .catch(function () {
-      dispatch({
-          type: FAILED_AUTH_CHECK
-      });
+        else {
+          dispatch({
+            type: FAILED_AUTH_CHECK
+        });
+      }
 
     });
-  }
+}
 }
 
   
@@ -58,29 +57,25 @@ export const loginUser = (username, password) =>{
 
 export const checkToken = () => {
 
-  const token = sessionStorage.getItem('jwt');
-  const config = {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }
-
-  if(token){
-    config.headers["fuckyou-key"] = token
-    axios.defaults.headers.common['fuckyou-key'] = token
-  }
-
   return (dispatch) =>{
-    axios.get('/api/auth/user', config)
-    .then(res => {
-      const data = res.data
-      dispatch({type: USER_LOADED,
-      payload: data})
-    })
-    .catch(() =>{
+
+    checkTokenApi().then( (result) => {
+      if(result){
+        dispatch({type: USER_LOADED,
+          payload: result})
+      }
+
+      else{
         dispatch({
           type: FAILED_AUTH_CHECK
         })
+      }
+    } )
+
+    .catch( () => {
+      dispatch({
+        type: FAILED_AUTH_CHECK
+      })
     })
   }
 }
