@@ -2,9 +2,10 @@ const express = require('express');
 var cors = require('cors');
 const rateLimit = require("express-rate-limit");
 const path = require('path');
+require('custom-env').env()
 
 //set up CORS whitelist
-var whitelist = ['http://localhost:3000']
+var whitelist = [process.env.CORS]
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (whitelist.indexOf(req.header('Origin')) !== -1) {

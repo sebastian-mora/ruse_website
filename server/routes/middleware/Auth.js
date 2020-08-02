@@ -10,7 +10,7 @@ function verifyToken(req, res, next) {
   // Check if bearer is undefined
   if(typeof bearerHeader !== 'undefined') {
 
-    jwt.verify(bearerHeader, 'accessTokenSecret', (err, authData) => {
+    jwt.verify(bearerHeader, process.env.JWT_SECERT, (err, authData) => {
       if (err){
         console.log("Token failed to verifiy");
            
