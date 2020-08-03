@@ -31,7 +31,7 @@ const Blog = () => {
     // Other keys added dynamicly 
 
     let sortedBlogs = {
-      "new":[]
+      "New":[]
     }
     var current_date = new Date()
     
@@ -44,7 +44,7 @@ const Blog = () => {
       // If the blog is less than 30 days add it to the new category
       if(post_delta <= NEW_POST_THRESHOLD)
       {
-        sortedBlogs.new.push({id,title})
+        sortedBlogs.New.push({id,title})
       }
   
       // If category does not exist create it and add it
