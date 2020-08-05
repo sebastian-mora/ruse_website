@@ -2,7 +2,8 @@ import {LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCESSS, USER_LOADED, FAILED_AUTH_CHEC
 
 
 const intialState = {
-  "isAuthd": false
+  "isAuthd": false,
+  "loginMessage": ""
 }
 
 export default function(state=intialState, action){
@@ -31,7 +32,8 @@ export default function(state=intialState, action){
         ...state,
         token: null,
         isAuthd: false,
-        user:null
+        user:null,
+        loginMessage: action.payload
       }
 
     case LOGOUT_SUCESSS:

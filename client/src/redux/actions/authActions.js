@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {loginApi, checkTokenApi} from '../../api/authApi'
 
 import {
@@ -9,47 +8,35 @@ import {
 } from '../actions/types'
 
 
-
-export const loginFailed = () =>{
-  return{
-    type: LOGIN_FAIL
-  }
-}
-
-
 export const loginUser = (username, password) =>{
 
   // Store the JWT in the session
-  
-
   return (dispatch) => {
 
-    loginApi(username, password).then( (response) => {
+    loginApi(username, password).then( (res) => {
+      console.log(res);
+   
+      const user =  {
+        jwt: res.accessToken,
+        username: res.username,
+        login_time: res.login_time
+      }
 
-      if(response){ 
-        const user =  {
-          jwt: response.accessToken,
-          username: response.username,
-          login_time: response.login_time
-        }
-
-        sessionStorage.setItem('jwt', user.jwt)
+      sessionStorage.setItem('jwt', user.jwt)
  
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: user
-        });
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: user
+      });
 
-      }
-      
-        else {
-          dispatch({
-            type: FAILED_AUTH_CHECK
-        });
-      }
-
-    });
-}
+    })
+    .catch ((err) =>{
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err
+      })
+    })
+  }
 }
 
   

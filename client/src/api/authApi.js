@@ -7,10 +7,9 @@ export function loginApi(username, password){
     return res.data
   })
   .catch(err => {
-    console.log(err.request);
+    throw err.request.response
   });
 }
-
 
 export function checkTokenApi(token){
 
@@ -20,14 +19,13 @@ export function checkTokenApi(token){
     }
   }
 
-
   config.headers["fuckyou-key"] = token
   axios.defaults.headers.common['fuckyou-key'] = token
 
   return axios.get(`${API_ENDPOINT}/api/auth/user`).then(res => {
     return res.data
   })
-  .catch(err => {
+  .catch(() => {
     return false
   });
 }

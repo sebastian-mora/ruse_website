@@ -7,6 +7,7 @@ import style from './Login.module.css'
 
 const Login = ({dispatch}) => {
   const isAuthd = useSelector(state => state.user.isAuthd)
+  const error_message = useSelector(state => state.user.loginMessage)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
@@ -44,6 +45,8 @@ const Login = ({dispatch}) => {
         <input type="password" value={password} onChange={e => setPassword(e.target.value)}></input>
         <input type="submit" value="Submit" />
       </form>
+
+      <p className={style.loginError}>{error_message}</p>
     </div>
 
   )
