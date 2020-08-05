@@ -14,8 +14,6 @@ export const loginUser = (username, password) =>{
   return (dispatch) => {
 
     loginApi(username, password).then( (res) => {
-      console.log(res);
-   
       const user =  {
         jwt: res.accessToken,
         username: res.username,
