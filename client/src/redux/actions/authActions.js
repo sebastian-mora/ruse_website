@@ -59,23 +59,34 @@ export const checkToken = () => {
 
   return (dispatch) =>{
 
-    checkTokenApi().then( (result) => {
-      if(result){
-        dispatch({type: USER_LOADED,
-          payload: result})
-      }
+    const token = sessionStorage.getItem('jwt');
 
-      else{
+    if(token){
+
+      checkTokenApi(token) 
+      .then( (result) => {
+        if (result){
+          dispatch({type: USER_LOADED,
+            payload: result})
+        }
+
+        else{
+          dispatch({
+            type: FAILED_AUTH_CHECK
+          })
+        }
+      })
+      .catch( () => {
         dispatch({
           type: FAILED_AUTH_CHECK
         })
-      }
-    } )
-
-    .catch( () => {
+      })
+      
+    }
+    else{
       dispatch({
         type: FAILED_AUTH_CHECK
       })
-    })
+    }
   }
 }
