@@ -72,13 +72,13 @@ if(env == "prod"){
   const httpsServer = https.createServer(credentials, app);
 
   httpsServer.listen(https_port, () => {
-    console.log('HTTPS Server running on port 443');
+    console.log(`HTTPS Server running on port ${https_port}`);
   });
 
 }
 
 
 httpServer.listen(http_port, () => {
-	console.log(`HTTP Server on port ${port}`)
+	console.log(`HTTP Server on port ${http_port}`)
 });
 
