@@ -22,8 +22,7 @@ const limiter = rateLimit({
   max: 100 // limit each IP to 100 requests per windowMs
 })
 
-// certbot 
-app.use(express.static(__dirname, { dotfiles: 'allow' } ));
+
 
 
 const app = express();
@@ -36,6 +35,9 @@ const host =  process.env.HOST || 'localhost';
 app.use(cors(corsOptionsDelegate));
 //  apply ratelimit to all requests
 app.use(limiter);
+
+// certbot 
+app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 //routes
 const blog = require('./routes/blog.js')
