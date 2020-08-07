@@ -22,6 +22,9 @@ const limiter = rateLimit({
   max: 100 // limit each IP to 100 requests per windowMs
 })
 
+// certbot 
+app.use(express.static(__dirname, { dotfiles: 'allow' } ));
+
 
 const app = express();
 const port = process.env.PORT || 5000;
