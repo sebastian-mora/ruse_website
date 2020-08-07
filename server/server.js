@@ -1,8 +1,8 @@
 const express = require('express');
+const fs = require('fs');
 const http = require('http');
 const https = require('https');
-
-var cors = require('cors');
+const cors = require('cors');
 const rateLimit = require("express-rate-limit");
 const path = require('path');
 require('custom-env').env()
@@ -28,9 +28,8 @@ const limiter = rateLimit({
 
 
 const app = express();
-const port = process.env.PORT || 8080;
-const host =  process.env.HOST || 'localhost';
-
+const http_port = process.env.HTTP_PORT || 8080;
+const https_port = process.env.HTTPS_PORT || 8080
 
 
 // add CORS
@@ -72,14 +71,14 @@ if(env == "prod"){
 
   const httpsServer = https.createServer(credentials, app);
 
-  httpsServer.listen(443, () => {
+  httpsServer.listen(https_port, () => {
     console.log('HTTPS Server running on port 443');
   });
 
 }
 
 
-httpServer.listen(process.env.PORT, () => {
+httpServer.listen(http_port, () => {
 	console.log(`HTTP Server on port ${port}`)
 });
 
