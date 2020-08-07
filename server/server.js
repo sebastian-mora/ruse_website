@@ -1,4 +1,7 @@
 const express = require('express');
+const http = require('http');
+const https = require('https');
+
 var cors = require('cors');
 const rateLimit = require("express-rate-limit");
 const path = require('path');
@@ -16,6 +19,7 @@ var corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions) // callback expects two parameters: error and options
 }
 
+
 //set up ratelimit
 const limiter = rateLimit({
   windowMs: 15*60*1000, //15 mins
@@ -24,7 +28,7 @@ const limiter = rateLimit({
 
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 const host =  process.env.HOST || 'localhost';
 
 
@@ -33,6 +37,9 @@ const host =  process.env.HOST || 'localhost';
 app.use(cors(corsOptionsDelegate));
 //  apply ratelimit to all requests
 app.use(limiter);
+
+// certbot 
+// app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 //routes
 const blog = require('./routes/blog.js')
@@ -45,16 +52,34 @@ app.use('/admin', admin)
 app.use('/api', api)
 
 
-// app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
+// Starting both http & https servers
+const httpServer = http.createServer(app);
 
-// // Handles any requests that don't match the ones above
-// app.get('/*', (req,res) =>{
-//   console.log("CALLE");
-//   res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'));
-// });
+var env = process.env.NODE_ENV || 'development';
 
 
+if(env == "prod"){
+  // Load certs
+  const privateKey = fs.readFileSync(process.env.PRIVATE_KEY, 'utf8');
+  const certificate = fs.readFileSync(process.env.CERT, 'utf8');
+  const ca = fs.readFileSync(process.env.CA, 'utf8');
+
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+  };
+
+  const httpsServer = https.createServer(credentials, app);
+
+  httpsServer.listen(443, () => {
+    console.log('HTTPS Server running on port 443');
+  });
+
+}
 
 
-// console.log that your server is up and running
-app.listen(port, host, () => console.log(`Listening on port ${port}`));
+httpServer.listen(process.env.PORT, () => {
+	console.log(`HTTP Server on port ${port}`)
+});
+
