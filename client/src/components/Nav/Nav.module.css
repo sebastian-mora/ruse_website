@@ -10,11 +10,15 @@ div.container{
 
 li.container{
   font-size: 15px;
-  color: #00ff00;
   padding-right: 10%;
 }
 
 .link {
   font-size: 18px;
   padding-right: 10%;
+  color: white;
+}
+
+.link:visited{
+  color: white;
 }

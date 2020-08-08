@@ -5,3 +5,13 @@
   padding: 10px 10px 10px 10px;
   clear: left;
 }
+
+.container h3 {
+  font-size: 30px;
+  margin-left: 1em;
+  text-decoration: underline;
+}
+
+.container h4 {
+  text-indent: 2em;
+}
