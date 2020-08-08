@@ -12,15 +12,26 @@
   padding-top: 3%;
 }
 
+.category {
+  font-size: 20px;
+  font-weight: bolder;
+  
+}
+
+.post{
+  margin:0 0 3% 0;  
+}
+
 
 ul.sub li{
   text-decoration: underline;
-  padding-bottom: 1%;
   color: white;
+  font-size: 16px;
 }
 
 ul.sub li a{
   color: white;
+  
 }
 
 ul.sub li a:visited{

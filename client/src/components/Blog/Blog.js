@@ -82,10 +82,10 @@ const Blog = () => {
       */}
       {Object.keys(blogs).map((keyName, i) => (
         <React.Fragment key={keyName}>
-          <li>{keyName}</li>
+          <li className={style.category}>{keyName}</li>
           <ul className={style.sub}> 
             {blogs[keyName].map((blog) => {
-              return <Link key={blog.id + i} to={`blog/${blog.id}`}><li>{blog.title}</li></Link>
+              return <Link key={blog.id + i} to={`blog/${blog.id}`}><li className={style.post}>{blog.title}</li></Link>
             })}
           </ul>
         </React.Fragment>
