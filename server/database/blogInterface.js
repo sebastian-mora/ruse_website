@@ -10,7 +10,7 @@ function getAllBlogs(isAdmin=false){
 
     //select title,id,post,date,views, c1.name catagory from blogs left join catagories c1 on (blogs.category_id=c1.id);
 
-
+    
     if(isAdmin){
       var query_str = 'select blogs.title, blogs.id, blogs.post, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id)'
     }

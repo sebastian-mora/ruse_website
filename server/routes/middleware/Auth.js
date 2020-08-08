@@ -11,9 +11,7 @@ function verifyToken(req, res, next) {
   if(typeof bearerHeader !== 'undefined') {
 
     jwt.verify(bearerHeader, process.env.JWT_SECERT, (err, authData) => {
-      if (err){
-        console.log("Token failed to verifiy");
-           
+      if (err){  
         res.sendStatus(403);
       }
       else {
@@ -21,7 +19,6 @@ function verifyToken(req, res, next) {
         next();
       }
     })
-
 
     // Next middleware
     
@@ -32,4 +29,6 @@ function verifyToken(req, res, next) {
   }
 }
 
-module.exports = verifyToken;
+
+
+module.exports = verifyToken

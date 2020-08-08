@@ -13,21 +13,7 @@ router.get('/', async (req, res) => {
   
   // Get auth header value
   const bearerHeader = req.headers['fuckyou-key'];
-  var isAdmin  = false
-
-  // Check if bearer is undefined
-  if(typeof bearerHeader !== 'undefined') {
-
-    jwt.verify(bearerHeader, 'accessTokenSecret', (err, authData) => {
-      if (err){        
-        
-      }
-      else {
-        res.authData = authData
-        isAdmin = true
-      }
-    })
-  }
+  var isAdmin  = checkJwt(bearerHeader)
 
   getAllBlogs(isAdmin) 
   .then( (results) => {
@@ -116,6 +102,21 @@ router.post('/delete', verifyToken, (req, res) => {
     res.sendStatus(500);
   })
 });
+
+
+function checkJwt(token){
+  
+  return jwt.verify(token, process.env.JWT_SECERT, (err, data) => {
+    
+    if (err){
+      
+      return false
+    }
+    else {
+      return true
+    }
+  })
+}
 
 
 
