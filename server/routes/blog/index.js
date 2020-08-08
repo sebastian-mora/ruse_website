@@ -1,8 +1,8 @@
 var express = require('express')
 var router = express.Router()
 
-const verifyToken = require('./middleware/Auth')
-const {getAllBlogs, getBlogByID, getCategories, addBlog, updateBlog, deleteBlog}  = require('../database/blogInterface')
+const verifyToken = require('../middleware/Auth')
+const {getAllBlogs, getBlogByID, getCategories, addBlog, updateBlog, deleteBlog}  = require('../../database/blogInterface')
 const jwt = require('jsonwebtoken');
 
 router.use(express.json())

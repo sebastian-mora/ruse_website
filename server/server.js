@@ -41,9 +41,9 @@ app.use(limiter);
 // app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 //routes
-const blog = require('./routes/blog.js')
+const blog = require('./routes/blog')
 const login = require('./routes/login.js')
-const admin = require('./routes/admin.js')
+const admin = require('./routes/admin')
 const api = require('./routes/api.js')
 app.use('/blog', blog)
 app.use('/login', login)
