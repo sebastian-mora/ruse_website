@@ -22,11 +22,12 @@ class Admin extends Component {
 
 
 
+
   render() {
 
     const onCloseClick = () =>{this.props.dispatch(closeEditorBlog())}
     const onNewClick = () =>{this.props.dispatch(openNewBlog())}
-    const onBlogSelectClick = (e) =>{this.props.dispatch(selectBlog(e.target.value))}
+    const onBlogSelectClick = (e) =>{if(e.target.value) this.props.dispatch(selectBlog(e.target.value));}
 
 
     return (
