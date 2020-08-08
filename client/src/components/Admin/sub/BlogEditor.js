@@ -108,7 +108,7 @@ class BlogEditor extends Component {
             <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
 
             <label>Category</label>
-            <Dropdown name={"category"}options={this.props.categories.map((cat) => {return {title:cat, id:cat}})} onChange={this.editorOnChange}/>
+            <Dropdown name={"category"} defaultValue={this.props.blog.category} options={this.props.categories.map((cat) => {return {title:cat, id:cat}})} onChange={this.editorOnChange}/>
 
 
 
