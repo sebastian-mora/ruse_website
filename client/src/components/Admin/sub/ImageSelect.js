@@ -1,14 +1,20 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import {} from '../../../redux/actions/blogActions';
+
 import {useDropzone} from 'react-dropzone'
 
 import {getImages, uploadImage} from '../../../api/adminApi'
 import style from './ImageSelect.module.css'
+import { UPDATE_EDITOR_BLOG } from '../../../redux/actions/types';
 
 
 
 const ImageSelect = (props) => {
 
   const [images, setImages] = useState([])
+  const {post} =  useSelector(state => state.editor.editorBlog)
+  const dispatch = useDispatch()
 
   useEffect( () => {
     setImages(loadImages(props.blog_id))
@@ -16,7 +22,7 @@ const ImageSelect = (props) => {
 
   function loadImages(blog_id){
 
-    getImages(1).then((data) =>{
+    getImages(blog_id).then((data) =>{
       setImages(data);
     })
     .catch((err) => {
@@ -25,13 +31,15 @@ const ImageSelect = (props) => {
     return []
   }
 
-  function imgClick() {
-    console.log("IMAGE CLICK");
+  function imgClick(e) {
+
+    const html_img = `<img alt="null" src="${e.target.src}">`
+    dispatch({type: UPDATE_EDITOR_BLOG, payload:{post: post + `\n ${html_img}`} })
   }
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach((file) => {
-        uploadImage(1, file).then((res) =>{
+        uploadImage(props.blog_id, file).then((res) =>{
           console.log(res);
         }).catch((err) => {
           console.log(err);
@@ -49,8 +57,8 @@ const ImageSelect = (props) => {
       <div>
         {images.map((image) => {
               return (
-                  <div className={style.thumbnail} >
-                    <img key={image.url} onClick={imgClick} alt={image.filename} src={image.url}/>
+                  <div key={image.url}  className={style.thumbnail} >
+                    <img onClick={imgClick} alt={image.filename} src={image.url}/>
                     <p>{image.filename}</p>
                   </div> 
                 )  
@@ -68,4 +76,4 @@ const ImageSelect = (props) => {
   )
 }
 
-export default ImageSelect;
+export default connect()(ImageSelect);
