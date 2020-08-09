@@ -10,3 +10,20 @@ export function getImages(blog_id){
     return false
   });
 }
+
+export function uploadImage(blog_id, image){
+
+  var form = new FormData();
+  form.append('image', image);
+  form.append('blog_id', blog_id);
+
+  console.log(form);
+
+
+  return axios.post(`${API_ENDPOINT}/admin/upload/image`, form, { headers: {'content-type': "form-data"} }).then(res => {
+    return res.data
+  })
+  .catch(err => {
+    throw err.request.response
+  });
+}
