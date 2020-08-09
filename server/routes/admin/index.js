@@ -20,7 +20,7 @@ router.get('/authd', (req, res) =>{
 
 router.get('/:id/images', (req, res) => {
   let id = req.params.id;
-
+  
   var params = {
     Bucket: process.env.S3_BUCKET,
     Delimiter: '/',
@@ -40,11 +40,10 @@ router.get('/:id/images', (req, res) => {
 
 
 function processS3Results(data) {
-  
 
   return data.map( (file) =>{
     let filename = file.Key.split('/')
-    return {filename : filename[filename.length-1], url: 'https://s3-us-west-2.amazonaws.com/ruse.tech/' + file.key}
+    return {filename : filename[filename.length-1], url: 'https://s3-us-west-2.amazonaws.com/ruse.tech/' + file.Key}
   })
   
 
