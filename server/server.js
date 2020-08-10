@@ -5,7 +5,14 @@ const https = require('https');
 const cors = require('cors');
 const rateLimit = require("express-rate-limit");
 const path = require('path');
+const bodyParser = require('body-parser');
 require('custom-env').env()
+
+
+const app = express();
+const http_port = process.env.HTTP_PORT || 8080;
+const https_port = process.env.HTTPS_PORT || 8080
+
 
 //set up CORS whitelist
 var whitelist = [process.env.CORS]
@@ -27,9 +34,8 @@ const limiter = rateLimit({
 })
 
 
-const app = express();
-const http_port = process.env.HTTP_PORT || 8080;
-const https_port = process.env.HTTPS_PORT || 8080
+//set up body-parser
+app.use(bodyParser.json());
 
 
 // add CORS
@@ -44,7 +50,8 @@ app.use(limiter);
 const blog = require('./routes/blog')
 const login = require('./routes/login.js')
 const admin = require('./routes/admin')
-const api = require('./routes/api.js')
+const api = require('./routes/api.js');
+
 app.use('/blog', blog)
 app.use('/login', login)
 app.use('/admin', admin)
