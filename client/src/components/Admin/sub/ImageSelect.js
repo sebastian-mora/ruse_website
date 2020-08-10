@@ -6,14 +6,14 @@ import {useDropzone} from 'react-dropzone'
 
 import {getImages, uploadImage} from '../../../api/adminApi'
 import style from './ImageSelect.module.css'
-import { UPDATE_EDITOR_BLOG } from '../../../redux/actions/types';
+import { UPDATE_EDITOR_POST, UPDATE_EDITOR_BLOG } from '../../../redux/actions/types';
+
 
 
 
 const ImageSelect = (props) => {
 
   const [images, setImages] = useState([])
-  const {post} =  useSelector(state => state.editor.editorBlog)
   const dispatch = useDispatch()
 
   useEffect( () => {
@@ -34,7 +34,7 @@ const ImageSelect = (props) => {
   function imgClick(e) {
 
     const html_img = `<img alt="null" src="${e.target.src}">`
-    dispatch({type: UPDATE_EDITOR_BLOG, payload:{post: post + `\n ${html_img}`} })
+    dispatch({type: UPDATE_EDITOR_BLOG, payload: {...props.blog, post: props.blog.post + '\n' +  html_img }})
   }
 
   const onDrop = useCallback(acceptedFiles => {
@@ -76,4 +76,24 @@ const ImageSelect = (props) => {
   )
 }
 
-export default connect()(ImageSelect);
+const mapToProps= (state) =>{
+
+  let {post, title, date ,isPosted, id, category} = state.editor.editorBlog
+  let {isNewPost, categories, preview} = state.editor;
+
+  return {
+    blog:{
+      post,
+      title,
+      date,
+      isPosted,
+      id,
+      category
+    },
+    isNewPost,
+    categories,
+    preview
+  }
+}
+
+export default connect(mapToProps)(ImageSelect);
