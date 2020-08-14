@@ -83,7 +83,8 @@ class BlogEditor extends Component {
       return <Preview></Preview>
     }
 
-    return <AceEditor
+
+    return <div><AceEditor
       mode="html"
       theme="monokai"
       onChange={this.editorOnChange}
@@ -94,7 +95,7 @@ class BlogEditor extends Component {
       width="1000"
       heigh="700"
       />
-    
+    </div>
   }
 
 
@@ -131,11 +132,6 @@ class BlogEditor extends Component {
     
           {this.renderEditor()}
           
-
-        
-
-     
-
       </div>
     );
   }

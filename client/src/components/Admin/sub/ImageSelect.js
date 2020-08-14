@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import {} from '../../../redux/actions/blogActions';
 
 import {useDropzone} from 'react-dropzone'
 
 import {getImages, uploadImage} from '../../../api/adminApi'
 import style from './ImageSelect.module.css'
-import { UPDATE_EDITOR_POST, UPDATE_EDITOR_BLOG } from '../../../redux/actions/types';
+import { UPDATE_EDITOR_BLOG } from '../../../redux/actions/types';
 
 
 
@@ -33,7 +33,7 @@ const ImageSelect = (props) => {
 
   function imgClick(e) {
 
-    const html_img = `<img alt="null" src="${e.target.src}">`
+    const html_img = `<img alt="null" width="" height="" src="${e.target.src}">`
     dispatch({type: UPDATE_EDITOR_BLOG, payload: {...props.blog, post: props.blog.post + '\n' +  html_img }})
   }
 
@@ -46,8 +46,7 @@ const ImageSelect = (props) => {
         })
   }, [])
 })
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-
+  const {getRootProps, getInputProps} = useDropzone({onDrop})
   
   return (
     
@@ -55,6 +54,7 @@ const ImageSelect = (props) => {
 
       {/* Show images */}
       <div>
+
         {images.map((image) => {
               return (
                   <div key={image.url}  className={style.thumbnail} >
