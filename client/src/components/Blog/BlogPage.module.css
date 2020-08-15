@@ -45,3 +45,12 @@ div p:first-of-type{
 div ul li {
   padding-bottom: 2%;
 }
+
+.post img {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -44,12 +44,13 @@ export default function(state=intialState, action){
         editorBlog: state.blogs.find(blog => blog.id === parseInt(action.payload))
       }
     
+      // update all blog editor attriubutes
     case UPDATE_EDITOR_BLOG:
       return {
         ...state,
         editorBlog: action.payload
       }
-
+    
     case CLOSE_EDITOR_BLOG:
       return {
         ...state,
@@ -58,6 +59,7 @@ export default function(state=intialState, action){
         "editorBlog": {
           id: null,
           title: "",
+          post:"",
           date: "",
           isPosted: false,
           views: 0

@@ -51,7 +51,6 @@
 
 }
 
-
 .form checkbox {
   width: 40px;
   height: 10px;
@@ -59,4 +58,8 @@
   margin: 20px 80px;
   position: relative;
   border-radius: 3px;
+}
+
+.CollapsibleOpen{
+  background-color: #5555;
 }

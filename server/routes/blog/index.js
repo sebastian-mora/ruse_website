@@ -1,11 +1,9 @@
 var express = require('express')
 var router = express.Router()
 
-const verifyToken = require('./middleware/Auth')
-const {getAllBlogs, getBlogByID, getCategories, addBlog, updateBlog, deleteBlog}  = require('../database/blogInterface')
+const verifyToken = require('../middleware/Auth')
+const {getAllBlogs, getBlogByID, getCategories, addBlog, updateBlog, deleteBlog}  = require('../../database/blogInterface')
 const jwt = require('jsonwebtoken');
-
-router.use(express.json())
 
 
 // create a GET route
@@ -81,7 +79,7 @@ router.post('/create', verifyToken, (req,res) =>{
 });
 
 router.post('/update',verifyToken ,(req,res) =>{
-
+  console.log(req.body);
   updateBlog(req.body).then(()=>{
     res.sendStatus(200);
   }).catch( (err) => {

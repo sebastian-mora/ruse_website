@@ -80,8 +80,6 @@ function updateBlog(blog)
     find_or_create_category(blog.category).then((result)=>{
       let category_id = result[0].id
 
-      console.log(category_id);
-
       blog = {...blog,
         category: category_id
       }
@@ -116,7 +114,6 @@ function deleteBlog(id)
 
 function find_or_create_category(category_name){
   return new Promise((resolve, reject) =>{ 
-    console.log(category_name);
     pool.query('INSERT IGNORE INTO categories SET name=? ', category_name, (err)=>{
       if(err)
         reject()
