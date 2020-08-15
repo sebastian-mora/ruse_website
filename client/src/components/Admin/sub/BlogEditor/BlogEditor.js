@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs, togglePreview} from '../../../redux/actions/blogActions'
+import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs, togglePreview} from '../../../../redux/actions/blogActions'
 
 
 import AceEditor from "react-ace";
 import Collapsible from 'react-collapsible';
 import Preview from './Preview'
-import ImageSelect from './ImageSelect'
+import ImageSelect from './ImageSelect/ImageSelect'
 
 import style from './BlogEditor.module.css'
 import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/theme-monokai";
-import Dropdown from './Dropdown'
+import Dropdown from '../Dropdown'
 
 class BlogEditor extends Component {
 

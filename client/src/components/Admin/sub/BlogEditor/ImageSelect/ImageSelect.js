@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { connect, useDispatch } from 'react-redux';
-import {} from '../../../redux/actions/blogActions';
+import {} from '../../../../../redux/actions/blogActions';
 
 import {useDropzone} from 'react-dropzone'
 
-import {getImages, uploadImage} from '../../../api/adminApi'
+import {getImages, uploadImage} from '../../../../../api/adminApi'
 import style from './ImageSelect.module.css'
-import { UPDATE_EDITOR_BLOG } from '../../../redux/actions/types';
+import { UPDATE_EDITOR_BLOG } from '../../../../../redux/actions/types';
 
 
 

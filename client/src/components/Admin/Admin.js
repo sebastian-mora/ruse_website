@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 
 import Dropdown from './sub/Dropdown'
-import BlogEditor from './sub/BlogEditor';
+import BlogEditor from './sub/BlogEditor/BlogEditor';
 import style from './Admin.module.css'
 
 import { connect } from 'react-redux';
