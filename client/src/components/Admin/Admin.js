@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 
 import Dropdown from './sub/Dropdown'
 import BlogEditor from './sub/BlogEditor/BlogEditor';
-import UserEdit from './sub/User/'
 import style from './Admin.module.css'
 
 import { connect } from 'react-redux';
 import {loadBlogs, closeEditorBlog, openNewBlog, selectBlog, loadCategories} from '../../redux/actions/blogActions'
+import Users from './sub/Users';
 
 
 
@@ -52,7 +52,7 @@ class Admin extends Component {
           {!this.state.manageUsers &&
             <>
             
-            <UserEdit></UserEdit>
+            <Users></Users>
             </>
           }
           
