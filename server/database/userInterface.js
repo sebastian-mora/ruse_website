@@ -10,11 +10,11 @@ function getAllUsers(){
   })
 }
 
-function deleteUser(user_id){
+function deleteUser(userid){
   return new Promise((resolve, reject) =>{
-    if(!user_id){reject()}
-    user_id = Number(user_id)
-    pool.query('DELETE FROM users WHERE userid=?', user_id ,(err, rows) =>{
+    if(!userid){reject()}
+    userid = Number(userid)
+    pool.query('DELETE FROM users WHERE userid=?', userid ,(err, rows) =>{
       if(err){reject(err)}
       resolve(rows)
     })
@@ -31,9 +31,22 @@ function addUser(user_data){
   })
 }
 
+// THIS COULD LEAD TO IDOR but this route is only for admin so it
+//  should be okay
+function changePassword(userid){
+  return new Promise((resolve, reject) =>{ 
+    if(!userid){reject()}
+    pool.query('UPDATE users SET pw_hash=? WHERE userid=?', [pw_hash, userid], (err, rows) =>{ 
+      if(err){reject(err)}
+      resolve(rows)
+    })
+  })
+}
+
 
 module.exports = {
   getAllUsers,
   deleteUser, 
+  changePassword,
   addUser
 }

@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const AWS = require('aws-sdk')
 
-// const verifyToken = require('../middleware/Auth')
+const verifyToken = require('../middleware/Auth')
 const s3 = new AWS.S3()
 
-// router.use(verifyToken)
+router.use(verifyToken)
 
 router.use('/upload', require('./upload.js'))
 router.use('/user', require('./user.js'))

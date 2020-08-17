@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {getAllUsers, addUser, deleteUser}  = require('../../database/userInterface')
+const {getAllUsers, addUser, deleteUser, changePassword}  = require('../../database/userInterface')
 const bcrypt = require('bcryptjs');
 
 
@@ -33,9 +33,9 @@ router.post('/add', async (req, res) =>{
 })
 
 router.post('/delete', async (req, res) =>{
-  let user_id = req.body.user_id;
+  let userid = req.body.userid;
 
-  deleteUser(user_id).then((result) =>{
+  deleteUser(userid).then((result) =>{
     res.sendStatus(200)
   })
   .catch((err) =>{
@@ -44,10 +44,19 @@ router.post('/delete', async (req, res) =>{
   })
 })
 
-router.post('/edit', (res, req) =>{
-  res.setEncoding("edit")
-})
+router.post('/reset', async (req, res) =>{
+  let password = req.body.pass;
+  let userid = req.body.userid;
+  try {
+    pw_hash = await generateHash(password)
+    changePassword(userid, pw_hash)
+    res.sendStatus(200)
+  } catch (error) {
+    res.sendStatus(500)
+  }
+  
 
+})
 
 function generateHash(password){
   return new Promise((resolve, reject) =>{

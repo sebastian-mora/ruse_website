@@ -46,3 +46,21 @@ export function deleteUser(user_id){
     throw err.request.response
   });
 }
+
+export function addUser(user_data){
+  return axios.post(`${API_ENDPOINT}/admin/user/add`, user_data).then(res => {
+    return res.data
+  })
+  .catch(err => {
+    throw err.request.response
+  });
+}
+
+export function resetPassword(userid, pass){
+  return axios.post(`${API_ENDPOINT}/admin/user/reset`, {userid, pass}).then(res => {
+    return res.data
+  })
+  .catch(err => {
+    throw err.request.response
+  });
+}

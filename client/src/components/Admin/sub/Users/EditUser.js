@@ -1,12 +1,13 @@
 import React from 'react';
 import style from './EditUser.module.css'
+import {resetPassword} from '../../../../api/adminApi'
 
 class EditUser extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
-      "pass": "",
+      "password": "",
       "pass_confirm": ""
     }
 
@@ -15,19 +16,19 @@ class EditUser extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) { this.setState({[e.target]: e.target.value });  }
+  handleChange(e) { this.setState({[e.target.name]: e.target.value });  }
 
   handleSubmit(e) {
     e.preventDefault();
 
-    if(this.state.pass !== this.state.pass_confirm){
+    if(this.state.password !== this.state.pass_confirm){
       alert("Passwords do not match")
     }
-    else if(!this.state.pass){alert("Enter a password")}
+    else if(!this.state.password){alert("Enter a password")}
 
     else{
-      
-
+      resetPassword(this.props.user.userid, this.state.password).then(() =>{alert("Password changed")})
+      .catch((err)=> console.log(err))
     }
     
   }
@@ -48,9 +49,9 @@ class EditUser extends React.Component {
 
       <form onSubmit={this.handleSubmit}>
         <label>Change Password</label>
-        <input type="password" name="pass"/>
+        <input type="password" name="password" onChange={this.handleChange}/>
         <label>Confirm Password</label>
-        <input type="password" name="pass_confirm"/>
+        <input type="password" name="pass_confirm" onChange={this.handleChange}/>
         <button type="submit">Change</button>
       </form>
 
