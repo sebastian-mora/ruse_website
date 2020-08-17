@@ -27,3 +27,22 @@ export function uploadImage(blog_id, image){
     throw err.request.response
   });
 }
+
+
+export function getUsers(){
+  return axios.get(`${API_ENDPOINT}/admin/user/list`).then(res => {
+    return res.data
+  })
+  .catch(() => {
+    return false
+  });
+}
+
+export function deleteUser(user_id){
+  return axios.post(`${API_ENDPOINT}/admin/user/delete`, {user_id}).then(res => {
+    return res.data
+  })
+  .catch(err => {
+    throw err.request.response
+  });
+}

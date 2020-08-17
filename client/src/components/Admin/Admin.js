@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import Dropdown from './sub/Dropdown'
 import BlogEditor from './sub/BlogEditor/BlogEditor';
+import UserEdit from './sub/User/'
 import style from './Admin.module.css'
 
 import { connect } from 'react-redux';
@@ -12,7 +13,9 @@ import {loadBlogs, closeEditorBlog, openNewBlog, selectBlog, loadCategories} fro
 
 class Admin extends Component {
 
-  //
+  state = {
+    manageUsers: false
+  }
   
   // Get all the blogs on load
   componentDidMount() {
@@ -20,14 +23,12 @@ class Admin extends Component {
     this.props.dispatch(loadCategories())
   }
 
-
-
-
   render() {
 
     const onCloseClick = () =>{this.props.dispatch(closeEditorBlog())}
     const onNewClick = () =>{this.props.dispatch(openNewBlog())}
     const onBlogSelectClick = (e) =>{if(e.target.value) this.props.dispatch(selectBlog(e.target.value));}
+    const onManageClick = () => {this.setState({manageUsers:!this.state.manageUsers})}
 
 
     return (
@@ -46,13 +47,23 @@ class Admin extends Component {
           {!this.props.editorShow &&
              <button onClick={onNewClick}>New</button>
           }
+
+          <button onClick={onManageClick}>Manage Users</button>
+          {!this.state.manageUsers &&
+            <>
+            
+            <UserEdit></UserEdit>
+            </>
+          }
+          
           
         </div>
     ) 
   }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state, ownProps) =>{
+  
   return {
     editorShow: state.editor.editorShow,
     blogs: state.editor.blogs
