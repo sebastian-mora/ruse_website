@@ -2,6 +2,11 @@
   color: white;
 }
 
+.data{
+  padding: 1%;
+  background-color: #353333;
+}
+
 .attribute {
   font-weight: bold;
 }

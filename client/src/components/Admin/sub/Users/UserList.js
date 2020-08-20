@@ -1,9 +1,10 @@
 import React from 'react';
 import style from './UserList.module.css'
 
-
 const UserList = ({users, onClick}) => {
-
+  if(!users){
+    users = []
+  }
   return (
     <div className={style.container}>
 

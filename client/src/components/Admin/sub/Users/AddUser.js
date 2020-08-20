@@ -1,14 +1,19 @@
 import React from 'react';
 import style from './EditUser.module.css'
-import {resetPassword, deleteUser} from '../../../../api/adminApi'
+import {addUser} from '../../../../api/adminApi'
 
-class EditUser extends React.Component {
+class AddUser extends React.Component {
 
   constructor(props){
     super(props)
+
     this.state = {
-      "password": "",
-      "pass_confirm": ""
+
+        "username":"",
+        "email":"",
+        "password": "",
+        "pass_confirm":""
+      
     }
 
 
@@ -27,36 +32,30 @@ class EditUser extends React.Component {
     else if(!this.state.password){alert("Enter a password")}
 
     else{
-      resetPassword(this.props.user.userid, this.state.password).then(() =>{alert("Password changed")})
+      addUser(this.state).then(() =>{alert("User Created")})
       .catch((err)=> console.log(err))
     }
-    
   }
 
   render() {
     return (
       <div className={style.container}>
-
-        {Object.keys(this.props.user).map((key) => {
-          return (
-            <div className={style.data}>
-              <label className={style.attribute}>{key}: </label>
-              {this.props.user[key]}
-            </div>
-          )
-        })}
-
-
+        
       <form onSubmit={this.handleSubmit}>
-        <label>Change Password</label>
+        <label>Username</label>
+        <input type="text" name="username" onChange={this.handleChange}/>
+
+        <label>Email</label>
+        <input type="text" name="email" onChange={this.handleChange}/>
+
+        <label>Password</label>
         <input type="password" name="password" onChange={this.handleChange}/>
+
         <label>Confirm Password</label>
         <input type="password" name="pass_confirm" onChange={this.handleChange}/>
-        <button type="submit">Change</button>
+
+        <button type="submit">Add</button>
       </form>
-
-      <button onClick={this.props.deleteUser} value={this.props.user.userid}>Delete</button>
-
     </div>
 
 
@@ -66,4 +65,4 @@ class EditUser extends React.Component {
   
 }
 
-export default EditUser;
+export default AddUser;

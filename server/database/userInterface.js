@@ -21,10 +21,9 @@ function deleteUser(userid){
   })
 }
 
-function addUser(user_data){
+function addUser(username, email, pw_hash){
   return new Promise((resolve, reject) =>{
-    if(!user_data){reject()}
-    pool.query('INSERT INTO users SET ?', user_data ,(err, rows) =>{
+    pool.query('INSERT INTO users SET pw_hash=?, username=?, email=?', [username, email, pw_hash] ,(err, rows) =>{
       if(err){reject(err)}
       resolve(rows)
     })

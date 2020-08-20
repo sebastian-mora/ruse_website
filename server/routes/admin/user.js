@@ -22,7 +22,7 @@ router.post('/add', async (req, res) =>{
   // THIS IS UNHANDLED. GO READ ABOUT ERROR HANDLEING
   let pw_hash = await generateHash(req.body.password)
 
-  addUser({username, email, pw_hash})
+  addUser(username, email, pw_hash)
   .then((result) => {
     res.sendStatus(200)
   })
@@ -54,8 +54,6 @@ router.post('/reset', async (req, res) =>{
   } catch (error) {
     res.sendStatus(500)
   }
-  
-
 })
 
 function generateHash(password){

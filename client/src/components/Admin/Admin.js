@@ -51,7 +51,6 @@ class Admin extends Component {
           <button onClick={onManageClick}>Manage Users</button>
           {!this.state.manageUsers &&
             <>
-            
             <Users></Users>
             </>
           }

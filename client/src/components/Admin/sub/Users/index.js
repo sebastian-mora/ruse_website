@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {getUsers} from '../../../../api/adminApi'
+import {getUsers, deleteUser} from '../../../../api/adminApi'
 
 import style from './style.module.css'
 
 import UserList from './UserList';
 import EditUser from './EditUser';
+import AddUser from './AddUser'
 
 const Users = () => {
 
   const [editUser, setEdit] = useState(false);
+  const [addUser, setAddUser]  = useState(false);
   const [userId, setuserId] = useState();
   const [users, setUsers] = useState([]);
   
@@ -32,10 +34,14 @@ const Users = () => {
     setuserId()
   }
 
-  const getUser = (user_id) => {
+  const onAdd = () =>{
+    setAddUser(!addUser)
+  }
+
+  const getUser = (userid) => {
     let x = {}
     users.forEach(user => {
-      if(user.userid === user_id){
+      if(user.userid === userid){
         x = user
       }
     });
@@ -43,13 +49,24 @@ const Users = () => {
     return x
   }
 
+  const removeUser = (e) => {
+    deleteUser(e.target.value)
+    setEdit(false)
+  }
+
   const renderUserView = () =>{
     if(editUser){
       return( 
         <>
-        <EditUser user = {getUser(userId)}/> 
+        <EditUser user = {getUser(userId)} deleteUser={removeUser}/> 
         <button onClick={onClick}>Back</button>
         </>
+      )
+    }
+
+    else if(addUser){
+      return (
+        <AddUser></AddUser>
       )
     }
 
@@ -61,7 +78,7 @@ const Users = () => {
   return (
     <div className={style.container}>
       {renderUserView()}
-
+      <button onClick={onAdd}>Add User</button>
     </div>
   )
 }

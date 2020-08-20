@@ -38,8 +38,8 @@ export function getUsers(){
   });
 }
 
-export function deleteUser(user_id){
-  return axios.post(`${API_ENDPOINT}/admin/user/delete`, {user_id}).then(res => {
+export function deleteUser(userid){
+  return axios.post(`${API_ENDPOINT}/admin/user/delete`, {userid}).then(res => {
     return res.data
   })
   .catch(err => {
@@ -47,8 +47,8 @@ export function deleteUser(user_id){
   });
 }
 
-export function addUser(user_data){
-  return axios.post(`${API_ENDPOINT}/admin/user/add`, user_data).then(res => {
+export function addUser(username, email, password){
+  return axios.post(`${API_ENDPOINT}/admin/user/add`, username, email, password).then(res => {
     return res.data
   })
   .catch(err => {
