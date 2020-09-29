@@ -47,7 +47,18 @@ const ImageSelect = (props) => {
   }, [])
 })
   const {getRootProps, getInputProps} = useDropzone({onDrop})
-  
+  const render_images = () => {
+    if(images){
+      {images.map((image) => {
+        return (
+            <div key={image.url}  className={style.thumbnail} >
+              <img onClick={imgClick} alt={image.filename} src={image.url}/>
+              <p>{image.filename}</p>
+            </div> 
+          )  
+      })}
+    }
+  }
   return (
     
     <div>
@@ -55,14 +66,8 @@ const ImageSelect = (props) => {
       {/* Show images */}
       <div>
 
-        {images.map((image) => {
-              return (
-                  <div key={image.url}  className={style.thumbnail} >
-                    <img onClick={imgClick} alt={image.filename} src={image.url}/>
-                    <p>{image.filename}</p>
-                  </div> 
-                )  
-            })}
+        {render_images()}
+ 
       </div>
       
 
