@@ -28,9 +28,9 @@ function getAllBlogs(isAdmin=false){
 
 function getCategories(){
   return new Promise((resolve, reject) => {
-    pool.query('SELECT name from categories', (err, rows) => {
+    pool.query('SELECT id, name from categories', (err, rows) => {
       if(err){ reject(err) }
-      rows = rows.map( (row) => {return row.name})
+
       resolve(rows)
     })
   })
