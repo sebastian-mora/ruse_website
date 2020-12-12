@@ -6,7 +6,7 @@ function getAllBlogs(isAdmin=false){
     // The Promise constructor should catch any errors thrown on
     // this tick. Alternately, try/catch and reject(err) on catch.
 
-    var query_str = 'select blogs.title, blogs.id, blogs.post, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE isPosted=true'
+    var query_str = 'select blogs.title, blogs.id, blogs.postURL, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE isPosted=true'
 
     //select title,id,post,date,views, c1.name catagory from blogs left join catagories c1 on (blogs.category_id=c1.id);
 
