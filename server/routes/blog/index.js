@@ -6,7 +6,7 @@ const {getAllBlogs, getBlogByID, getCategories, addBlog, updateBlog, deleteBlog}
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 
-const {uploadBlogFile, deleteBlogFile} = require('../../s3/S3Interface')
+const {uploadBlogFile, deleteBlogFile, getBlogFileContents} = require('../../s3/S3Interface')
 
 
 //TODO: Add input validation on body params. 
@@ -56,16 +56,38 @@ router.get('/:id', (req, res) =>{
 
   const id = req.params.id;
 
-  getBlogByID(id)
-  .then( (results) => {
 
-    // check out why this uses a zero
-    res.send(results[0])
-  })
-  .catch((err) => {
-    console.log(err);
-    res.sendStatus(500)
-  })
+  // Get blog metadata from DB 
+  getBlogByID(id)
+    .then( (results) => {
+      if(results.length <= 0){
+        res.sendStatus(404)
+        return
+      }
+      
+      var {id, title, date, views, category, post } = results[0];
+      
+      getBlogFileContents(id).then((post) => { 
+        res.send({id, title, date, views, category, post})
+      })
+      
+      // If s3 fetch fails 
+      .catch((err) => {
+        if (err.code == 'NoSuchKey') {
+          res.sendStatus(404)
+        }
+        else {
+          console.error(err);
+          res.sendStatus(500)
+        }   
+      })
+    })
+
+    // If get Blog meta fails
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500)
+    })
 
 });
 
@@ -93,7 +115,6 @@ router.post('/create', verifyToken, (req,res) =>{
       res.sendStatus(200)
     })
     .catch((err) => {
-      console.log(err);
       res.status(400).send("Missing some data")
     });
   });

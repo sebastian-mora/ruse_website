@@ -41,10 +41,27 @@ deleteBlogFile = (id) => {
 }
 
 
+getBlogFileContents = (id) => {
+  const params = {
+    Bucket: process.env.S3_BUCKET,
+    Key: `${s3_path}${id}/` + blog_filename
+  }
+
+  return new Promise((resolve, reject) => {
+    s3.getObject(params, (err, data) =>{ 
+      if(err){
+        reject(err)
+      }
+      resolve(data.Body.toString())
+    })
+  })
+}
+
 
 module.exports = {
   uploadBlogFile,
-  deleteBlogFile
+  deleteBlogFile,
+  getBlogFileContents
 }
 
 
