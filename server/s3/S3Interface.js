@@ -47,12 +47,21 @@ getBlogFileContents = (id) => {
     Key: `${s3_path}${id}/` + blog_filename
   }
 
+  
+
   return new Promise((resolve, reject) => {
     s3.getObject(params, (err, data) =>{ 
+      
       if(err){
         reject(err)
       }
-      resolve(data.Body.toString())
+
+      if(data.Body){
+        resolve(data.Body.toString())
+      }
+
+      reject()
+      
     })
   })
 }

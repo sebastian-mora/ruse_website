@@ -31,9 +31,18 @@ DONE
   - Chance for desync here
 
 ### React 
-* Check out blog.js and check if it needs reworked.
+
+DONE 
 * Rework BlogPage.js to rener .md files
   - md file should be request by client from s3
+
+DONE 
 * Rework BlogPage.css for .md files 
+
+TODO
 * Blog editor change syntax type
+This needs alot of work to deal with the new api calls
+
+TODO
+* Error handling when requesting a page that does not exist 
 
