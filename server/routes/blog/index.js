@@ -9,6 +9,8 @@ const { v4: uuidv4 } = require('uuid');
 const {uploadBlogFile, deleteBlogFile} = require('../../s3/S3Interface')
 
 
+//TODO: Add input validation on body params. 
+//      Input is only submited and edited by admin risk is reduced but not great
 
 // create a GET route
 router.get('/', async (req, res) => {
@@ -100,18 +102,27 @@ router.post('/create', verifyToken, (req,res) =>{
   
 });
 
-router.post('/update',verifyToken ,(req,res) =>{
+router.post('/update', verifyToken, (req,res) =>{
 
   const id  = req.body.id;
   const post  = req.body.post;
-  var postURL;  
-
+ 
   // Update the blog file
   uploadBlogFile(id, post).then((url) => {
-    var postURL = url;
+
+    // TODO: Fix this code here
+    
+    const blog = {
+      id: req.body.id,
+      title: req.body.title,
+      date: req.body.date,
+      category: req.body.category,
+      isPosted: req.body.isPosted
+    }
+
 
     // Update the database metadata
-    updateBlog(req.body).then(()=>{
+    updateBlog(blog).then(()=>{
       res.sendStatus(200);
     }).catch( (err) => {
       console.log(err);
