@@ -12,6 +12,7 @@ const {uploadBlogFile, deleteBlogFile} = require('../../s3/S3Interface')
 //TODO: Add input validation on body params. 
 //      Input is only submited and edited by admin risk is reduced but not great
 
+
 // create a GET route
 router.get('/', async (req, res) => {
 
@@ -29,7 +30,6 @@ router.get('/', async (req, res) => {
       if(blog.isPosted != null){
         blog.isPosted = Boolean(blog.isPosted)     
       }
-      
     })
     res.send(results)
   })
@@ -52,11 +52,9 @@ router.get('/categories', (req, res) => {
 });
 
 
-
 router.get('/:id', (req, res) =>{
 
   const id = req.params.id;
-
 
   getBlogByID(id)
   .then( (results) => {
@@ -147,7 +145,7 @@ router.post('/delete', verifyToken, (req, res) => {
   })
 });
 
-
+// TODO: Is this needed here? 
 function checkJwt(token){
   
   return jwt.verify(token, process.env.JWT_SECERT, (err, data) => {
