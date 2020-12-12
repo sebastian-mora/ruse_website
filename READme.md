@@ -8,14 +8,25 @@ mysql will store metadata about blog but blog file (.md) will be stored in s3.
 
 ### API
 
+DONE
 * Create s3 folder for .md files
   - have it follow some type of format. Image should be saved with the blogs.
+
+  Folder has been created at /blogs. folder will be uuids from db
+
+DONE
 * Update getAllBlogs "blog interface" to return metadata + .md file url
   - This should reudce the size of request by alot
+
+DONE
 * Update /blogs
   - Have it return only relevent metadata
+DONE 
+
 * Update /create (addBlog method) to add metadata then upload .md file 
   - route needs to take data and convert to file to upload.
+
+DONE 
 * Update /delete to remove sql and s3 
   - Chance for desync here
 
