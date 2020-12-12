@@ -58,7 +58,6 @@ function addBlog(blog){
     blog = {...blog,
       category: category_id
     }
-    delete blog.id
 
     pool.query('INSERT INTO blogs SET ?', blog, (err) =>{
       if(err){
@@ -69,8 +68,6 @@ function addBlog(blog){
   }))
     
 }
-
-
 
 
 function updateBlog(blog)
@@ -84,7 +81,7 @@ function updateBlog(blog)
         category: category_id
       }
 
-      pool.query('UPDATE blogs SET ? WHERE id=?', [{title,date,post,isPosted,category_id}=blog, blog.id] , (err)=>{
+      pool.query('UPDATE blogs SET ? WHERE id=?', [{ title, date, postURL, isPosted, category_id } = blog, blog.id] , (err)=>{
         if(err)
           return reject(err);
         resolve();
