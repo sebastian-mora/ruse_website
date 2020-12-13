@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs, togglePreview} from '../../../redux/actions/blogActions'
 
 
-import AceEditor from "react-ace";
 import Collapsible from 'react-collapsible';
-import Preview from './Preview'
+
 import ImageSelect from './ImageSelect'
+import MDEditor from '@uiw/react-md-editor';
 
 import style from './BlogEditor.module.css'
-import "ace-builds/src-noconflict/mode-html";
-import "ace-builds/src-noconflict/theme-monokai";
 import Dropdown from './Dropdown'
 
 class BlogEditor extends Component {
@@ -78,29 +76,44 @@ class BlogEditor extends Component {
     this.props.dispatch(togglePreview())
   }
 
+  categorySelect = (e) =>{
+    // Work around method to get the name not the id of the selected catagory.
+    var index = e.nativeEvent.target.selectedIndex;
+    this.props.dispatch(  
+      updateEditorBlog({...this.props.blog,
+      category : e.nativeEvent.target[index].text
+    }))
+  }
+
+  getCurrentCategory = () => {
+    if (this.props.blog.category){
+      return this.props.categories.find(c => c.name === this.props.blog.category).id
+    }
+
+    else{
+      return this.props.categories
+    }
+  }
+
   renderEditor = () =>{
     if(this.props.preview){
-      return <Preview></Preview>
+      return <div className="container"> <MDEditor.Markdown source={this.props.blog.post} /></div>
     }
 
 
-    return <div><AceEditor
-      mode="html"
-      theme="monokai"
-      onChange={this.editorOnChange}
-      value={this.props.blog.post}
-      name="Editor"
-      fontSize= {16}
-      className={style.Editor}
-      width="1000"
-      heigh="700"
-      />
-    </div>
+    return(
+      <div className="container">
+            <MDEditor
+              value={this.props.blog.post}
+              onChange={this.editorOnChange}
+              height={500}
+            />
+          </div>
+    )
   }
 
-
-
   render () {
+
 
     return (
       <div className={style.container}>
@@ -112,8 +125,11 @@ class BlogEditor extends Component {
             <label>Date</label>
             <input type="date" name = "date" onChange={this.editorOnChange} value={this.props.blog.date}/>
 
+
+            {/* This categories is mapped to {title, id } to match dropdown structure */}
+
             <label>Category</label>
-            <Dropdown name={"category"} defaultValue={this.props.blog.category} options={this.props.categories.map((cat) => {return {title:cat, id:cat}})} onChange={this.editorOnChange}/>
+            <Dropdown name={"category"} defaultValue={ this.getCurrentCategory() } options={this.props.categories.map((cat) => {return {title:cat.name, id:cat.id}})} onChange={this.categorySelect}/>
 
 
 
@@ -123,7 +139,7 @@ class BlogEditor extends Component {
             <button onClick={this.saveClick}>Save</button>
             <button onClick={this.deleteClick}>Delete</button>
             <button onClick={this.previewClick}>Preview</button>
-            </div>
+          </div>
 
 
             <Collapsible className={style.Collapsible} contentOuterClassName={style.CollapsibleOpen} contentInnerClassName={style.CollapsibleInner} trigger={<button>Images</button>}>
@@ -139,7 +155,7 @@ class BlogEditor extends Component {
 
 const mapToProps= (state) =>{
 
-  let {post, title, date ,isPosted, id, category} = state.editor.editorBlog
+  let {post, title, date ,isPosted, category, id} = state.editor.editorBlog
   let {isNewPost, categories, preview} = state.editor;
 
   return {
@@ -148,8 +164,8 @@ const mapToProps= (state) =>{
       title,
       date,
       isPosted,
-      id,
-      category
+      category,
+      id
     },
     isNewPost,
     categories,
