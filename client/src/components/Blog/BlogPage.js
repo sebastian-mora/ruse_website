@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Redirect} from 'react-router-dom';
+
 import ReactMarkdown from 'react-markdown'
 
 import style from './BlogPage.module.css'
@@ -22,7 +22,7 @@ const BlogPage = (props) => {
         setError("")
       })
       .catch((err) =>{
-        if(err.response.status == 404){
+        if(err.response.status === 404){
           setError("Blog not Found")
         }
       })
