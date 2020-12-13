@@ -18,6 +18,7 @@ const Blog = () => {
       getBlogs().then(res => {
         // When the blogs are loaded sort them into their catagories 
         setBlogs(processCategories(res));  
+        console.log(res);
       })
       .catch(err => {
         setErr(err)
@@ -68,7 +69,7 @@ const Blog = () => {
   return (
     <div className={style.center}>
 
-      <h1>Blogs:</h1>
+      <h1 className={style.pageTitle}>Blogs:</h1>
 
   
       <ul className={style.root}>
