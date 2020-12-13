@@ -60,6 +60,7 @@ router.get('/:id', (req, res) =>{
   // Get blog metadata from DB 
   getBlogByID(id)
     .then( (results) => {
+
       if(results.length <= 0){
         res.sendStatus(404)
         return
@@ -73,7 +74,9 @@ router.get('/:id', (req, res) =>{
       
       // If s3 fetch fails 
       .catch((err) => {
+        
         if (err.code == 'NoSuchKey') {
+          
           res.sendStatus(404)
         }
         else {
@@ -85,6 +88,7 @@ router.get('/:id', (req, res) =>{
 
     // If get Blog meta fails
     .catch((err) => {
+      
       console.error(err);
       res.sendStatus(500)
     })
@@ -147,18 +151,23 @@ router.post('/update', verifyToken, (req,res) =>{
       console.log(err);
       res.sendStatus(500)
     })
-
   })
-
-
 });
 
 router.post('/delete', verifyToken, (req, res) => {
 
   const id = req.body.id;
   
+  // Delete blog meta data
   deleteBlog(id).then(() =>{
-    res.sendStatus(200);
+
+    // Delete from s3
+    deleteBlogFile(id).then(() =>{
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+    })
   })
   .catch((err) => {
     console.log(err);
