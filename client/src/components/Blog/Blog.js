@@ -18,7 +18,6 @@ const Blog = () => {
       getBlogs().then(res => {
         // When the blogs are loaded sort them into their catagories 
         setBlogs(processCategories(res));  
-        console.log(res);
       })
       .catch(err => {
         setErr(err)

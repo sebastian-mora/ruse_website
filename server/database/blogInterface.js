@@ -12,7 +12,7 @@ function getAllBlogs(isAdmin=false){
 
     
     if(isAdmin){
-      var query_str = 'select blogs.title, blogs.id, blogs.postURL, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id)'
+      var query_str = 'select blogs.title, blogs.id, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id)'
     }
 
     pool.query(query_str, function (err, rows) {
@@ -38,7 +38,7 @@ function getCategories(){
 
 function getBlogByID(id){
   return new Promise(function(resolve, reject) {
-    pool.query('select blogs.title, blogs.id, blogs.postURL, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? AND isPosted=true', id, function (err, rows) {
+    pool.query('select blogs.title, blogs.id,  blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? AND isPosted=true', id, function (err, rows) {
         if (err) {
             return reject(err);
         }
