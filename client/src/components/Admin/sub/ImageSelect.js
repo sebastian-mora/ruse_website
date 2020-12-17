@@ -9,8 +9,6 @@ import style from './ImageSelect.module.css'
 import { UPDATE_EDITOR_BLOG } from '../../../redux/actions/types';
 
 
-
-
 const ImageSelect = (props) => {
 
   const [images, setImages] = useState([])
@@ -33,40 +31,40 @@ const ImageSelect = (props) => {
 
   function imgClick(e) {
 
-    const html_img = `<img alt="null" width="" height="" src="${e.target.src}">`
+    const html_img = `![alt text](${e.target.src})`
     dispatch({type: UPDATE_EDITOR_BLOG, payload: {...props.blog, post: props.blog.post + '\n' +  html_img }})
   }
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach((file) => {
         uploadImage(props.blog_id, file).then((res) =>{
-          console.log(res);
-        }).catch((err) => {
-          console.log(err);
-        })
-  }, [])
-})
+            console.log(res);
+          }).catch((err) => {
+            console.log(err);
+          })
+    }, [])
+  })
+
   const {getRootProps, getInputProps} = useDropzone({onDrop})
-  const render_images = () => {
-    if(images){
-      {images.map((image) => {
-        return (
-            <div key={image.url}  className={style.thumbnail} >
-              <img onClick={imgClick} alt={image.filename} src={image.url}/>
-              <p>{image.filename}</p>
-            </div> 
-          )  
-      })}
-    }
-  }
+
+
   return (
     
     <div>
 
       {/* Show images */}
       <div>
+        <p>YOOOO</p>
+        {/* {render_images()} */}
 
-        {render_images()}
+        {
+          images.map(image => (
+            <div key={image.url}  className={style.thumbnail} >
+            <img onClick={imgClick} alt={image.filename} src={image.url}/>
+            <p>{image.filename}</p>
+          </div> 
+          ))
+        }
  
       </div>
       
