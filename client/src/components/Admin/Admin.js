@@ -8,6 +8,7 @@ import style from './Admin.module.css'
 import { connect } from 'react-redux';
 import {loadBlogs, closeEditorBlog, openNewBlog, selectBlog, loadCategories} from '../../redux/actions/blogActions'
 
+import {getBlog} from '../../api/blogsApi'; 
 
 
 class Admin extends Component {
@@ -27,7 +28,18 @@ class Admin extends Component {
 
     const onCloseClick = () =>{this.props.dispatch(closeEditorBlog())}
     const onNewClick = () =>{this.props.dispatch(openNewBlog())}
-    const onBlogSelectClick = (e) =>{if(e.target.value) this.props.dispatch(selectBlog(e.target.value));}
+    const onBlogSelectClick = (e) =>{
+      if (e.target.value){
+        // Load the selected blog data and update redux state
+        getBlog(e.target.value)
+          .then((res) => { 
+            this.props.dispatch(selectBlog(res.data));
+          })
+          .catch((err) =>{
+
+          })       
+      } 
+    }
 
 
     return (

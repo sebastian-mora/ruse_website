@@ -1,5 +1,5 @@
 
- div h1{
+.pageTitle {
   color: white;
   border-left: 2px solid #00ff00;
   padding-left: 2%;
@@ -10,6 +10,7 @@
   background-color: #1e1e1e;
   margin-top: 5%;
   padding-top: 3%;
+  padding-bottom: 1%;
 }
 
 .category {
@@ -27,6 +28,7 @@ ul.sub li{
   text-decoration: underline;
   color: white;
   font-size: 16px;
+  padding-top: 1%;
 }
 
 ul.sub li a{
