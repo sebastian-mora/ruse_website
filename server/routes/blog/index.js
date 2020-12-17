@@ -4,7 +4,7 @@ var router = express.Router()
 const verifyToken = require('../middleware/Auth')
 const {getAllBlogs, getBlogByID, getCategories, addBlog, updateBlog, deleteBlog}  = require('../../database/blogInterface')
 const jwt = require('jsonwebtoken');
-const { v4: uuidv4 } = require('uuid');
+const uuid = require('short-uuid');
 
 const {uploadBlogFile, deleteBlogFile, getBlogFileContents} = require('../../s3/S3Interface')
 
@@ -56,7 +56,6 @@ router.get('/:id', (req, res) =>{
 
   const id = req.params.id;
 
-
   // Get blog metadata from DB 
   getBlogByID(id)
     .then( (results) => {
@@ -66,7 +65,11 @@ router.get('/:id', (req, res) =>{
         return
       }
       
-      var {id, title, date, views, category, post } = results[0];
+      var {id, title, date, views, category} = results[0];
+
+      // convert time stamp to date string 
+      date = date.toDateString()
+      
       
       getBlogFileContents(id).then((post) => { 
         res.send({id, title, date, views, category, post})
@@ -109,7 +112,7 @@ router.post('/create', verifyToken, (req,res) =>{
   }
 
   // Upload file to s3 bucket
-  let id = uuidv4();
+  let id = uuid.generate();
   var postURL;   
   
   uploadBlogFile(id, post).then((url) => {
