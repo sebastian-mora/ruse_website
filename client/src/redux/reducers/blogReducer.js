@@ -1,5 +1,6 @@
 import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, LOAD_CATEGORIES, TOGGLE_PREVIEW} from '../actions/types'
 
+
 const intialState = {
   "blogs": [],
   "categories":[],
@@ -9,6 +10,7 @@ const intialState = {
     id: null,
     title: "",
     date: "",
+    post: "",
     isPosted: false,
     category: "",
     views: 0
@@ -36,12 +38,13 @@ export default function(state=intialState, action){
       }
 
     case SELECT_BLOG:
+
       return {
         ...state,
-        selectedBlog: action.payload,
+        selectedBlog: action.payload.id,
         editorShow: true,
         isNewPost: false,
-        editorBlog: state.blogs.find(blog => blog.id === parseInt(action.payload))
+        editorBlog: action.payload
       }
     
       // update all blog editor attriubutes

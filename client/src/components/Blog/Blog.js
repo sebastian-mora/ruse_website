@@ -68,7 +68,7 @@ const Blog = () => {
   return (
     <div className={style.center}>
 
-      <h1>Blogs:</h1>
+      <h1 className={style.pageTitle}>Blogs:</h1>
 
   
       <ul className={style.root}>

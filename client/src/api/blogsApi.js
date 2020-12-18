@@ -11,12 +11,7 @@ export function getBlogs(){
 }
 
 export function getBlog(id){
-  return axios.get(`${API_ENDPOINT}/blog/${id}`).then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err.request);
-  });
+  return axios.get(`${API_ENDPOINT}/blog/${id}`)
 }
 
 export function getCategoriesApi(){
