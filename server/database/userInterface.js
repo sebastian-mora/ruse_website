@@ -23,7 +23,7 @@ function deleteUser(userid){
 
 function addUser(username, email, pw_hash){
   return new Promise((resolve, reject) =>{
-    pool.query('INSERT INTO users SET pw_hash=?, username=?, email=?', [username, email, pw_hash] ,(err, rows) =>{
+    pool.query('INSERT INTO users SET pw_hash=?, username=?, email=?', [pw_hash, username, email ] ,(err, rows) =>{
       if(err){reject(err)}
       resolve(rows)
     })

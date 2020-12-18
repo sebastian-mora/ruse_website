@@ -5,11 +5,11 @@ import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loa
 
 import Collapsible from 'react-collapsible';
 
-import ImageSelect from './ImageSelect'
+import ImageSelect from './ImageSelect/ImageSelect'
 import MDEditor from '@uiw/react-md-editor';
 
 import style from './BlogEditor.module.css'
-import Dropdown from './Dropdown'
+import Dropdown from '../Dropdown'
 
 class BlogEditor extends Component {
 
