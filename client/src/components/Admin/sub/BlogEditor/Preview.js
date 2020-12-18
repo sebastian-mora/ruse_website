@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, useSelector } from 'react-redux';
-import style from '../../Blog/BlogPage.module.css'
+import style from '../../../Blog/BlogPage.module.css'
 
 const Preview = () => {
 

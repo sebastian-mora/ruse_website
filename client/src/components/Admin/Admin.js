@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 
 
 import Dropdown from './sub/Dropdown'
-import BlogEditor from './sub/BlogEditor';
+import BlogEditor from './sub/BlogEditor/BlogEditor';
 import style from './Admin.module.css'
 
 import { connect } from 'react-redux';
 import {loadBlogs, closeEditorBlog, openNewBlog, selectBlog, loadCategories} from '../../redux/actions/blogActions'
+import Users from './sub/Users';
 
 import {getBlog} from '../../api/blogsApi'; 
 
 
 class Admin extends Component {
 
-  //
+  state = {
+    manageUsers: false
+  }
   
   // Get all the blogs on load
   componentDidMount() {
@@ -21,25 +24,12 @@ class Admin extends Component {
     this.props.dispatch(loadCategories())
   }
 
-
-
-
   render() {
 
     const onCloseClick = () =>{this.props.dispatch(closeEditorBlog())}
     const onNewClick = () =>{this.props.dispatch(openNewBlog())}
-    const onBlogSelectClick = (e) =>{
-      if (e.target.value){
-        // Load the selected blog data and update redux state
-        getBlog(e.target.value)
-          .then((res) => { 
-            this.props.dispatch(selectBlog(res.data));
-          })
-          .catch((err) =>{
-
-          })       
-      } 
-    }
+    const onBlogSelectClick = (e) =>{if(e.target.value) this.props.dispatch(selectBlog(e.target.value));}
+    const onManageClick = () => {this.setState({manageUsers:!this.state.manageUsers})}
 
 
     return (
@@ -58,13 +48,22 @@ class Admin extends Component {
           {!this.props.editorShow &&
              <button onClick={onNewClick}>New</button>
           }
+
+          <button onClick={onManageClick}>Manage Users</button>
+          {!this.state.manageUsers &&
+            <>
+            <Users></Users>
+            </>
+          }
+          
           
         </div>
     ) 
   }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state, ownProps) =>{
+  
   return {
     editorShow: state.editor.editorShow,
     blogs: state.editor.blogs

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs, togglePreview} from '../../../redux/actions/blogActions'
+import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs, togglePreview} from '../../../../redux/actions/blogActions'
 
 
 import Collapsible from 'react-collapsible';
