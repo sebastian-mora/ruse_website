@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   // Get auth header value
   const bearerHeader = req.headers['fuckyou-key'];
   var isAdmin  = checkJwt(bearerHeader)
-
+  
   getAllBlogs(isAdmin) 
   .then( (results) => {
     // Convert DateTime to Date for HTML
