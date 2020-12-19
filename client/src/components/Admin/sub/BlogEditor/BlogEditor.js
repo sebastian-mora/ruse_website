@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs, togglePreview} from '../../../../redux/actions/blogActions'
+import {loadBlogs} from '../../../../redux/actions/blogActions'
+import {updateBlog, updateEditorBlog, fetchBlog, postBlog, closeEditorBlog, deleteBlog, togglePreview} from '../../../../redux/actions/editorActions'
 
 
 import Collapsible from 'react-collapsible';
@@ -12,8 +13,6 @@ import style from './BlogEditor.module.css'
 import Dropdown from '../Dropdown'
 
 class BlogEditor extends Component {
-
-  
 
   editorOnChange = (e) => {
 
@@ -48,7 +47,6 @@ class BlogEditor extends Component {
       [e.target.name] : e.target.value
     }))
   };
-
 
 
   saveClick = () => {
@@ -96,10 +94,16 @@ class BlogEditor extends Component {
   }
 
   renderEditor = () =>{
+
+    // If blog is not loaded 
+    if(!this.props.loaded){
+
+      this.props.dispatch(fetchBlog(this.props.blog.id))
+    }
+
     if(this.props.preview){
       return <div className="container"> <MDEditor.Markdown source={this.props.blog.post} /></div>
     }
-
 
     return(
       <div className="container">
@@ -156,7 +160,8 @@ class BlogEditor extends Component {
 const mapToProps= (state) =>{
 
   let {post, title, date ,isPosted, category, id} = state.editor.editorBlog
-  let {isNewPost, categories, preview} = state.editor;
+  let {isNewPost, preview, loaded} = state.editor;
+  let categories = state.blogs.categories;
 
   return {
     blog:{
@@ -169,6 +174,7 @@ const mapToProps= (state) =>{
     },
     isNewPost,
     categories,
+    loaded,
     preview
   }
 }
