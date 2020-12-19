@@ -27,7 +27,7 @@ export default function(state=intialState, action){
         }
 
     case LOGIN_FAIL:
-      sessionStorage.clear('jwt')
+
       return {
         ...state,
         token: null,
@@ -37,7 +37,6 @@ export default function(state=intialState, action){
       }
 
     case LOGOUT_SUCESSS:
-      sessionStorage.clear('jwt')
       return {
         ...state,
         token: null,
@@ -46,7 +45,6 @@ export default function(state=intialState, action){
       }
     
     case FAILED_AUTH_CHECK:
-      sessionStorage.clear('jwt')
       return {
         ...state,
         token: null,

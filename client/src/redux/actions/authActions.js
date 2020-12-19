@@ -4,7 +4,8 @@ import {
   LOGIN_FAIL,
   USER_LOADED,
   LOGIN_SUCCESS,
-  FAILED_AUTH_CHECK
+  FAILED_AUTH_CHECK, 
+  LOGOUT_SUCESSS
 } from '../actions/types'
 
 
@@ -36,8 +37,6 @@ export const loginUser = (username, password) =>{
     })
   }
 }
-
-  
 
 
 export const checkToken = () => {
@@ -73,5 +72,12 @@ export const checkToken = () => {
         type: FAILED_AUTH_CHECK
       })
     }
+  }
+}
+
+export const removeSession = () =>{
+  return (dispatch) => {
+    sessionStorage.clear('jwt')
+    dispatch({type: LOGOUT_SUCESSS})
   }
 }
