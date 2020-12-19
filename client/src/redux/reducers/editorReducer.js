@@ -1,9 +1,10 @@
 import { EDITOR_FETCH_BLOG_FAILURE, EDITOR_FETCH_BLOG_REQUEST, EDITOR_FETCH_BLOG_SUCCESS, EDITOR_SAVE_FAIL, EDITOR_SAVE_SUCCESS, EDITOR_SAVE_ERROR_CLEAR,
-  SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, TOGGLE_PREVIEW} from '../actions/types'
+  SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, TOGGLE_PREVIEW, EDITOR_FETCH_IMAGES_REQUEST,
+  EDITOR_SAVE_IMAGES_REQUEST, EDITOR_SAVE_IMAGES_SUCCUESS,EDITOR_SAVE_IMAGES_FAILURE,
+  EDITOR_FETCH_IMAGES_SUCCUESS, EDITOR_FETCH_IMAGES_FAILURE} from '../actions/types'
 
 const intialState = {
-  editorShow: false,
-  loaded: false,
+  images: [],
   editorBlog: {
     id: null,
     title: "",
@@ -13,8 +14,14 @@ const intialState = {
     category: "",
     views: 0
   },
+
   isNewPost: false,
   preview: false,
+  loaded: false,
+  loadingImages: false,
+  savingImage: false,
+  newUploadedImage: false,
+  editorShow: false,
   error: "",
   saveError: "",
   didSave: null
@@ -90,6 +97,45 @@ export default function(state=intialState, action){
         ...state,
         didSave: null,
         saveError: ""
+      }
+    
+    case EDITOR_FETCH_IMAGES_REQUEST:
+      return {
+        ...state, 
+        loadingImages: true
+      }
+
+    case EDITOR_FETCH_IMAGES_SUCCUESS:
+      return {
+        ...state,
+        images: action.payload,
+        loadingImages: false,
+        newUploadedImage: false
+      }
+
+    case EDITOR_FETCH_IMAGES_FAILURE:
+      return {
+        ...state,
+        loadingImages: false
+      }
+
+    case EDITOR_SAVE_IMAGES_REQUEST:
+      return {
+        ...state,
+        savingImage: true
+      }
+    
+    case EDITOR_SAVE_IMAGES_SUCCUESS:
+      return {
+        ...state,
+        savingImage: false,
+        newUploadedImage: true
+      }
+    
+    case EDITOR_SAVE_IMAGES_FAILURE:
+      return {
+        ...state,
+        savingImage: false
       }
 
     case TOGGLE_PREVIEW:

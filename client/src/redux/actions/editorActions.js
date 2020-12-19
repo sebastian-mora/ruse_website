@@ -1,5 +1,9 @@
-import {EDITOR_FETCH_BLOG_FAILURE, EDITOR_FETCH_BLOG_SUCCESS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, TOGGLE_PREVIEW, EDITOR_SAVE_SUCCESS, EDITOR_SAVE_FAIL} from './types'
+import {EDITOR_FETCH_BLOG_FAILURE, EDITOR_FETCH_BLOG_SUCCESS, SELECT_BLOG, UPDATE_EDITOR_BLOG, 
+  OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, TOGGLE_PREVIEW, 
+  EDITOR_SAVE_SUCCESS, EDITOR_SAVE_FAIL,
+  EDITOR_FETCH_IMAGES_SUCCUESS, EDITOR_FETCH_IMAGES_FAILURE, EDITOR_SAVE_IMAGES_SUCCUESS, EDITOR_SAVE_IMAGES_FAILURE, EDITOR_SAVE_IMAGES_REQUEST} from './types'
 import {addBlog, updateBlogApi, deleteBlogApi, getBlog} from '../../api/blogsApi';
+import {getImages, uploadImage} from '../../api/adminApi';
 
 export const closeEditorBlog = () =>{
   return (dispatch) =>{
@@ -77,3 +81,28 @@ export const fetchBlog = (blogid) =>{
     })
   }
 }
+
+export const fetchBlogImages = (blogid) =>{
+  return(dispatch) => {
+    getImages(blogid).then((res) =>{
+      dispatch({type: EDITOR_FETCH_IMAGES_SUCCUESS, payload: res.data })
+    })
+
+    .catch((err) =>{
+      dispatch({type: EDITOR_FETCH_IMAGES_FAILURE})
+    })
+  }
+}
+
+export const saveBlogImage = (blogid, file) => {
+  return (dispatch) => {
+    dispatch({type: EDITOR_SAVE_IMAGES_REQUEST})
+    uploadImage(blogid, file).then(() =>{
+      dispatch({type: EDITOR_SAVE_IMAGES_SUCCUESS})
+    })
+    .catch( (err) =>{ 
+      dispatch({type: EDITOR_SAVE_IMAGES_FAILURE})
+    })
+  }
+  }
+
