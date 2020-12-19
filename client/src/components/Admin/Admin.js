@@ -6,10 +6,10 @@ import BlogEditor from './sub/BlogEditor/BlogEditor';
 import style from './Admin.module.css'
 
 import { connect } from 'react-redux';
-import {loadBlogs, closeEditorBlog, openNewBlog, selectBlog, loadCategories} from '../../redux/actions/blogActions'
-import Users from './sub/Users';
+import {loadBlogs, loadCategories} from '../../redux/actions/blogActions'
+import {closeEditorBlog, openNewBlog, selectBlog} from '../../redux/actions/editorActions'
 
-import {getBlog} from '../../api/blogsApi'; 
+import Users from './sub/Users';
 
 
 class Admin extends Component {
@@ -66,7 +66,7 @@ const mapStateToProps = (state, ownProps) =>{
   
   return {
     editorShow: state.editor.editorShow,
-    blogs: state.editor.blogs
+    blogs: state.blogs.blogs
   }
 }
 
