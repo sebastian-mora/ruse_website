@@ -104,7 +104,7 @@ class BlogEditor extends Component {
       this.props.dispatch({type: EDITOR_SAVE_ERROR_CLEAR})
     }
 
-    if(this.props.didSave == false){
+    if(this.props.didSave === false){
       alert(`Failed to Save: ${this.props.saveError}`)
       this.props.dispatch({type: EDITOR_SAVE_ERROR_CLEAR})
     }
