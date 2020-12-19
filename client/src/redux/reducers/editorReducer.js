@@ -1,4 +1,5 @@
-import { EDITOR_FETCH_BLOG_FAILURE, EDITOR_FETCH_BLOG_REQUEST, EDITOR_FETCH_BLOG_SUCCESS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, TOGGLE_PREVIEW} from '../actions/types'
+import { EDITOR_FETCH_BLOG_FAILURE, EDITOR_FETCH_BLOG_REQUEST, EDITOR_FETCH_BLOG_SUCCESS, EDITOR_SAVE_FAIL, EDITOR_SAVE_SUCCESS, EDITOR_SAVE_ERROR_CLEAR,
+  SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, TOGGLE_PREVIEW} from '../actions/types'
 
 const intialState = {
   editorShow: false,
@@ -14,7 +15,9 @@ const intialState = {
   },
   isNewPost: false,
   preview: false,
-  error: ""
+  error: "",
+  saveError: "",
+  didSave: null
 }
 
 export default function(state=intialState, action){
@@ -67,6 +70,26 @@ export default function(state=intialState, action){
       return {
         ...state,
         loaded: false
+      }
+    
+    case EDITOR_SAVE_SUCCESS:
+      return {
+        ...state,
+        didSave: true
+      }
+    
+    case EDITOR_SAVE_FAIL:
+      return {
+        ...state, 
+        didSave: false,
+        saveError: action.payload
+      }
+    
+    case EDITOR_SAVE_ERROR_CLEAR:
+      return {
+        ...state,
+        didSave: null,
+        saveError: ""
       }
 
     case TOGGLE_PREVIEW:

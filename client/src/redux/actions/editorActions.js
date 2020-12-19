@@ -1,4 +1,4 @@
-import {EDITOR_FETCH_BLOG_FAILURE, EDITOR_FETCH_BLOG_SUCCESS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, TOGGLE_PREVIEW} from './types'
+import {EDITOR_FETCH_BLOG_FAILURE, EDITOR_FETCH_BLOG_SUCCESS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, TOGGLE_PREVIEW, EDITOR_SAVE_SUCCESS, EDITOR_SAVE_FAIL} from './types'
 import {addBlog, updateBlogApi, deleteBlogApi, getBlog} from '../../api/blogsApi';
 
 export const closeEditorBlog = () =>{
@@ -30,6 +30,7 @@ export const selectBlog = (id) => {
   }
 }
 
+// Update the local blog instance
 export const updateEditorBlog = (blog) => {
 
   return (dispatch) =>{
@@ -43,9 +44,15 @@ export const postBlog = (blog) =>{
   }
 }
 
+// Send editor blog to api
 export const updateBlog = (blog) => {
   return (dispatch) =>{ 
-    updateBlogApi(blog)
+    updateBlogApi(blog).then( (res) =>{
+      dispatch({type: EDITOR_SAVE_SUCCESS})
+    })
+    .catch((err) =>{
+      dispatch({type: EDITOR_SAVE_FAIL, payload: err})
+    })
   }
 }
 

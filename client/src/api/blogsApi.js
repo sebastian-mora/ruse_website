@@ -36,12 +36,7 @@ export function addBlog(blog){
 
 
 export function updateBlogApi(blog){
-  return axios.post(`${API_ENDPOINT}/blog/update`, blog).then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err.request);
-  });
+  return axios.post(`${API_ENDPOINT}/blog/update`, blog);
 }
 
 export function deleteBlogApi(id){

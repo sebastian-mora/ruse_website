@@ -11,6 +11,7 @@ import MDEditor from '@uiw/react-md-editor';
 
 import style from './BlogEditor.module.css'
 import Dropdown from '../Dropdown'
+import { EDITOR_SAVE_ERROR_CLEAR } from '../../../../redux/actions/types';
 
 class BlogEditor extends Component {
 
@@ -53,12 +54,10 @@ class BlogEditor extends Component {
     if(this.props.isNewPost)
     {
       this.props.dispatch(postBlog(this.props.blog))
-      this.props.dispatch(closeEditorBlog())
-    } 
+    }
     else 
     {
       this.props.dispatch(updateBlog(this.props.blog))
-      this.props.dispatch(closeEditorBlog())
     }
 
     this.props.dispatch(loadBlogs())
@@ -97,8 +96,17 @@ class BlogEditor extends Component {
 
     // If blog is not loaded 
     if(!this.props.loaded){
-
       this.props.dispatch(fetchBlog(this.props.blog.id))
+    }
+
+    if(this.props.didSave === true){
+      alert("Blog saved sucessful")
+      this.props.dispatch({type: EDITOR_SAVE_ERROR_CLEAR})
+    }
+
+    if(this.props.didSave == false){
+      alert(`Failed to Save: ${this.props.saveError}`)
+      this.props.dispatch({type: EDITOR_SAVE_ERROR_CLEAR})
     }
 
     if(this.props.preview){
@@ -160,7 +168,7 @@ class BlogEditor extends Component {
 const mapToProps= (state) =>{
 
   let {post, title, date ,isPosted, category, id} = state.editor.editorBlog
-  let {isNewPost, preview, loaded} = state.editor;
+  let {isNewPost, preview, loaded, saveError, didSave} = state.editor;
   let categories = state.blogs.categories;
 
   return {
@@ -175,6 +183,8 @@ const mapToProps= (state) =>{
     isNewPost,
     categories,
     loaded,
+    saveError,
+    didSave,
     preview
   }
 }
