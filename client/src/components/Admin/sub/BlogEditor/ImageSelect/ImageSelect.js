@@ -1,13 +1,10 @@
 import React, {useEffect, useCallback} from 'react';
 import { connect, useDispatch } from 'react-redux';
-
-import {useDropzone} from 'react-dropzone'
-
-import { uploadImage} from '../../../../../api/adminApi'
 import {fetchBlogImages, saveBlogImage} from '../../../../../redux/actions/editorActions'
-import style from './ImageSelect.module.css'
 import { UPDATE_EDITOR_BLOG } from '../../../../../redux/actions/types';
 
+import {useDropzone} from 'react-dropzone'
+import style from './ImageSelect.module.css'
 
 const ImageSelect = (props) => {
 
@@ -15,7 +12,7 @@ const ImageSelect = (props) => {
   const dispatch = useDispatch()
 
   useEffect( () => {
-    if(props.images.length == 0 || props.newUploadedImage){
+    if(props.images.length === 0 || props.newUploadedImage){
       dispatch(fetchBlogImages(props.blog_id))
     }
   }, [props.newUploadedImage])
