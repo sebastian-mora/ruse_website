@@ -15,6 +15,10 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   
   useEffect(() => {
+
+    function handleChangeUsers(users){
+      setUsers(users)
+    }
     getUsers().then(res => {
       setUsers(res);  
     })
@@ -36,6 +40,7 @@ const Users = () => {
 
   const onAdd = () =>{
     setAddUser(!addUser)
+    setUsers([]);
   }
 
   const getUser = (userid) => {
@@ -66,7 +71,7 @@ const Users = () => {
 
     else if(addUser){
       return (
-        <AddUser></AddUser>
+        <AddUser onAdd={onAdd} ></AddUser>
       )
     }
 

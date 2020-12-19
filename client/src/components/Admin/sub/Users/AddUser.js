@@ -32,7 +32,10 @@ class AddUser extends React.Component {
     else if(!this.state.password){alert("Enter a password")}
 
     else{
-      addUser(this.state).then(() =>{alert("User Created")})
+      addUser(this.state).then(() =>{
+        alert("User Created");
+        this.props.onAdd();
+      })
       .catch((err)=> console.log(err))
     }
   }
