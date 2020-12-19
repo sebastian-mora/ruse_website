@@ -20,8 +20,10 @@ class Admin extends Component {
   
   // Get all the blogs on load
   componentDidMount() {
+    if(this.props.user.isAuthd){
     this.props.dispatch(loadBlogs())
     this.props.dispatch(loadCategories())
+    }
   }
 
   render() {
@@ -66,7 +68,8 @@ const mapStateToProps = (state, ownProps) =>{
   
   return {
     editorShow: state.editor.editorShow,
-    blogs: state.blogs.blogs
+    blogs: state.blogs.blogs,
+    user: state.user
   }
 }
 
