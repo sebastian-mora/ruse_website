@@ -27,7 +27,8 @@ var whitelist = [process.env.CORS]
 //set up ratelimit
 const limiter = rateLimit({
   windowMs: 15*60*1000, //15 mins
-  max: 100 // limit each IP to 100 requests per windowMs
+  max: 100, // limit each IP to 100 requests per windowMs
+  headers: false
 })
 
 
@@ -48,9 +49,9 @@ const admin = require('./routes/admin')
 const api = require('./routes/api.js');
 
 app.use('/blog', blog)
-app.use('/login', login)
-app.use('/admin', admin)
-app.use('/api', api)
+app.use('/login', limiter, login)
+app.use('/admin',limiter, admin)
+app.use('/api',  api)
 
 
 // Starting both http & https servers
