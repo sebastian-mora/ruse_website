@@ -16,21 +16,11 @@ export function uploadImage(blog_id, image){
 
 
 export function getUsers(){
-  return axios.get(`${API_ENDPOINT}/admin/user/list`).then(res => {
-    return res.data
-  })
-  .catch(() => {
-    return false
-  });
+  return axios.get(`${API_ENDPOINT}/admin/user/list`)
 }
 
 export function deleteUser(userid){
-  return axios.post(`${API_ENDPOINT}/admin/user/delete`, {userid}).then(res => {
-    return res.data
-  })
-  .catch(err => {
-    throw err.request.response
-  });
+  return axios.post(`${API_ENDPOINT}/admin/user/delete`, {userid})
 }
 
 export function addUser(username, email, password){
