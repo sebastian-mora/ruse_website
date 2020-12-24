@@ -58,7 +58,8 @@ export default function(state=intialState, action){
       return {
         ...state,
         editorShow: true,
-        isNewPost: true
+        isNewPost: true,
+        loaded: true
       }
     
     case EDITOR_FETCH_BLOG_SUCCESS:
