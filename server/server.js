@@ -1,17 +1,14 @@
 const express = require('express');
-const fs = require('fs');
 const http = require('http');
-const https = require('https');
 const cors = require('cors');
 const rateLimit = require("express-rate-limit");
-const path = require('path');
 const bodyParser = require('body-parser');
 require('custom-env').env()
 
 
 const app = express();
 const http_port = process.env.HTTP_PORT || 8080;
-const https_port = process.env.HTTPS_PORT || 8080
+
 
 
 //set up CORS whitelist
@@ -43,8 +40,6 @@ app.use(cors(corsOptionsDelegate));
 //  apply ratelimit to all requests
 app.use(limiter);
 
-// certbot 
-// app.use(express.static(__dirname, { dotfiles: 'allow' } ));
 
 //routes
 const blog = require('./routes/blog')
@@ -62,27 +57,6 @@ app.use('/api', api)
 const httpServer = http.createServer(app);
 
 var env = process.env.NODE_ENV || 'development';
-
-
-if(env == "prod"){
-  // Load certs
-  const privateKey = fs.readFileSync(process.env.PRIVATE_KEY, 'utf8');
-  const certificate = fs.readFileSync(process.env.CERT, 'utf8');
-  const ca = fs.readFileSync(process.env.CA, 'utf8');
-
-  const credentials = {
-    key: privateKey,
-    cert: certificate,
-    ca: ca
-  };
-
-  const httpsServer = https.createServer(credentials, app);
-
-  httpsServer.listen(https_port, () => {
-    console.log(`HTTPS Server running on port ${https_port}`);
-  });
-
-}
 
 
 httpServer.listen(http_port, () => {
