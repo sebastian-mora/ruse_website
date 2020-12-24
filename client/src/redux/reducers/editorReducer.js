@@ -58,7 +58,8 @@ export default function(state=intialState, action){
       return {
         ...state,
         editorShow: true,
-        isNewPost: true
+        isNewPost: true,
+        loaded: true
       }
     
     case EDITOR_FETCH_BLOG_SUCCESS:
@@ -70,7 +71,8 @@ export default function(state=intialState, action){
     case EDITOR_FETCH_BLOG_FAILURE:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loaded: true
       }
 
     case EDITOR_FETCH_BLOG_REQUEST:
