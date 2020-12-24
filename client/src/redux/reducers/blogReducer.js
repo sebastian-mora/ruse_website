@@ -1,22 +1,10 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, CLOSE_EDITOR_BLOG, OPEN_NEW_BLOG, LOAD_CATEGORIES, TOGGLE_PREVIEW} from '../actions/types'
+import { FETCH_BLOG_SUCCESS, FETCH_BLOG_REQUEST, LOAD_CATEGORIES} from '../actions/types'
 
 
 const intialState = {
   "blogs": [],
-  "categories":[],
-  "selectedBlog": null,
-  "editorShow": false,
-  "editorBlog": {
-    id: null,
-    title: "",
-    date: "",
-    post: "",
-    isPosted: false,
-    category: "",
-    views: 0
-  },
-  "isNewPost": false,
-  "preview": false
+  loading:false,
+  "categories":[]
 }
 
 
@@ -25,62 +13,23 @@ export default function(state=intialState, action){
 
   switch(action.type){
     
-    case LOAD_BLOGS:
+    case FETCH_BLOG_SUCCESS:
       return {
         ...state,
-        blogs: action.payload
+        blogs: action.payload,
+        loading: false
+      }
+    
+    case FETCH_BLOG_REQUEST:
+      return {
+        ...state,
+        loading: true
       }
     
     case LOAD_CATEGORIES:
       return {
         ...state,
         categories: action.payload
-      }
-
-    case SELECT_BLOG:
-
-      return {
-        ...state,
-        selectedBlog: action.payload.id,
-        editorShow: true,
-        isNewPost: false,
-        editorBlog: action.payload
-      }
-    
-      // update all blog editor attriubutes
-    case UPDATE_EDITOR_BLOG:
-      return {
-        ...state,
-        editorBlog: action.payload
-      }
-    
-    case CLOSE_EDITOR_BLOG:
-      return {
-        ...state,
-        "selectedBlog": null,
-        "editorShow": false,
-        "editorBlog": {
-          id: null,
-          title: "",
-          post:"",
-          date: "",
-          isPosted: false,
-          views: 0
-        },
-        "isNewPost": false
-      }
-    
-    case OPEN_NEW_BLOG:
-      return {
-        ...state,
-        editorShow: true,
-        isNewPost: true
-      }
-
-    case TOGGLE_PREVIEW:
-      return {
-        ...state,
-        preview: !state.preview
       }
     
     default:

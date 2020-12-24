@@ -26,7 +26,7 @@ const BlogPage = (props) => {
           setError("Blog not Found")
         }
       })
-  }, [])
+  }, [id])
   
   return(
     <div>

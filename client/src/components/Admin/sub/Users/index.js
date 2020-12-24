@@ -1,27 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import {getUsers, deleteUser} from '../../../../api/adminApi'
-
+import { connect, useDispatch } from 'react-redux';
+import {fetchUsers, removeUser}
+ from '../../../../redux/actions/userManageActions'
 import style from './style.module.css'
 
 import UserList from './UserList';
 import EditUser from './EditUser';
 import AddUser from './AddUser'
 
-const Users = () => {
+const Users = ({users}) => {
 
   const [editUser, setEdit] = useState(false);
   const [addUser, setAddUser]  = useState(false);
   const [userId, setuserId] = useState();
-  const [users, setUsers] = useState([]);
+  const dispatch = useDispatch()
   
   useEffect(() => {
-    getUsers().then(res => {
-      setUsers(res);  
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }, []);
+    dispatch(fetchUsers())
+  },[]);
 
 
   const editClick = (e) =>{
@@ -49,8 +45,9 @@ const Users = () => {
     return x
   }
 
-  const removeUser = (e) => {
-    deleteUser(e.target.value)
+  const deleteUser = (e) => {
+    let userid = e.target.value
+    dispatch(removeUser(userid))
     setEdit(false)
   }
 
@@ -58,7 +55,7 @@ const Users = () => {
     if(editUser){
       return( 
         <>
-        <EditUser user = {getUser(userId)} deleteUser={removeUser}/> 
+        <EditUser user = {getUser(userId)} deleteUser={deleteUser}/> 
         <button onClick={onClick}>Back</button>
         </>
       )
@@ -66,7 +63,7 @@ const Users = () => {
 
     else if(addUser){
       return (
-        <AddUser></AddUser>
+        <AddUser onAdd={onAdd} ></AddUser>
       )
     }
 
@@ -83,4 +80,8 @@ const Users = () => {
   )
 }
 
-export default Users;
+const mapStateToProps = (state) => {
+  return state.userManage
+}
+
+export default connect(mapStateToProps)(Users);

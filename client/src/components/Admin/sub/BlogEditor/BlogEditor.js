@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {updateEditorBlog, postBlog, updateBlog, deleteBlog, closeEditorBlog, loadBlogs, togglePreview} from '../../../../redux/actions/blogActions'
+import {loadBlogs} from '../../../../redux/actions/blogActions'
+import {updateBlog, updateEditorBlog, fetchBlog, postBlog, closeEditorBlog, deleteBlog, togglePreview} from '../../../../redux/actions/editorActions'
 
 
 import Collapsible from 'react-collapsible';
@@ -10,10 +11,9 @@ import MDEditor from '@uiw/react-md-editor';
 
 import style from './BlogEditor.module.css'
 import Dropdown from '../Dropdown'
+import { EDITOR_SAVE_ERROR_CLEAR } from '../../../../redux/actions/types';
 
 class BlogEditor extends Component {
-
-  
 
   editorOnChange = (e) => {
 
@@ -50,17 +50,14 @@ class BlogEditor extends Component {
   };
 
 
-
   saveClick = () => {
     if(this.props.isNewPost)
     {
       this.props.dispatch(postBlog(this.props.blog))
-      this.props.dispatch(closeEditorBlog())
-    } 
+    }
     else 
     {
       this.props.dispatch(updateBlog(this.props.blog))
-      this.props.dispatch(closeEditorBlog())
     }
 
     this.props.dispatch(loadBlogs())
@@ -96,10 +93,25 @@ class BlogEditor extends Component {
   }
 
   renderEditor = () =>{
+
+    // If blog is not loaded 
+    if(!this.props.loaded){
+      this.props.dispatch(fetchBlog(this.props.blog.id))
+    }
+
+    if(this.props.didSave === true){
+      alert("Blog saved sucessful")
+      this.props.dispatch({type: EDITOR_SAVE_ERROR_CLEAR})
+    }
+
+    if(this.props.didSave === false){
+      alert(`Failed to Save: ${this.props.saveError}`)
+      this.props.dispatch({type: EDITOR_SAVE_ERROR_CLEAR})
+    }
+
     if(this.props.preview){
       return <div className="container"> <MDEditor.Markdown source={this.props.blog.post} /></div>
     }
-
 
     return(
       <div className="container">
@@ -156,7 +168,8 @@ class BlogEditor extends Component {
 const mapToProps= (state) =>{
 
   let {post, title, date ,isPosted, category, id} = state.editor.editorBlog
-  let {isNewPost, categories, preview} = state.editor;
+  let {isNewPost, preview, loaded, saveError, didSave} = state.editor;
+  let categories = state.blogs.categories;
 
   return {
     blog:{
@@ -169,6 +182,9 @@ const mapToProps= (state) =>{
     },
     isNewPost,
     categories,
+    loaded,
+    saveError,
+    didSave,
     preview
   }
 }

@@ -1,12 +1,40 @@
-import {LOAD_BLOGS, SELECT_BLOG, UPDATE_EDITOR_BLOG, OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, LOAD_CATEGORIES, TOGGLE_PREVIEW} from './types'
-import {getBlogs, addBlog, updateBlogApi, deleteBlogApi, getCategoriesApi} from '../../api/blogsApi';
+import {FETCH_BLOG_FAILURE, FETCH_BLOG_SUCCESS, FETCH_BLOG_REQUEST, LOAD_CATEGORIES} from './types'
+import {getBlogs,  getCategoriesApi} from '../../api/blogsApi';
+
+
+// FETCH STATE FUCTIONS
+
+// PENDING REQUEST
+export const fetchBlogsRequest = () => {
+  return {
+    type: FETCH_BLOG_REQUEST
+  }
+}
+
+// request sucess
+export const fetchBlogsSuccess = (blogs) => {
+  return {
+    type: FETCH_BLOG_SUCCESS,
+    payload: blogs
+  }
+}
+
+//request fail
+export const fetchBlogsFailure = () => {
+  return {
+    type: FETCH_BLOG_FAILURE
+  }
+}
 
 export const loadBlogs = () => {
   return (dispatch) =>{
+    dispatch(fetchBlogsRequest())
     getBlogs()
     .then(data => {
-      dispatch({type: LOAD_BLOGS,
-      payload: data})
+      dispatch(fetchBlogsSuccess(data))
+    })
+    .catch( err => {
+      dispatch(fetchBlogsFailure())
     })
   }
 }
@@ -20,61 +48,8 @@ export const loadCategories = () =>{
   }
 }
 
-export const selectBlog = (id) => {
-  return (dispatch) =>{
-    dispatch({type: SELECT_BLOG, payload: id})
-  }
-}
-
-export const updateEditorBlog = (blog) => {
-
-  return (dispatch) =>{
-    dispatch({type: UPDATE_EDITOR_BLOG, payload: blog})
-  }
-}
-
-export const postBlog = (blog) =>{
-  return (dispatch) => {
-    addBlog(blog)
-  }
-}
-
-export const updateBlog = (blog) => {
-  return (dispatch) =>{ 
-    updateBlogApi(blog)
-  }
-}
-
-export const deleteBlog = (blog) =>{
-  
-  const id = blog.id;
-
-  return (dispatch) =>{
-    deleteBlogApi(id)
-  }
-}
-
-export const closeEditorBlog = () =>{
-  return (dispatch) =>{
-    dispatch({
-      type: CLOSE_EDITOR_BLOG
-    })
-  }
-}
 
 
-export const openNewBlog = () =>{
-  return (dispatch) =>{
-    dispatch({
-      type: OPEN_NEW_BLOG
-    })
-  }
-}
 
-export const togglePreview = () => {
-  return (dispatch => {
-    dispatch({type: TOGGLE_PREVIEW})
-  })
-}
 
 
