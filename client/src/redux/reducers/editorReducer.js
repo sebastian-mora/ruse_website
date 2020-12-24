@@ -70,7 +70,8 @@ export default function(state=intialState, action){
     case EDITOR_FETCH_BLOG_FAILURE:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        loaded: true
       }
 
     case EDITOR_FETCH_BLOG_REQUEST:
