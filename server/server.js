@@ -13,15 +13,15 @@ const http_port = process.env.HTTP_PORT || 8080;
 
 //set up CORS whitelist
 var whitelist = [process.env.CORS]
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions;
-  if (whitelist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false } // disable CORS for this request
-  }
-  callback(null, corsOptions) // callback expects two parameters: error and options
-}
+// var corsOptionsDelegate = function (req, callback) {
+//   var corsOptions;
+//   if (whitelist.indexOf(req.header('Origin')) !== -1) {
+//     corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+//   } else {
+//     corsOptions = { origin: false } // disable CORS for this request
+//   }
+//   callback(null, corsOptions) // callback expects two parameters: error and options
+// }
 
 
 //set up ratelimit
@@ -36,9 +36,9 @@ app.use(bodyParser.json());
 
 
 // add CORS
-app.use(cors(corsOptionsDelegate));
+app.use(cors());
 //  apply ratelimit to all requests
-app.use(limiter);
+// app.use(limiter);
 
 
 //routes
