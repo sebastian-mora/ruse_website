@@ -10,9 +10,9 @@ const About = () => {
     <h1><code>typeof(RU$E)</code></h1>
       <img src={ruse_dark} className={style.ruseImg} alt="Ruse Logo"></img>
       <p className={style.boxedAbout}>
-        I am a infosec person. I working in pentesting and have intrests in offsec and privacy.
+        I am an infosec person. I working in pentesting and have interests in offsec and privacy.
         This website is dedicated to whatever content I feel is interesting or relevant.
-        If you wish to contact me email me at <a href="mailto:????">??? (tbd)</a>
+        If you wish to contact me email me at <a href="mailto:info@ruse.tech">??? (tbd)</a>
         <br></br>
         Links:
         <ul>
