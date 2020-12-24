@@ -26,4 +26,4 @@ This was the most challenging part for me. Having never used React there were ma
 
 ### Infra
 
-The website is run on an EC2 with the domain api.ruse.tech and the React client is stored in an S3 bucket. The bucket is attached to a Cloudfront distribution. Images and the blog .md files are stored in S3 buckets as well. The MySQL database is run on the same instance as the API. Ideally, this database would be migrated to RDS or run on a dedicated instance but for cost reasons, it is not. This in the future could be an issue.
+The website is run on an EC2 with the domain api.ruse.tech and the React client is stored in an S3 bucket. The EC2 is provied with a very restricted role to allow the upload of images and blog files. The bucket is attached to a Cloudfront distribution to enable support for HTTPS and faster content delivery. Images and the blog .md files are stored in S3 buckets. The MySQL database is run on the same instance as the API. Ideally, this database would be migrated to RDS or run on a dedicated instance but for cost reasons, it is not. This in the future could be an issue depending on expected load.
