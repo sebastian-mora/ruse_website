@@ -13,6 +13,7 @@ const Nav = () => {
       <Link className={style.link} to="/">RU$E</Link>
       <Link className={style.link} to="/blog">Blog</Link>
       <Link className={style.link} to="/about">About</Link>
+      <Link className={style.link} to='/projects'>Projects</Link>
       {isAuthd && 
         <>
           <Link className={style.link} to="/admin">Admin</Link>
