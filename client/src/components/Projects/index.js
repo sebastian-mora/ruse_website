@@ -2,10 +2,6 @@ import React from 'react';
 import Card from './Card'
 import style from './index.module.css'
 
-
-
-
-
 const Projects = () => {
 
 
