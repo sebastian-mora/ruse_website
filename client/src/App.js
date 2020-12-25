@@ -14,7 +14,7 @@ import BlogPage from './components/Blog/BlogPage'
 import Login from './components/Login/Login'
 import Admin from './components/Admin/Admin'
 import Logout from './components/Logout/Logout';
-
+import Projects from './components/Projects'
 
 import {connect} from 'react-redux';
 import {checkToken} from './redux/actions/authActions'
@@ -40,6 +40,7 @@ class App extends Component{
             <Switch>
               <Route path ="/" exact component={Index} />
               <Route path ="/about" exact component={About} />
+              <Route path ="/projects" exact component={Projects} />
               <Route exact path = "/blog"  component={Blog} />
               <Route  path={"/blog/:id"} component={BlogPage}/>
               <Route  path={"/login"} component={Login}/>

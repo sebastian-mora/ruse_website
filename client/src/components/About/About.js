@@ -12,13 +12,13 @@ const About = () => {
       <p className={style.boxedAbout}>
         I am an infosec person. I am a Pentester with focus on Cloud/WebApps and an intrest in privacy.
         This website is dedicated to whatever content I feel is interesting or relevant.
-        If you wish to contact my email is <a>seb@ruse.tech</a> (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/61594A228EE2FF3B7811A5C0423803123B071223">PGP Available</a>).
+        If you wish to contact my email is <a href=""> seb@ruse.tech</a> (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/61594A228EE2FF3B7811A5C0423803123B071223">PGP Available</a>).
 
         <br></br>
         Links:
         <ul>
-          <li><a href="https://github.com/seb1055">Github<img src="public/imgs/github.png" alt=""/></a></li>
-          <li><a href="https://twitter.com/seb1055">Twitter</a></li>
+          <li><a  href="https://github.com/seb1055"  rel="noopener noreferrer"target="_blank">Github</a></li>
+          <li><a href="https://twitter.com/seb1055"  rel="noopener noreferrer" target="_blank">Twitter</a></li>
         </ul>
       </p>
 
