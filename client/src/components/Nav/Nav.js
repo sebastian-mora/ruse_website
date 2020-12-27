@@ -10,10 +10,11 @@ const Nav = () => {
 
   return (
     <div className={style.container}>
-      <Link className={style.link} to="/">RU$E</Link>
+      <Link className={style.link} to="/">Ru$e</Link>
       <Link className={style.link} to="/blog">Blog</Link>
-      <Link className={style.link} to="/about">About</Link>
       <Link className={style.link} to='/projects'>Projects</Link>
+      <Link className={style.link} to="/about">About</Link>
+
       {isAuthd && 
         <>
           <Link className={style.link} to="/admin">Admin</Link>
