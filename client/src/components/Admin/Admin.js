@@ -38,6 +38,12 @@ class Admin extends Component {
     const onManageBlogsClick = () => {
       this.setState({manageBlogs:!this.state.manageBlogs})
       this.setState({manageUsers:false})
+
+      // If button is clicked and the editor is open. Close the editor
+      if(this.props.editorShow){
+        this.props.dispatch(closeEditorBlog())
+      }
+
     }
     const onEditBlog = (e) => {
       this.props.dispatch(selectBlog(e.target.value))
