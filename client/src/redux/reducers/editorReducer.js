@@ -28,6 +28,7 @@ const intialState = {
 }
 
 export default function(state=intialState, action){
+
   switch(action.type){
 
     case SELECT_BLOG:
@@ -50,9 +51,9 @@ export default function(state=intialState, action){
       }
     
     case CLOSE_EDITOR_BLOG:
-      return {
-        intialState
-      }
+
+        return intialState
+    
     
     case OPEN_NEW_BLOG:
       return {

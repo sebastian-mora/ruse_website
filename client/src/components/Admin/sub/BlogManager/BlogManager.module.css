@@ -1,0 +1,21 @@
+.userTable {
+  margin-top: 5%;
+  border-collapse: collapse;
+  width: 100%;
+  color: white;
+  background-color: #444444;
+}
+
+.userTable td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.userTable tr:nth-child(even) {
+  background-color: #6b6b6b;
+}
+
+.userTable button{
+  padding: 5px 15px;
+}
