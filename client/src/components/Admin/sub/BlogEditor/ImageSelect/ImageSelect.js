@@ -39,7 +39,7 @@ const ImageSelect = (props) => {
       <div>
         {/* Show images */}
         <div>
-          {
+          { props.images &&
             props.images.map(image => (
               <div key={image.url}  className={style.thumbnail} >
               <img onClick={imgClick} alt={image.filename} src={image.url}/>
