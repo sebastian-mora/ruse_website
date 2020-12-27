@@ -31,8 +31,14 @@ class Admin extends Component {
 
     const onCloseClick = () =>{this.props.dispatch(closeEditorBlog())}
     const onNewClick = () =>{this.props.dispatch(openNewBlog())}
-    const onManageUsersClick = () => {this.setState({manageUsers:!this.state.manageUsers})}
-    const onManageBlogsClick = () => {this.setState({manageBlogs:!this.state.manageBlogs})}
+    const onManageUsersClick = () => {
+      this.setState({manageUsers:!this.state.manageUsers})
+      this.setState({manageBlogs:false})
+    }
+    const onManageBlogsClick = () => {
+      this.setState({manageBlogs:!this.state.manageBlogs})
+      this.setState({manageUsers:false})
+    }
     const onEditBlog = (e) => {
       this.props.dispatch(selectBlog(e.target.value))
       this.state.manageBlogs = false;

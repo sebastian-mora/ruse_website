@@ -3,6 +3,7 @@
   border-collapse: collapse;
   width: 100%;
   color: white;
+  background-color: #444444;
 }
 
 .userTable td, th {
