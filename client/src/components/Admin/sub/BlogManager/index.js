@@ -1,6 +1,5 @@
 import React from 'react';
-import {selectBlog} from '../../../../redux/actions/editorActions'
-import { connect, useDispatch } from 'react-redux';
+import { connect} from 'react-redux';
 import style from './BlogManager.module.css'
 
 const BlogManager = ({blogs ,onClick}) => {

@@ -41,8 +41,8 @@ class Admin extends Component {
     }
     const onEditBlog = (e) => {
       this.props.dispatch(selectBlog(e.target.value))
-      this.state.manageBlogs = false;
-      this.setState.manageUsers = false;
+      this.setState({manageBlogs:false})
+      this.setState({manageUsers:false})
     }
 
 
