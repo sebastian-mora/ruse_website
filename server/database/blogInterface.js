@@ -36,9 +36,15 @@ function getCategories(){
   })
 }
 
-function getBlogByID(id){
+function getBlogByID(id, isAdmin=false){
+  query_str = 'select blogs.title, blogs.id, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? AND isPosted=true'
+
+  if(isAdmin){
+    query_str = 'select blogs.title, blogs.id, blogs.isPosted,  blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? '
+  }
+
   return new Promise(function(resolve, reject) {
-    pool.query('select blogs.title, blogs.id,  blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? AND isPosted=true', id, function (err, rows) {
+    pool.query(query_str, id, function (err, rows) {
         if (err) {
             return reject(err);
         }
