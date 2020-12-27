@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 
-import Dropdown from './sub/Dropdown'
 import BlogEditor from './sub/BlogEditor/BlogEditor';
+import BlogManager from './sub/BlogManager';
 import style from './Admin.module.css'
 
 import { connect } from 'react-redux';
@@ -15,14 +15,15 @@ import Users from './sub/Users';
 class Admin extends Component {
 
   state = {
-    manageUsers: false
+    manageUsers: false,
+    manageBlogs: false
   }
   
   // Get all the blogs on load
   componentDidMount() {
     if(this.props.user.isAuthd){
-    this.props.dispatch(loadBlogs())
-    this.props.dispatch(loadCategories())
+      this.props.dispatch(loadBlogs())
+      this.props.dispatch(loadCategories())
     }
   }
 
@@ -30,15 +31,24 @@ class Admin extends Component {
 
     const onCloseClick = () =>{this.props.dispatch(closeEditorBlog())}
     const onNewClick = () =>{this.props.dispatch(openNewBlog())}
-    const onBlogSelectClick = (e) =>{if(e.target.value) this.props.dispatch(selectBlog(e.target.value));}
-    const onManageClick = () => {this.setState({manageUsers:!this.state.manageUsers})}
+    const onManageUsersClick = () => {this.setState({manageUsers:!this.state.manageUsers})}
+    const onManageBlogsClick = () => {this.setState({manageBlogs:!this.state.manageBlogs})}
+    const onEditBlog = (e) => {
+      this.props.dispatch(selectBlog(e.target.value))
+      this.state.manageBlogs = false;
+      this.setState.manageUsers = false;
+    }
 
 
     return (
         <div className={style.container}>
-          {/* Blog title selector */}
-          <Dropdown name={"titles"} options={this.props.blogs} onChange={onBlogSelectClick} />
 
+          <button onClick={onManageBlogsClick}>Manage Blogs</button>
+          {this.state.manageBlogs &&
+            <>
+            <BlogManager onClick={onEditBlog}></BlogManager>
+            </>
+          }
           
           {this.props.editorShow &&
             <div>
@@ -51,8 +61,8 @@ class Admin extends Component {
              <button onClick={onNewClick}>New</button>
           }
 
-          <button onClick={onManageClick}>Manage Users</button>
-          {!this.state.manageUsers &&
+          <button onClick={onManageUsersClick}>Manage Users</button>
+          {this.state.manageUsers &&
             <>
             <Users></Users>
             </>
