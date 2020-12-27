@@ -56,8 +56,13 @@ router.get('/:id', (req, res) =>{
 
   const id = req.params.id;
 
+  // Check if admin 
+
+  const bearerHeader = req.headers['fuckyou-key'];
+  var isAdmin  = checkJwt(bearerHeader)
+
   // Get blog metadata from DB 
-  getBlogByID(id)
+  getBlogByID(id, isAdmin)
     .then( (results) => {
 
       if(results.length <= 0){
@@ -65,14 +70,14 @@ router.get('/:id', (req, res) =>{
         return
       }
       
-      var {id, title, date, views, category} = results[0];
+      var {id, title, date, views, isPosted, category} = results[0];
 
       // convert time stamp to date string 
-      date = date.toDateString()
+      date = `${date.getFullYear()}-${ date.getMonth() + 1 }-${date.getDate()}`
       
       
       getBlogFileContents(id).then((post) => { 
-        res.send({id, title, date, views, category, post})
+        res.send({id, title, date, views, category, isPosted, post})
       })
       
       // If s3 fetch fails 
