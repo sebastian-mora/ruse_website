@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown'
 
 import style from './BlogPage.module.css'
 
-import {getBlog} from '../../api/blogsApi';
+import {getBlogBySlug} from '../../api/blogsApi';
 
 
 
@@ -12,11 +12,11 @@ const BlogPage = (props) => {
 
   const [blog, setBlog] = useState({});
   const [errMessage, setError] = useState("")
-  const id = props.match.params.id;
+  const slug = props.match.params.slug;
 
   useEffect(() => {
 
-    getBlog(id)
+    getBlogBySlug(slug)
       .then((result) => {
         setBlog(result.data)
         setError("")
@@ -26,7 +26,7 @@ const BlogPage = (props) => {
           setError("Blog not Found")
         }
       })
-  }, [id])
+  }, [slug])
   
   return(
     <div>
