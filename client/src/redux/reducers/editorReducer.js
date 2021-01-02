@@ -21,6 +21,7 @@ const intialState = {
   loadingImages: false,
   savingImage: false,
   newUploadedImage: false,
+  newBlogUploaded: false,
   editorShow: false,
   error: "",
   saveError: "",
@@ -66,7 +67,8 @@ export default function(state=intialState, action){
     case EDITOR_FETCH_BLOG_SUCCESS:
       return {
         ...state,
-        loaded: true
+        loaded: true,
+        newBlogUploaded: false
       }
     
     case EDITOR_FETCH_BLOG_FAILURE:
@@ -85,7 +87,8 @@ export default function(state=intialState, action){
     case EDITOR_SAVE_SUCCESS:
       return {
         ...state,
-        didSave: true
+        didSave: true,
+        newBlogUploaded: true
       }
     
     case EDITOR_SAVE_FAIL:
