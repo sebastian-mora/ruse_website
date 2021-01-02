@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 
 const verifyToken = require('../middleware/Auth')
-const {getAllBlogs, getBlogByID, getCategories, addBlog, updateBlog, deleteBlog}  = require('../../database/blogInterface')
+const {getAllBlogs, getBlogByID, getBlogBySlug, getCategories, addBlog, updateBlog, deleteBlog}  = require('../../database/blogInterface')
 const jwt = require('jsonwebtoken');
 const uuid = require('short-uuid');
 
@@ -52,12 +52,11 @@ router.get('/categories', (req, res) => {
 });
 
 
-router.get('/:id', (req, res) =>{
+router.get('/id/:id', (req, res) =>{
 
   const id = req.params.id;
 
   // Check if admin 
-
   const bearerHeader = req.headers['fuckyou-key'];
   var isAdmin  = checkJwt(bearerHeader)
 
@@ -104,6 +103,59 @@ router.get('/:id', (req, res) =>{
 });
 
 
+
+router.get('/:slug', (req, res) =>{
+
+  const slug = req.params.slug;
+
+  // Check if admin 
+  const bearerHeader = req.headers['fuckyou-key'];
+  var isAdmin  = checkJwt(bearerHeader)
+
+  // Get blog metadata from DB 
+  getBlogBySlug(slug, isAdmin)
+    .then( (results) => {
+
+      if(results.length <= 0){
+        res.sendStatus(404)
+        return
+      }
+      
+      var {id, title, date, slug, views, isPosted, category} = results[0];
+
+      // convert time stamp to date string 
+      date = `${date.getFullYear()}-${ date.getMonth() + 1 }-${date.getDate()}`
+      
+      
+      getBlogFileContents(id).then((post) => { 
+        res.send({id, slug, title, date, views, category, isPosted, post})
+      })
+      
+      
+      // If s3 fetch fails 
+      .catch((err) => {
+        
+        if (err.code == 'NoSuchKey') {
+          
+          res.sendStatus(404)
+        }
+        else {
+          console.error(err);
+          res.sendStatus(500)
+        }   
+      })
+    })
+
+    // If get Blog meta fails
+    .catch((err) => {
+      
+      console.error(err);
+      res.sendStatus(500)
+    })
+
+});
+
+
 router.post('/create', verifyToken, (req,res) =>{
 
   const post = req.body.post;
@@ -116,18 +168,23 @@ router.post('/create', verifyToken, (req,res) =>{
     res.sendStatus(400)
   }
 
-  // Upload file to s3 bucket
+  // Generate Blog ID. This never changes
   let id = uuid.generate();
-  var postURL;   
-  
-  uploadBlogFile(id, post).then((url) => {
-    postURL = url;
 
-    addBlog({id, title, postURL, date, category, isPosted}).then( () =>{
+  // Create Slug
+  // Slug is the tile lowercase and all spaces replaced with '-'
+  let slug = req.body.title.toLowerCase().replace(/\s+/gm, `-`);
+
+  
+  
+  uploadBlogFile(id, post).then((postURL) => {
+
+    addBlog({id, slug, title, postURL, date, category, isPosted}).then( () =>{
       res.sendStatus(200)
     })
     .catch((err) => {
       res.status(400).send("Missing some data")
+      console.error(err);
     });
   });
   
@@ -137,6 +194,9 @@ router.post('/update', verifyToken, (req,res) =>{
 
   const id  = req.body.id;
   const post  = req.body.post;
+
+  // Recalc slug
+  const slug = req.body.title.toLowerCase().replace(/\s+/gm, `-`);
  
   // Update the blog file
   uploadBlogFile(id, post).then((url) => {
@@ -147,6 +207,7 @@ router.post('/update', verifyToken, (req,res) =>{
       id: req.body.id,
       title: req.body.title,
       date: req.body.date,
+      slug,
       category: req.body.category,
       isPosted: req.body.isPosted
     }

@@ -6,13 +6,13 @@ function getAllBlogs(isAdmin=false){
     // The Promise constructor should catch any errors thrown on
     // this tick. Alternately, try/catch and reject(err) on catch.
 
-    var query_str = 'select blogs.title, blogs.id,  blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE isPosted=true'
+    var query_str = 'select blogs.title, blogs.id, blogs.slug,  blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE isPosted=true'
 
     //select title,id,post,date,views, c1.name catagory from blogs left join catagories c1 on (blogs.category_id=c1.id);
 
     
     if(isAdmin){
-      var query_str = 'select blogs.title, blogs.id, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id)'
+      var query_str = 'select blogs.title, blogs.id, blogs.slug, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id)'
     }
 
     pool.query(query_str, function (err, rows) {
@@ -37,14 +37,33 @@ function getCategories(){
 }
 
 function getBlogByID(id, isAdmin=false){
-  query_str = 'select blogs.title, blogs.id, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? AND isPosted=true'
+  query_str = 'select blogs.title, blogs.id, blogs.slug, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? AND isPosted=true'
 
   if(isAdmin){
-    query_str = 'select blogs.title, blogs.id, blogs.isPosted,  blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? '
+    query_str = 'select blogs.title, blogs.id, blogs.slug, blogs.isPosted,  blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.id=? '
   }
 
   return new Promise(function(resolve, reject) {
     pool.query(query_str, id, function (err, rows) {
+        if (err) {
+            return reject(err);
+        }
+        resolve(rows);
+    });
+  }); 
+}
+
+
+
+function getBlogBySlug(slug, isAdmin=false){
+  query_str = 'select blogs.title, blogs.id, blogs.slug, blogs.isPosted, blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.slug=? AND isPosted=true'
+
+  if(isAdmin){
+    query_str = 'select blogs.title, blogs.id, blogs.slug, blogs.isPosted,  blogs.date, blogs.views, c1.name category from blogs left join categories c1 on (blogs.category=c1.id) WHERE blogs.slug=? '
+  }
+
+  return new Promise(function(resolve, reject) {
+    pool.query(query_str, slug, function (err, rows) {
         if (err) {
             return reject(err);
         }
@@ -131,6 +150,7 @@ module.exports = {
   addBlog,
   getAllBlogs,
   getBlogByID,
+  getBlogBySlug,
   getCategories,
   updateBlog,
   deleteBlog
