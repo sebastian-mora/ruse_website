@@ -2,7 +2,7 @@ import {EDITOR_FETCH_BLOG_FAILURE, EDITOR_FETCH_BLOG_SUCCESS, SELECT_BLOG, UPDAT
   OPEN_NEW_BLOG, CLOSE_EDITOR_BLOG, TOGGLE_PREVIEW, 
   EDITOR_SAVE_SUCCESS, EDITOR_SAVE_FAIL,
   EDITOR_FETCH_IMAGES_SUCCUESS, EDITOR_FETCH_IMAGES_FAILURE, EDITOR_SAVE_IMAGES_SUCCUESS, EDITOR_SAVE_IMAGES_FAILURE, EDITOR_SAVE_IMAGES_REQUEST} from './types'
-import {addBlog, updateBlogApi, deleteBlogApi, getBlog} from '../../api/blogsApi';
+import {addBlog, updateBlogApi, deleteBlogApi, getBlogByID} from '../../api/blogsApi';
 import {getImages, uploadImage} from '../../api/adminApi';
 
 export const closeEditorBlog = () =>{
@@ -44,7 +44,12 @@ export const updateEditorBlog = (blog) => {
 
 export const postBlog = (blog) =>{
   return (dispatch) => {
-    addBlog(blog)
+    addBlog(blog).then((res) => {
+      dispatchEvent({type: EDITOR_SAVE_SUCCESS})
+    })
+    .catch((err) => {
+      dispatch({type: EDITOR_SAVE_FAIL, payload: err})
+    })
   }
 }
 
@@ -72,7 +77,7 @@ export const deleteBlog = (blog) =>{
 export const fetchBlog = (blogid) =>{
   return(dispatch) => {
 
-    getBlog(blogid).then((res) =>{
+    getBlogByID(blogid).then((res) =>{
       dispatch({type: UPDATE_EDITOR_BLOG, payload: res.data})
       dispatch({type: EDITOR_FETCH_BLOG_SUCCESS})
     })
