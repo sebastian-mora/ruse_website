@@ -1,5 +1,5 @@
 import {FETCH_BLOG_FAILURE, FETCH_BLOG_SUCCESS, FETCH_BLOG_REQUEST, LOAD_CATEGORIES} from './types'
-import {getBlogs,  getCategoriesApi} from '../../api/blogsApi';
+import {getAllBlogs, getCategoriesApi} from '../../api/blogsApi';
 
 
 // FETCH STATE FUCTIONS
@@ -29,9 +29,9 @@ export const fetchBlogsFailure = () => {
 export const loadBlogs = () => {
   return (dispatch) =>{
     dispatch(fetchBlogsRequest())
-    getBlogs()
-    .then(data => {
-      dispatch(fetchBlogsSuccess(data))
+    getAllBlogs()
+    .then(res => {
+      dispatch(fetchBlogsSuccess(res.data))
     })
     .catch( err => {
       dispatch(fetchBlogsFailure())

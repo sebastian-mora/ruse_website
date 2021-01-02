@@ -15,7 +15,6 @@ import Login from './components/Login/Login'
 import Admin from './components/Admin/Admin'
 import Logout from './components/Logout/Logout';
 import Projects from './components/Projects'
-
 import {connect} from 'react-redux';
 import {checkToken} from './redux/actions/authActions'
 
@@ -42,7 +41,7 @@ class App extends Component{
               <Route path ="/about" exact component={About} />
               <Route path ="/projects" exact component={Projects} />
               <Route exact path = "/blog"  component={Blog} />
-              <Route  path={"/blog/:id"} component={BlogPage}/>
+              <Route  path={"/blog/:slug"} component={BlogPage}/>
               <Route  path={"/login"} component={Login}/>
               <Route  path={"/logout"} component={Logout}/>
               <PrivateRoute  component={Admin} isAuthd={isAuthd} path={"/admin"}/>

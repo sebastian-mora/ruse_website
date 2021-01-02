@@ -1,17 +1,18 @@
 import axios from 'axios';
+
 import {API_ENDPOINT} from '../config'
 
-export function getBlogs(){
-  return axios.get(`${API_ENDPOINT}/blog`).then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err.request);
-  });
+
+export function getBlogByID(id){
+  return axios.get(`${API_ENDPOINT}/blog/id/${id}`)
 }
 
-export function getBlog(id){
-  return axios.get(`${API_ENDPOINT}/blog/${id}`)
+export function getBlogBySlug(slug){
+  return axios.get(`${API_ENDPOINT}/blog/${slug}`)
+}
+
+export function getAllBlogs(){
+  return axios.get(`${API_ENDPOINT}/blog`)
 }
 
 export function getCategoriesApi(){
@@ -24,14 +25,7 @@ export function getCategoriesApi(){
 }
 
 export function addBlog(blog){
-
-
-  return axios.post(`${API_ENDPOINT}/blog/create`, blog).then(res => {
-    return res.data
-  })
-  .catch(err => {
-    console.log(err.request);
-  });
+  return axios.post(`${API_ENDPOINT}/blog/create`, blog);
 }
 
 
