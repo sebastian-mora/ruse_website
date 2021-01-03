@@ -11,7 +11,7 @@ const Blog = () => {
   // store the blogs from the api in blogs
   const [blogs, setBlogs] = useState({});
   const [loadErr, setErr] = useState(false);
-  const NEW_POST_THRESHOLD = 30;
+  const NEW_POST_THRESHOLD = 14;
 
  
   useEffect(() => {
@@ -44,21 +44,21 @@ const Blog = () => {
       // If the blog is less than 30 days add it to the new category
       if(post_delta <= NEW_POST_THRESHOLD)
       {
-        sortedBlogs.New.push({slug,title})
+        sortedBlogs.New.push({slug,title,date})
       }
   
       // If category does not exist create it and add it
       if (!(category in sortedBlogs))
       {
         sortedBlogs = {...sortedBlogs,
-          [category]:[{title,slug}]
+          [category]:[{title,slug, date}]
         }
       }
 
       // else the catagoie does exist. Add it to the category 
       else 
       {
-        sortedBlogs[category].push({slug,title})
+        sortedBlogs[category].push({slug,title, date})
       }
     })
  
@@ -85,7 +85,7 @@ const Blog = () => {
           <li className={style.category}>{keyName}</li>
           <ul className={style.sub}> 
             {blogs[keyName].map((blog) => {
-              return <Link key={blog.id + i} to={`blog/${blog.slug}`}><li className={style.post}>{blog.title}</li></Link>
+              return <Link key={blog.id + i} to={`blog/${blog.slug}`}><li className={style.post}>{blog.title} ({blog.date})</li></Link>
             })}
           </ul>
         </React.Fragment>
