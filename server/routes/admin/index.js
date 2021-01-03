@@ -45,7 +45,7 @@ function processS3Results(data) {
 
   return data.map( (file) =>{
     let filename = file.Key.split('/')
-    return {filename : filename[filename.length-1], url: 'https://s3-us-west-2.amazonaws.com/ruse.tech/' + file.Key}
+    return {filename : filename[filename.length-1], url: 'https://ruse.tech/' + file.Key}
   })
   
 
