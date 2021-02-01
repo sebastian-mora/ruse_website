@@ -6,6 +6,9 @@ import style from './BlogPage.module.css'
 
 import {getBlogBySlug} from '../../api/blogsApi';
 
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {darcula} from 'react-syntax-highlighter/dist/esm/styles/prism'
+
 
 
 const BlogPage = (props) => {
@@ -28,6 +31,13 @@ const BlogPage = (props) => {
       })
   }, [slug])
   
+  const renderers = {
+    code: ({language, value}) => {
+      return <SyntaxHighlighter style={darcula} language={language} children={value} />
+    }
+  }
+
+
   return(
     <div>
       {blog &&
@@ -36,7 +46,7 @@ const BlogPage = (props) => {
 
           <div className={style.date}>{blog.date}</div>
 
-          <ReactMarkdown className= {style.post} >{blog.post}</ReactMarkdown>
+          <ReactMarkdown className= {style.post} renderers={renderers} >{blog.post}</ReactMarkdown>
         </>
         }
 

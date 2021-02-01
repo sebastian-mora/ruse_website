@@ -57,7 +57,13 @@ div.post ul li {
   margin-right: auto;
 }
 
-.post code{ 
+.post pre {
   background-color: #2b2b2b;
   padding: 1%;
+  overflow: auto;
+  text-overflow: wrap;
+}
+.post pre code{ 
+ 
+  /* padding: 1%; */
 }
