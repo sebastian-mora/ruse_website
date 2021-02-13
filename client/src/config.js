@@ -1,1 +1,1 @@
-export const API_ENDPOINT = "https://api.ruse.tech"
+export const API_ENDPOINT = " https://5tzjfsu5t8.execute-api.us-west-2.amazonaws.com/v1/"

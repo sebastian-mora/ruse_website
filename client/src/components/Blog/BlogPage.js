@@ -7,22 +7,20 @@ import style from './BlogPage.module.css'
 import {getBlogBySlug} from '../../api/blogsApi';
 
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {darcula} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import {materialDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 
 
 const BlogPage = (props) => {
 
-  const [blog, setBlog] = useState({});
+  const [blog, setBlog] = useState();
   const [errMessage, setError] = useState("")
   const slug = props.match.params.slug;
 
   useEffect(() => {
-
     getBlogBySlug(slug)
       .then((result) => {
         setBlog(result.data)
-        setError("")
       })
       .catch((err) =>{
         if(err.response.status === 404){
@@ -33,20 +31,20 @@ const BlogPage = (props) => {
   
   const renderers = {
     code: ({language, value}) => {
-      return <SyntaxHighlighter style={darcula} language={language} children={value} />
+      return <SyntaxHighlighter style={materialDark} language={language} children={value} />
     }
   }
 
-
   return(
     <div>
+
       {blog &&
         <>
-          <div className={style.title}><h1>{blog.title}</h1></div>
+          <div className={style.title}><h1>{blog.metadata.title}</h1></div>
 
-          <div className={style.date}>{blog.date}</div>
+          <div className={style.date}>{blog.metadata.date}</div>
 
-          <ReactMarkdown className= {style.post} renderers={renderers} >{blog.post}</ReactMarkdown>
+          <ReactMarkdown className= {style.post} renderers={renderers} >{blog.blog}</ReactMarkdown>
         </>
         }
 

@@ -31,6 +31,10 @@ div.post{
   margin-right: 5%;
   margin-bottom: 5%;
   line-height: 1.5;
+
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 div.post p{
@@ -49,9 +53,9 @@ div.post ul li {
   text-decoration: underline;
 }
 .post img {
-  padding-top: 3%;
-  padding-bottom: 3%;
-  width: 50%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  width: 80%;
   display: block;
   margin-left: auto;
   margin-right: auto;
