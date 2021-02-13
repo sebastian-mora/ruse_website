@@ -17,24 +17,21 @@
   font-size: 20px;
   font-weight: bolder;
 }
-
-.post{
-  margin:0 0 1% 0;  
+.linkContainer {
+  font-size: 1.2em;
 }
-
-
-ul.sub li{
-  text-decoration:underline;
+.linkContainer p {
   color: white;
-  font-size: 16px;
-  padding-top: 1%;
+  font-size: smaller;
+  text-indent: 3mm;
+  line-height: .3em;
 }
 
-ul.sub li a{
+.linkContainer span {
   color: white;
-  
+  text-decoration: none;
 }
 
-ul.sub li a:visited{
-  color: white;
-}
+
+
+
