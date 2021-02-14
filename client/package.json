@@ -18,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "aws s3 sync build/ s3://ruse.tech",
+    "deploy": "aws s3 sync build/ s3://ruse.tech --delete",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
