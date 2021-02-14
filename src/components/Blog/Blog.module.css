@@ -1,0 +1,37 @@
+
+.pageTitle {
+  color: white;
+  border-left: 2px solid #00ff00;
+  padding-left: 2%;
+  margin-top: 10%;
+}
+
+.root{
+  background-color: #1e1e1e;
+  margin-top: 5%;
+  padding-top: 3%;
+  padding-bottom: 1%;
+}
+
+.category {
+  font-size: 20px;
+  font-weight: bolder;
+}
+.linkContainer {
+  font-size: 1.2em;
+}
+.linkContainer p {
+  color: white;
+  font-size: smaller;
+  text-indent: 3mm;
+  line-height: .3em;
+}
+
+.linkContainer span {
+  color: white;
+  text-decoration: none;
+}
+
+
+
+

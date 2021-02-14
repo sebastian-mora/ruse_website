@@ -1,0 +1,73 @@
+div.title{
+  margin-top: 7%;
+}
+a {
+  color: #00ff00;
+  border-style: none;
+}
+a:visited{
+  color: #00ff00;
+}
+
+
+/* ------------- Main Body --------------- */
+
+.title{
+  color: white;
+  padding-left: 5%
+}
+
+.date{
+  padding-left: 5%;
+}
+
+
+div.post{
+  color: white;
+  background-color: #1e1e1e;
+  padding: 2%;
+  margin-left: 5%;
+  margin-top: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  line-height: 1.5;
+
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+div.post p{
+  line-height: 1.7em;
+}
+
+div.post p:first-of-type{
+  text-indent: 2em;
+}
+
+div.post ul li {
+  padding-bottom: 2%;
+}
+ .post :is(h1, h2) {
+  color: white;
+  text-decoration: underline;
+}
+.post img {
+  padding-top: 1%;
+  padding-bottom: 1%;
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post pre {
+  background-color: #2b2b2b;
+  padding: 1%;
+  overflow: auto;
+  text-overflow: wrap;
+}
+.post pre code{ 
+ 
+  /* padding: 1%; */
+}
