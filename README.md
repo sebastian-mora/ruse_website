@@ -1,29 +1,68 @@
-# Ruse.tech
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This project is my personal website. The objective of this project was to build a full-stack application that I could use to post and manage my own blogs. Through this project, I experimented with creating my own API written in NodeJs using the express framework, interfaced and managed MySQL database for authentication and metadata, and React for the frontend. 
+## Available Scripts
 
-![homepage](imgs/homepage.png)
+In the project directory, you can run:
 
-## Website structure 
+### `npm start`
 
-### Databse Layer 
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-For the site, I decided on using Mysql. The database has three tables Users, Categportyies, and Blogs. The user table stores the user's login as well as the password hash. As of right now, there are no roles implemented for the site and the only users added to the site are the admins. Next is the categories table which is a very basic table that stores categories names and id. Finally, the most complicated table is the Blog table. These tables store what I call "blog metadata". This metadata includes the blog id, title, date, views, status (is posted), and category. The id is a UUID and represents a foreign key to the blog file stored in an S3 bucket. Blog posts are created and stored in .md format on an s3 bucket. Each blog is correlated with the UUID in the BLOG table. Overall in future versions, the database could be replaced with Dynamodb
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-![database](imgs/db.png)
+### `npm test`
 
-### API Layer
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-This layer was built using NodeJS Express. This layer servers the information used in the React frontend. The API is consists of two main categories. /Admin, /Blog. Start with /Blog the expected routes are implemented that allow an Admin user to create, delete, and update blogs. /Admin route handles the authentication as well as admin specific actions such as uploading images and user management. When /blog requests the API returns only the metadata about the blogs to the client. When a client requests to view a specific blog only then does the API reach out to the S3 gather the post and return it to be rendered.  Authentication is implemented using JWT tokens and rate limiting is implemented on the authentication routes to prevent abuse. 
+### `npm run build`
 
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Front End 
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
 
-This was the most challenging part for me. Having never used React there were many pitfalls including how to manage the state of an authenticated user. After learning more about React I decided to use Redux to help manage state. The un-authenticated portion of the site is relatively simple. The blog list page has some interesting logic which sorts blogs into categories and moved the newest blogs to the top of the list. Blog posts are rendered using .md files which makes blogs easily customizable and render nicely. On the authenticated side is where the frontend gets more complicated. After logging in the Admin user is allowed to select, create a new blog, and manage users. If an existing blog is selected the blog editor is opened and the user is allowed to update the metadata and post of the blog. Additional new blogs can be created or deleted using the admin interface. The blog editor support uploading images. Images are stored in S3 index by the blog ids. I learned the most in this section of the application. Moving forward I would like to research front-end design patterns to help reduce the redundancy of my code. In the Redux section of the application, there is redundant code in managing request states.  I am sure there is a better-generalized approach. 
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-![database](imgs/blog.png)
-![database](imgs/edit.png)
+### `npm run eject`
 
-### Infra
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-The website is run on an EC2 with the domain api.ruse.tech and the React client is stored in an S3 bucket. The EC2 is provied with a very restricted role to allow the upload of images and blog files. The bucket is attached to a Cloudfront distribution to enable support for HTTPS and faster content delivery. Images and the blog .md files are stored in S3 buckets. The MySQL database is run on the same instance as the API. Ideally, this database would be migrated to RDS or run on a dedicated instance but for cost reasons, it is not. This in the future could be an issue depending on expected load.
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
