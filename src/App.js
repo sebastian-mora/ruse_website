@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-
+import {Helmet} from 'react-helmet'
 
 import './App.css';
 
@@ -22,7 +22,12 @@ class App extends Component{
 
         <Router>
           <div >
-         <Nav />
+          <Helmet>
+            <title>Ruse</title>
+            <meta name="description" content="An indirect means to gain an end. Ruse may imply deception,
+                  illusion, and either an evil or harmless end." />
+          </Helmet>
+          <Nav />
             <Switch>
               <Route path ="/" exact component={Index} />
               <Route path ="/about" exact component={About} />

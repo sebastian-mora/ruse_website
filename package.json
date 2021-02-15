@@ -8,8 +8,10 @@
     "npm-check-updates": "^10.2.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
     "react-markdown": "^5.0.3",
     "react-router-dom": "^5.2.0",
+    "react-router-sitemap": "^1.2.0",
     "react-scripts": "^4.0.1",
     "react-syntax-highlighter": "^15.4.3",
     "typescript": "^4.1.3"
@@ -17,9 +19,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "aws s3 sync build/ s3://ruse.tech --delete",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "deploy": "react-scripts build && npm run sitemap && aws s3 sync build/ s3://ruse.tech --delete",
+    "sitemap": "babel-node ./generate-sitemap/sitemap-generator.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,5 +37,11 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000/"
+  "proxy": "http://localhost:5000/",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0"
+  }
 }

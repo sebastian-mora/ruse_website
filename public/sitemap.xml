@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://ruse.tech/</loc> </url>
+<url> <loc>https://ruse.tech/</loc> </url>
+<url> <loc>https://ruse.tech/</loc> </url>
+<url> <loc>https://ruse.tech/about</loc> </url>
+<url> <loc>https://ruse.tech/projects</loc> </url>
+<url> <loc>https://ruse.tech/blogs</loc> </url>
+<url> <loc>https://ruse.tech/blogs/a-quick-look-at-pritunl-vpn</loc> </url>
+<url> <loc>https://ruse.tech/blogs/building-the-site</loc> </url>
+<url> <loc>https://ruse.tech/blogs/cve-2020-27358-9</loc> </url>
+<url> <loc>https://ruse.tech/blogs/going-serverless</loc> </url>
+<url> <loc>https://ruse.tech/blogs/hacking-the-software-engineering-club</loc> </url>
+<url> <loc>https://ruse.tech/blogs/welcome</loc> </url>
+</urlset>
