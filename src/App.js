@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+<<<<<<< HEAD
 import {Helmet} from 'react-helmet'
+=======
+
+>>>>>>> cb9fee3b4e286ed1f248c6217ac64d2c15a1b575
 
 import './App.css';
 
@@ -22,12 +26,16 @@ class App extends Component{
 
         <Router>
           <div >
+<<<<<<< HEAD
           <Helmet>
             <title>Ruse</title>
             <meta name="description" content="An indirect means to gain an end. Ruse may imply deception,
                   illusion, and either an evil or harmless end." />
           </Helmet>
           <Nav />
+=======
+         <Nav />
+>>>>>>> cb9fee3b4e286ed1f248c6217ac64d2c15a1b575
             <Switch>
               <Route path ="/" exact component={Index} />
               <Route path ="/about" exact component={About} />

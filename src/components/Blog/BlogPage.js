@@ -8,6 +8,11 @@ import {materialDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 import {getBlogBySlug} from '../../api/blogsApi';
 
+<<<<<<< HEAD:src/components/Blog/BlogPage.js
+=======
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import {materialDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+>>>>>>> cb9fee3b4e286ed1f248c6217ac64d2c15a1b575:src/components/Blog/BlogPage.js
 
 
 
@@ -37,14 +42,18 @@ const BlogPage = (props) => {
 
   return(
     <div>
+
       {blog &&
         <>
+<<<<<<< HEAD:src/components/Blog/BlogPage.js
             <Helmet>
               <title>{blog.metadata.title}</title>
               <meta name="description" content={blog.metadata.title}/>
               <meta name="keywords" content={blog.metadata.tags}/>
               <link rel="canonical" href={window.location.href} />
             </Helmet>
+=======
+>>>>>>> cb9fee3b4e286ed1f248c6217ac64d2c15a1b575:src/components/Blog/BlogPage.js
           <div className={style.title}><h1>{blog.metadata.title}</h1></div>
 
           <div className={style.date}>{blog.metadata.date}</div>
