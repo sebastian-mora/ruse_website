@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import {Link} from 'react-router-dom';
 import {getAllBlogs} from '../../api/blogsApi';
 import style from './Blog.module.css'
@@ -30,13 +29,6 @@ const Blog = () => {
 
   return (
     <div className={style.center}>
-
-      <Helmet>
-        <title>Blogs</title>
-        <meta name="description" content="Ruse.tech blog posts."/>
-        <meta name="keywords" content="hacking, blog, security, cloud, pentesting"/>
-        <link rel="canonical" href="http://ruse.tech/blogs" />
-      </Helmet>
 
       <h1 className={style.pageTitle}>Blogs:</h1>
   
