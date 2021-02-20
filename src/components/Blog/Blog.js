@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import { Helmet } from 'react-helmet';
-=======
->>>>>>> cb9fee3b4e286ed1f248c6217ac64d2c15a1b575
 import {Link} from 'react-router-dom';
 import {getAllBlogs} from '../../api/blogsApi';
 import style from './Blog.module.css'
@@ -34,7 +31,6 @@ const Blog = () => {
   return (
     <div className={style.center}>
 
-<<<<<<< HEAD
       <Helmet>
         <title>Blogs</title>
         <meta name="description" content="Ruse.tech blog posts."/>
@@ -42,8 +38,6 @@ const Blog = () => {
         <link rel="canonical" href="http://ruse.tech/blogs" />
       </Helmet>
 
-=======
->>>>>>> cb9fee3b4e286ed1f248c6217ac64d2c15a1b575
       <h1 className={style.pageTitle}>Blogs:</h1>
   
       <ul className={style.root}>
