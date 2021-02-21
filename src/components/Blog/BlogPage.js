@@ -6,6 +6,8 @@ import ReactMarkdown from 'react-markdown'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {cb} from 'react-syntax-highlighter/dist/esm/styles/prism'
 
+import ModalImage from "react-modal-image";
+
 import {getBlogBySlug} from '../../api/blogsApi';
 
 
@@ -28,12 +30,17 @@ const BlogPage = (props) => {
       })
   }, [slug])
   
-  const renderers = {
+  const Noderender = {
     code: ({language, value}) => {
-      console.log(language);
       return <SyntaxHighlighter style={cb} language={language} children={value} />
+    },
+
+    // Maybe add larger images in the future
+    image: ({src, alt}) => {
+      return <ModalImage style={style.imageModal} small={src} large={src} alt={alt}/>
     }
   }
+
 
   return(
     <div>
@@ -50,7 +57,7 @@ const BlogPage = (props) => {
 
           <div className={style.date}>{blog.metadata.datePosted}</div>
 
-          <ReactMarkdown className={style.post} plugins={[gfm]} renderers={renderers} >{blog.blog}</ReactMarkdown>
+          <ReactMarkdown className={style.post} plugins={[gfm]} renderers={Noderender} >{blog.blog}</ReactMarkdown>
         </>
         }
 
