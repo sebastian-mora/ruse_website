@@ -23,8 +23,7 @@
 .linkContainer p {
   color: white;
   font-size: smaller;
-  text-indent: 3mm;
-  line-height: .3em;
+  margin: .3em;
 }
 
 .linkContainer span {

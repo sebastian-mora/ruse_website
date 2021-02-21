@@ -5,8 +5,10 @@ div.container{
 
   display: flex;
   justify-content: center;
-  margin: 5%;
-  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: 15%;
 }
 
 ul.crypto{
@@ -16,7 +18,7 @@ ul.crypto{
 li.crypto {
   float: left;
   border-bottom: 1px solid #00ff00;
-  margin: 0 150px 0 0;
+  margin: 0 50px 0 0;
   font-size: 8em;
 }
 
