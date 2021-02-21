@@ -1,7 +1,5 @@
 .center {
-  padding-left: 25px;
-
-  margin-top: 15%;
+  margin: 5%;
 }
 
 p.boxedAbout {
@@ -17,5 +15,6 @@ p.boxedAbout {
   margin-left: auto;
   margin-right: auto;
   margin: auto;
-  width: 70%;
+  width: 30%;
+  height: 10%;
 }

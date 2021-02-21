@@ -48,7 +48,7 @@ const BlogPage = (props) => {
             </Helmet>
           <div className={style.title}><h1>{blog.metadata.title}</h1></div>
 
-          <div className={style.date}>{blog.metadata.date}</div>
+          <div className={style.date}>{blog.metadata.datePosted}</div>
 
           <ReactMarkdown className={style.post} plugins={[gfm]} renderers={renderers} >{blog.blog}</ReactMarkdown>
         </>

@@ -10,7 +10,6 @@ const Index = () => {
   
   return (
       <div>
-
         <Scroller/>
         <RuseDef/>
       </div>

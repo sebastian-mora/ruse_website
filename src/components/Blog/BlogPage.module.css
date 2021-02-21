@@ -1,5 +1,5 @@
 div.title{
-  margin-top: 7%;
+  margin-top: 5%;
 }
 a {
   color: #00ff00;
@@ -55,7 +55,9 @@ div.post ul li {
 .post img {
   padding-top: 1%;
   padding-bottom: 1%;
-  width: 80%;
+  max-width: 100%;
+  object-fit: contain;
+  height: auto;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -75,14 +77,17 @@ div.post ul li {
 }
 
 .post pre code  {
-  font-size: 12px;
+  font-size: 14px;
 } 
 
+.post table{
+  margin-left: auto;
+  margin-right: auto;
+
+}
 
 .post th, td{
   border-bottom: 1px solid #ddd;
   padding: 15px;
-  text-align: left;
 }
 
-.post  tr:nth-child(even) {background-color: #1e1e1e;}

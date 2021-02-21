@@ -37,8 +37,6 @@ const Blog = () => {
         <meta name="keywords" content="hacking, blog, security, cloud, pentesting"/>
         <link rel="canonical" href="http://ruse.tech/blogs" />
       </Helmet>
-
-      <h1 className={style.pageTitle}>Blogs:</h1>
   
       <ul className={style.root}>
 

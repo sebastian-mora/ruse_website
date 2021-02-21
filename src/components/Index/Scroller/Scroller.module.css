@@ -1,12 +1,13 @@
 
 /* ---------------- cryto --------------------- */
 
-div.crypto {
-  align-content: center;
-  padding-top: 25%;
-  margin-left: 18%;
-}
+div.container{
 
+  display: flex;
+  justify-content: center;
+  margin: 5%;
+  margin-top: 10%;
+}
 
 ul.crypto{
   list-style-type: none;
@@ -15,8 +16,8 @@ ul.crypto{
 li.crypto {
   float: left;
   border-bottom: 1px solid #00ff00;
-  margin-right: 15%;
-  font-size: 700%;
+  margin: 0 150px 0 0;
+  font-size: 8em;
 }
 
 

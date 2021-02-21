@@ -60,7 +60,7 @@ const Scroller = () => {
   }
 
   return (
-    <div className={style.crypto}>
+    <div className={style.container}>
       <ul className={style.crypto}>
         {letters.map((letter, i) => <li className={style.crypto} key={i}>{String.fromCharCode(letter)}</li>)}
       </ul>
