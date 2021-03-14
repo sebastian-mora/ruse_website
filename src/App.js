@@ -12,6 +12,8 @@ import About from './components/About/About'
 import Blog from './components/Blog/Blog'
 import BlogPage from './components/Blog/BlogPage'
 import Projects from './components/Projects'
+import Login from './components/Login/Login';
+import Logout from './components/Logout/Logout';
 
 
 class App extends Component{
@@ -34,6 +36,8 @@ class App extends Component{
               <Route path ="/projects" exact component={Projects} />
               <Route exact path = "/blogs"  component={Blog} />
               <Route  path={"/blogs/:slug"} component={BlogPage}/>
+              <Route exact path = "/login"  component={Login} />
+              <Route exact path = "/logout"  component={Logout} />
             </Switch>
           </div>
         </Router>
