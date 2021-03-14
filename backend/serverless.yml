@@ -8,35 +8,29 @@ provider:
   lambdaHashingVersion: 20201221
   stage: v1
   region: us-west-2
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-      - "s3:ListBucket"
-      - "s3:GetObject"
-      Resource: 
-        - "arn:aws:s3:::blogs.ruse.tech"
-        - "arn:aws:s3:::blogs.ruse.tech/*"
+  apiGateway:
+    shouldStartNameWithService: True
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:ListBucket"
+            - "s3:GetObject"
+          Resource: 
+            - "arn:aws:s3:::blogs.ruse.tech"
+            - "arn:aws:s3:::blogs.ruse.tech/*"
 
-  resources:
-
+  resources: #cloudformation syntax
     Resources:
-
       GatewayResponseDefault4XX:
-
         Type: 'AWS::ApiGateway::GatewayResponse'
-
         Properties:
-
           ResponseParameters:
-
           gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-
           gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-
           ResponseType: DEFAULT_4XX
-
           RestApiId:
-
             Ref: 'ApiGatewayRestApi'
 
 package:
