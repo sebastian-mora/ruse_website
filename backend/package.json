@@ -1,0 +1,11 @@
+{
+  "name": "api-ruse-tech",
+  "version": "1.0.0",
+  "description": "",
+  "devDependencies": {
+    "serverless-python-requirements": "^5.1.0"
+  },
+  "dependencies": {
+    "serverless-python-individually": "^0.1.9"
+  }
+}

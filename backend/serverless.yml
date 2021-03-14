@@ -1,0 +1,101 @@
+
+service: api-ruse-tech
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  stage: v1
+  region: us-west-2
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+      - "s3:ListBucket"
+      - "s3:GetObject"
+      Resource: 
+        - "arn:aws:s3:::blogs.ruse.tech"
+        - "arn:aws:s3:::blogs.ruse.tech/*"
+
+# resources: # CloudFormation template syntax
+#   Resources:
+#     usersTable:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         TableName: usersTable
+#         AttributeDefinitions:
+#           - AttributeName: email
+#             AttributeType: S
+#           - AttributeName: fname
+#             AttributeType: S
+#           - AttributeName: lname
+#             AttributeType: S
+#           - AttributeName: password
+#             AttributeType: S
+            
+            
+            
+#         KeySchema:
+#           - AttributeName: email
+#             KeyType: HASH
+#         ProvisionedThroughput:
+#           ReadCapacityUnits: 1
+#           WriteCapacityUnits: 1
+
+package:
+  individually: True
+  exclude:
+    # Exclude everything first.
+    - '**/*'
+
+functions:
+  
+  auth:
+    handler: auth/auth.handler
+    package:
+      include:
+        - auth/**
+      exclude:
+        - 'auth/event.json'
+
+  listBlogs:
+    handler: blogs/list.list
+    events:
+      - http:
+          path: blogs
+          method: get
+    package:
+      include:
+        - blogs/**
+    environment:
+      BLOGMETADATA: metadata.json
+      BUCKET: blogs.ruse.tech
+
+  getBlog:
+    handler: blogs/get.get
+    events:
+      - http:
+          path: blogs/{title}
+          method: get
+    environment:
+      BLOGMETADATA: metadata.json
+      BUCKET: blogs.ruse.tech
+      BLOGINDEX: index.md
+    package:
+      include:
+        - blogs/**
+
+  yeetBlog:
+    handler: blogs/yeet.yeet
+    events:
+      - http:
+          path: blogs/yeet
+          method: get
+          authorizer:
+            name: auth
+    package:
+      include:
+        - blogs/**
+
+plugins:
+  - serverless-python-requirements
