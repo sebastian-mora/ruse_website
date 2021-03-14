@@ -17,6 +17,28 @@ provider:
         - "arn:aws:s3:::blogs.ruse.tech"
         - "arn:aws:s3:::blogs.ruse.tech/*"
 
+  resources:
+
+    Resources:
+
+      GatewayResponseDefault4XX:
+
+        Type: 'AWS::ApiGateway::GatewayResponse'
+
+        Properties:
+
+          ResponseParameters:
+
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+
+          ResponseType: DEFAULT_4XX
+
+          RestApiId:
+
+            Ref: 'ApiGatewayRestApi'
+
 package:
   individually: True
   exclude:
@@ -44,6 +66,7 @@ functions:
       - http:
           path: blogs
           method: get
+          cors: True
     package:
       include:
         - blogs/**
@@ -57,6 +80,7 @@ functions:
       - http:
           path: blogs/{title}
           method: get
+          cors: True
     environment:
       BLOGMETADATA: metadata.json
       BUCKET: blogs.ruse.tech
@@ -70,6 +94,7 @@ functions:
     events:
       - http:
           path: blogs/yeet
+          cors: True
           method: get
           authorizer:
             name: auth
