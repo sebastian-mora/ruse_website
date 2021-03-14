@@ -17,36 +17,17 @@ provider:
         - "arn:aws:s3:::blogs.ruse.tech"
         - "arn:aws:s3:::blogs.ruse.tech/*"
 
-# resources: # CloudFormation template syntax
-#   Resources:
-#     usersTable:
-#       Type: AWS::DynamoDB::Table
-#       Properties:
-#         TableName: usersTable
-#         AttributeDefinitions:
-#           - AttributeName: email
-#             AttributeType: S
-#           - AttributeName: fname
-#             AttributeType: S
-#           - AttributeName: lname
-#             AttributeType: S
-#           - AttributeName: password
-#             AttributeType: S
-            
-            
-            
-#         KeySchema:
-#           - AttributeName: email
-#             KeyType: HASH
-#         ProvisionedThroughput:
-#           ReadCapacityUnits: 1
-#           WriteCapacityUnits: 1
-
 package:
   individually: True
   exclude:
     # Exclude everything first.
     - '**/*'
+
+plugins:
+  - serverless-layers
+custom:
+  serverless-layers:
+    layersDeploymentBucket: ruse-api-layers
 
 functions:
   
@@ -54,9 +35,8 @@ functions:
     handler: auth/auth.handler
     package:
       include:
-        - auth/**
-      exclude:
-        - 'auth/event.json'
+        - auth/auth.py
+        - auth/jwks.json
 
   listBlogs:
     handler: blogs/list.list
@@ -96,6 +76,3 @@ functions:
     package:
       include:
         - blogs/**
-
-plugins:
-  - serverless-python-requirements
