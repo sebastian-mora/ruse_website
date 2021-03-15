@@ -18,6 +18,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
       clientId={clientId}
       redirectUri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
+      audience="https://api.ruse.tech"
     >
       {children}
     </Auth0Provider>

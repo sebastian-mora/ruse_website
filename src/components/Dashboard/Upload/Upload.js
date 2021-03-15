@@ -1,7 +1,10 @@
 import React, { useState  } from "react";
 import style from './Upload.module.css'
 
-import axios  from 'axios';
+import { useAuth0 } from "@auth0/auth0-react";
+
+
+import {postBlog} from '../../../api/blogsApi'
 
 
 const Upload = () => {
@@ -13,16 +16,28 @@ const Upload = () => {
   const [date, setDate] = useState("")
   const [mdFile, setFile] = useState()
 
+  const {authorized, getAccessTokenSilently } = useAuth0();
+  
   let formData = new FormData();
 
+  getAccessTokenSilently().then((t) => {console.log(t)})
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async (e) =>{
     e.preventDefault()
     formData.append('title', title)
     formData.append('description', description)
     formData.append('tags', tags)
     formData.append('date', date)
     formData.append('file', mdFile)
+ 
+    const token = await getAccessTokenSilently();
+    postBlog(formData, token)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   return (
