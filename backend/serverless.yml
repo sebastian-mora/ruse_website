@@ -18,12 +18,14 @@ provider:
             - "s3:ListBucket"
             - "s3:GetObject"
             - "s3:PutObject"
+            - "s3:DeleteObject"
           Resource: 
             - "arn:aws:s3:::blogs.ruse.tech"
             - "arn:aws:s3:::blogs.ruse.tech/*"
         - Effect: "Allow"
           Action:
             - "dynamodb:PutItem"
+            - "dynamodb:DeleteItem"
           Resource:
             - "arn:aws:dynamodb:us-west-2:606202301209:table/BlogMetadata"
 

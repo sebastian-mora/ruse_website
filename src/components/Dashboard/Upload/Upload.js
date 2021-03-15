@@ -16,11 +16,9 @@ const Upload = () => {
   const [date, setDate] = useState("")
   const [mdFile, setFile] = useState()
 
-  const {authorized, getAccessTokenSilently } = useAuth0();
+  const {getAccessTokenSilently } = useAuth0();
   
   let formData = new FormData();
-
-  getAccessTokenSilently().then((t) => {console.log(t)})
 
   const handleSubmit = async (e) =>{
     e.preventDefault()

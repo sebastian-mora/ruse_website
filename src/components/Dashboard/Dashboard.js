@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Upload from "./Upload/Upload";
+import BlogManager from "./BlogManager/BlogManager";
 
 
 const Dashboard = () => {
@@ -31,6 +32,7 @@ const Dashboard = () => {
       {/* <Profile></Profile> */}
       <h1>Dashboard</h1>
       {renderPostBlog()}
+      <BlogManager/>
     </div>
   );
 };

@@ -22,6 +22,15 @@ export function postBlog(formData, token){
   return api.post(`${API_ENDPOINT}/blogs/add`, formData, config)
 }
 
+export function deleteBlog(id, token){
+  const config = {
+    headers: {
+        'Authorization': `${token}`
+    }
+  }
+  return api.post(`${API_ENDPOINT}/blogs/delete`, {id}, config)
+}
+
 
 
 
