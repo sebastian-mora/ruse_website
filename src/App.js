@@ -14,7 +14,7 @@ import BlogPage from './components/Blog/BlogPage'
 import Projects from './components/Projects'
 import Login from './components/Login/Login';
 import Logout from './components/Logout/Logout';
-import Profile from './components/Profile/Profile';
+import Dashboard from './components/Dashboard/Dashboard';
 
 // Routing 
 
@@ -40,7 +40,7 @@ class App extends Component{
               <Route  path={"/blogs/:slug"} component={BlogPage}/>
               <Route exact path = "/login"  component={Login} />
               <Route exact path = "/logout"  component={Logout} />
-              <ProtectedRoute path="/profile" component={Profile} />
+              <ProtectedRoute  path="/dashboard" component={Dashboard} />
             </Switch>
           </div>
     );
