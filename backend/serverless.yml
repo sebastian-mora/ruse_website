@@ -17,9 +17,15 @@ provider:
           Action:
             - "s3:ListBucket"
             - "s3:GetObject"
+            - "s3:PutObject"
           Resource: 
             - "arn:aws:s3:::blogs.ruse.tech"
             - "arn:aws:s3:::blogs.ruse.tech/*"
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:PutItem"
+          Resource:
+            - "arn:aws:dynamodb:us-west-2:606202301209:table/BlogMetadata"
 
   resources: #cloudformation syntax
     Resources:
@@ -54,6 +60,7 @@ functions:
         - auth/auth.py
         - auth/jwks.json
 
+  ## BLOG FUNCTIONS
   listBlogs:
     handler: blogs/list.list
     events:
@@ -83,15 +90,30 @@ functions:
       include:
         - blogs/**
 
-  yeetBlog:
-    handler: blogs/yeet.yeet
+  ## Admin Blog Actions
+  postBlog:
+    handler: blogs/post.post
     events:
       - http:
-          path: blogs/yeet
+          path: blogs/add
+          method: post
           cors: True
-          method: get
-          authorizer:
-            name: auth
+          authorizer: auth
+    environment:
+      BUCKET: blogs.ruse.tech
+    package:
+      include:
+        - blogs/**
+  deleteBlog:
+    handler: blogs/delete.delete
+    events:
+      - http:
+          path: blogs/delete
+          method: post
+          cors: True
+          authorizer: auth
+    environment:
+      BUCKET: blogs.ruse.tech
     package:
       include:
         - blogs/**
