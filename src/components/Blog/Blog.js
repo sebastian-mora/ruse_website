@@ -24,7 +24,7 @@ const Blog = () => {
 
   // DATE FORMAT IS MM/DD/YYYY
   const convertStringToDate = (dateString) => {
-    const date  = dateString.split('/')
+    const date  = dateString.split('-')
     return new Date(date[2], date[0], date[1])
   }
 

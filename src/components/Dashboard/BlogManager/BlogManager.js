@@ -12,7 +12,7 @@ const BlogManager = () => {
     getAllBlogs()
       .then(res => {
         res.data.sort((a, b) => {
-          return  convertStringToDate(b.metadata.datePosted) - convertStringToDate(a.metadata.datePosted) 
+          return  convertStringToDate(b.datePosted) - convertStringToDate(a.datePosted) 
         })
         setBlogs(res.data)
       })
@@ -21,7 +21,7 @@ const BlogManager = () => {
 
   // DATE FORMAT IS MM/DD/YYYY
   const convertStringToDate = (dateString) => {
-    const date  = dateString.split('/')
+    const date  = dateString.split('-')
     return new Date(date[2], date[0], date[1])
   }
 
@@ -58,10 +58,10 @@ const BlogManager = () => {
           {blogs.map((blog, index) => {
             return(
                   <tr>
-                    <td> {blog.metadata.title} </td>
-                    <td>{blog.metadata.datePosted}</td>
-                    <td>{blog.metadata.tags.join(', ')}</td>
-                    <td><button value={blog.path} onClick={handelEditClick}>...</button></td>
+                    <td> {blog.title} </td>
+                    <td>{blog.datePosted}</td>
+                    <td>{blog.tags.join(', ')}</td>
+                    <td><button value={blog.id} onClick={handelEditClick}>...</button></td>
                   </tr>
             ) 
           })}
