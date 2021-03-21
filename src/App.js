@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import {Helmet} from 'react-helmet'
 
 import './App.css';
@@ -12,15 +12,19 @@ import About from './components/About/About'
 import Blog from './components/Blog/Blog'
 import BlogPage from './components/Blog/BlogPage'
 import Projects from './components/Projects'
+import Login from './components/Login/Login';
+import Logout from './components/Logout/Logout';
+import Dashboard from './components/Dashboard/Dashboard';
 
+// Routing 
+
+import ProtectedRoute from './components/Auth/ProtectedRoute'
 
 class App extends Component{
 
   render(){
 
     return (
-
-        <Router>
           <div >
           <Helmet>
             <title>Ruse</title>
@@ -34,9 +38,11 @@ class App extends Component{
               <Route path ="/projects" exact component={Projects} />
               <Route exact path = "/blogs"  component={Blog} />
               <Route  path={"/blogs/:slug"} component={BlogPage}/>
+              <Route exact path = "/login"  component={Login} />
+              <Route exact path = "/logout"  component={Logout} />
+              <ProtectedRoute  path="/dashboard" component={Dashboard} />
             </Switch>
           </div>
-        </Router>
     );
   }
 }

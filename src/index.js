@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from "react-router-dom";
 
 import App from './App';
-
+import Auth0ProviderWithHistory from "./components/Auth/auth0-provider-with-history";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Router>
+    <Auth0ProviderWithHistory>
       <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    </Auth0ProviderWithHistory>
+  </Router>,
+  document.getElementById("root")
 );
-

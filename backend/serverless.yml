@@ -8,39 +8,40 @@ provider:
   lambdaHashingVersion: 20201221
   stage: v1
   region: us-west-2
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-      - "s3:ListBucket"
-      - "s3:GetObject"
-      Resource: 
-        - "arn:aws:s3:::blogs.ruse.tech"
-        - "arn:aws:s3:::blogs.ruse.tech/*"
+  apiGateway:
+    shouldStartNameWithService: True
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "s3:ListBucket"
+            - "s3:GetObject"
+            - "s3:PutObject"
+            - "s3:DeleteObject"
+          Resource: 
+            - "arn:aws:s3:::blogs.ruse.tech"
+            - "arn:aws:s3:::blogs.ruse.tech/*"
+        - Effect: "Allow"
+          Action:
+            - "dynamodb:PutItem"
+            - "dynamodb:DeleteItem"
+            - "dynamodb:Scan"
+            - "dynamodb:GetItem"
+          Resource:
+            - "arn:aws:dynamodb:us-west-2:606202301209:table/BlogMetadata"
 
-# resources: # CloudFormation template syntax
-#   Resources:
-#     usersTable:
-#       Type: AWS::DynamoDB::Table
-#       Properties:
-#         TableName: usersTable
-#         AttributeDefinitions:
-#           - AttributeName: email
-#             AttributeType: S
-#           - AttributeName: fname
-#             AttributeType: S
-#           - AttributeName: lname
-#             AttributeType: S
-#           - AttributeName: password
-#             AttributeType: S
-            
-            
-            
-#         KeySchema:
-#           - AttributeName: email
-#             KeyType: HASH
-#         ProvisionedThroughput:
-#           ReadCapacityUnits: 1
-#           WriteCapacityUnits: 1
+  resources: #cloudformation syntax
+    Resources:
+      GatewayResponseDefault4XX:
+        Type: 'AWS::ApiGateway::GatewayResponse'
+        Properties:
+          ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+          ResponseType: DEFAULT_4XX
+          RestApiId:
+            Ref: 'ApiGatewayRestApi'
 
 package:
   individually: True
@@ -48,22 +49,29 @@ package:
     # Exclude everything first.
     - '**/*'
 
+plugins:
+  - serverless-layers
+custom:
+  serverless-layers:
+    layersDeploymentBucket: ruse-api-layers
+
 functions:
   
   auth:
     handler: auth/auth.handler
     package:
       include:
-        - auth/**
-      exclude:
-        - 'auth/event.json'
+        - auth/auth.py
+        - auth/jwks.json
 
+  ## BLOG FUNCTIONS
   listBlogs:
     handler: blogs/list.list
     events:
       - http:
           path: blogs
           method: get
+          cors: True
     package:
       include:
         - blogs/**
@@ -77,6 +85,7 @@ functions:
       - http:
           path: blogs/{title}
           method: get
+          cors: True
     environment:
       BLOGMETADATA: metadata.json
       BUCKET: blogs.ruse.tech
@@ -85,17 +94,30 @@ functions:
       include:
         - blogs/**
 
-  yeetBlog:
-    handler: blogs/yeet.yeet
+  ## Admin Blog Actions
+  postBlog:
+    handler: blogs/post.post
     events:
       - http:
-          path: blogs/yeet
-          method: get
-          authorizer:
-            name: auth
+          path: blogs/add
+          method: post
+          cors: True
+          authorizer: auth
+    environment:
+      BUCKET: blogs.ruse.tech
     package:
       include:
         - blogs/**
-
-plugins:
-  - serverless-python-requirements
+  deleteBlog:
+    handler: blogs/delete.delete
+    events:
+      - http:
+          path: blogs/delete
+          method: post
+          cors: True
+          authorizer: auth
+    environment:
+      BUCKET: blogs.ruse.tech
+    package:
+      include:
+        - blogs/**

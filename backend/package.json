@@ -1,11 +1,19 @@
 {
   "name": "api-ruse-tech",
   "version": "1.0.0",
-  "description": "",
   "devDependencies": {
+    "serverless-layers": "^2.3.3",
     "serverless-python-requirements": "^5.1.0"
   },
   "dependencies": {
+    "serverless": "^2.29.0",
     "serverless-python-individually": "^0.1.9"
-  }
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
