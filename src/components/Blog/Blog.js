@@ -15,7 +15,7 @@ const Blog = () => {
     getAllBlogs()
       .then(res => {
         res.data.sort((a, b) => {
-          return  convertStringToDate(b.metadata.datePosted) - convertStringToDate(a.metadata.datePosted) 
+          return  convertStringToDate(b.datePosted) - convertStringToDate(a.datePosted) 
         })
         setBlogs(res.data)
       })
@@ -43,9 +43,9 @@ const Blog = () => {
         {blogs.map((blog, index) => {
           return( 
                 <div className={style.linkContainer}> 
-                  <Link key={index} to={`blogs/${blog.path}`}> <li className={style.link}>{blog.metadata.title}</li></Link>
-                  <p className={style.postDate}>Date: {blog.metadata.datePosted}</p>
-                  <p>Tags: {blog.metadata.tags.join(', ')}</p>
+                  <Link key={index} to={`blogs/${blog.id}`}> <li className={style.link}>{blog.title}</li></Link>
+                  <p className={style.postDate}>Date: {blog.datePosted}</p>
+                  <p>Tags: {blog.tags.join(', ')}</p>
                 </div>
           ) 
         })}

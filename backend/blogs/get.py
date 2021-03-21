@@ -2,54 +2,54 @@ import json
 import boto3
 import os
 
+headers = {
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': '*'
+}
+
 
 client = boto3.client('s3')
+dynamodb = boto3.resource('dynamodb')
+
 bucket = os.environ['BUCKET']
-blog_metadata_file = os.environ['BLOGMETADATA']
 blog_index_file = os.environ['BLOGINDEX']
 
 
-def get_blog_content(key):
-    key = key + '/' +  blog_index_file
+def get_blog_content(blog_id):
+    key =  blog_id + '/' +  blog_index_file
     try:
         obj = client.get_object(Bucket=bucket, Key=key)
         file_data = obj['Body'].read().decode('utf-8')
         
         return file_data
     except Exception as e:
-        return False
+        return e
 
-def get_blog_metadata(key):
-    key = key + '/' + blog_metadata_file
-    try:
-        obj = client.get_object(Bucket=bucket, Key=key)
-        file_data = obj['Body'].read().decode('utf-8')
-        
-        return json.loads(file_data)
-    except Exception as e:
-        return False
+def get_blog_metadata(blog_id):
+    table = dynamodb.Table('BlogMetadata')
+    response = table.get_item(Key={
+        "id": blog_id
+    })
+    return response['Item']
 
 
 def get(event, context):
     # Get the blog title from request
     try:
-        key = event['pathParameters']['title']
+        blog_id = event['pathParameters']['title']
         
     except Exception:
         return {
             "statusCode": 403,
             "body": json.dumps({"message":"Blog path not specified."}),
-            "headers": {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            },
+            "headers":headers,
             'isBase64Encoded': False
         }
 
     
     # Load the blog contents from S3
-    blog_body = get_blog_content(key)
-    blog_metadata = get_blog_metadata(key)
+    blog_body = get_blog_content(blog_id)
+    blog_metadata = get_blog_metadata(blog_id)
     
     # Load blog meta data
     if blog_body and blog_metadata:
@@ -60,10 +60,7 @@ def get(event, context):
         return {
             "statusCode": 200,
             "body": json.dumps(body),
-            "headers": {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            },
+            "headers":headers,
             'isBase64Encoded': False
         }
 
@@ -71,9 +68,6 @@ def get(event, context):
         return {
             "statusCode": 404,
             "body": json.dumps({"message":"Blog not Found"}),
-            "headers": {
-                "Content-Type": "application/json",
-                'Access-Control-Allow-Origin': '*'
-            },
+            "headers": headers,
             'isBase64Encoded': False
         }
