@@ -17,7 +17,7 @@ const About = () => {
         <p></p>
         Links:
         <ul>
-          <li><a  href="https://github.com/seb1055"  rel="noopener noreferrer"target="_blank">Github</a></li>
+          <li><a  href="https://github.com/sebastian-mora"  rel="noopener noreferrer"target="_blank">Github</a></li>
           <li><a href="https://twitter.com/rusesec"  rel="noopener noreferrer" target="_blank">Twitter</a></li>
         </ul>
       </p>
