@@ -25,7 +25,7 @@ const Upload = () => {
     formData.append('title', title)
     formData.append('description', description)
     formData.append('tags', tags)
-    formData.append('date', date)
+    formData.append('datePosted', date)
     formData.append('file', mdFile)
  
     const token = await getAccessTokenSilently();
@@ -52,13 +52,13 @@ const Upload = () => {
         </label>
 
         <label>
-          date:
-          <input onChange={(e) => setDate(e.target.value)}  type="date" />        
+          datePosted (dd-mm-yyyy):
+          <input onChange={(e) => setDate(e.target.value)}  type="text" />        
         </label>
 
         <label>
-          tags:
-          <input onChange={(e) => setTags(e.target.value)}  type="text" />        
+          tags (dev,pentest):
+          <input onChange={(e) => {setTags(e.target.value.split(","))} } type="text" />        
         </label>
 
         <label>
