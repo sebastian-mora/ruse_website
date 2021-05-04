@@ -18,12 +18,14 @@ def parseFormName(partHeaders):
 def addMetadatatoDB(metadata):
   metadata['id'] = metadata['title'].replace(" ", "-")
   table = dynamodb.Table('BlogMetadata')
+  metadata['tags'] = metadata['tags'].split(',')
   table.put_item(Item=metadata)
 
 def uploadFileToS3(blogData, title):
   key = title + '/index.md'
   fo = io.BytesIO(bytes(blogData, 'utf-8'))
   s3.upload_fileobj(fo, bucket , key)
+
 
 def post(event, context):
 

@@ -22,10 +22,14 @@ const Upload = () => {
 
   const handleSubmit = async (e) =>{
     e.preventDefault()
+
+    if(!validateForm()){
+      return
+    }
     formData.append('title', title)
     formData.append('description', description)
     formData.append('tags', tags)
-    formData.append('date', date)
+    formData.append('datePosted', date)
     formData.append('file', mdFile)
  
     const token = await getAccessTokenSilently();
@@ -36,6 +40,22 @@ const Upload = () => {
       .catch((err) => {
         console.log(err);
       })
+  }
+
+
+  const validateForm = () =>{
+
+    if (!(title && tags &&  description &&  date &&  mdFile)){
+      alert("Missing form field")
+      return false
+    }
+
+    const regex = "^\\d{1,2}-\\d{1,2}-\\d{4}$"
+    if(!(date.match(regex))){
+      alert("date not in correct format")
+      return false
+    }
+    return true
   }
 
   return (
@@ -52,13 +72,13 @@ const Upload = () => {
         </label>
 
         <label>
-          date:
-          <input onChange={(e) => setDate(e.target.value)}  type="date" />        
+          datePosted (dd-mm-yyyy):
+          <input onChange={(e) => setDate(e.target.value)}  type="text" />        
         </label>
 
         <label>
-          tags:
-          <input onChange={(e) => setTags(e.target.value)}  type="text" />        
+          tags (dev,pentest):
+          <input onChange={(e) => {setTags(e.target.value.split(","))} } type="text" />        
         </label>
 
         <label>
@@ -71,5 +91,7 @@ const Upload = () => {
     </div>
   );
 };
+
+
 
 export default Upload;
