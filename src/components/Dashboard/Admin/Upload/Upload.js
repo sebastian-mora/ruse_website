@@ -22,6 +22,10 @@ const Upload = () => {
 
   const handleSubmit = async (e) =>{
     e.preventDefault()
+
+    if(!validateForm()){
+      return
+    }
     formData.append('title', title)
     formData.append('description', description)
     formData.append('tags', tags)
@@ -36,6 +40,22 @@ const Upload = () => {
       .catch((err) => {
         console.log(err);
       })
+  }
+
+
+  const validateForm = () =>{
+
+    if (!(title && tags &&  description &&  date &&  mdFile)){
+      alert("Missing form field")
+      return false
+    }
+
+    const regex = "^\\d{1,2}-\\d{1,2}-\\d{4}$"
+    if(!(date.match(regex))){
+      alert("date not in correct format")
+      return false
+    }
+    return true
   }
 
   return (
@@ -71,5 +91,7 @@ const Upload = () => {
     </div>
   );
 };
+
+
 
 export default Upload;
