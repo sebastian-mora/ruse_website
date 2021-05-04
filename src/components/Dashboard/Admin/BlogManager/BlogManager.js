@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {getAllBlogs} from '../../../api/blogsApi';
+import {getAllBlogs} from '../../../../api/blogsApi';
 import BlogEditor from './BlogEditor';
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {getBlogBySlug, deleteBlog} from '../../../api/blogsApi';
+import {getBlogBySlug, deleteBlog} from '../../../../api/blogsApi';
 import { useAuth0 } from "@auth0/auth0-react";
 
 
@@ -28,7 +28,7 @@ const BlogEditor = (prop) => {
 
   return (
     <div>
-      {/* {blog.metadata.title} */}
+      {blog.metadata.title}
 
       <div>
         <h2>Options</h2>

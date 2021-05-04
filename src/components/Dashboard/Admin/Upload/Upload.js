@@ -4,7 +4,7 @@ import style from './Upload.module.css'
 import { useAuth0 } from "@auth0/auth0-react";
 
 
-import {postBlog} from '../../../api/blogsApi'
+import {postBlog} from '../../../../api/blogsApi'
 
 
 const Upload = () => {
