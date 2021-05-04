@@ -46,9 +46,10 @@ div.post p:first-of-type{
 }
 
 div.post ul li {
-  padding-bottom: 2%;
+  padding-bottom: 1%;
 }
- .post :is(h1, h2) {
+
+.post :is(h1, h2) {
   color: white;
   text-decoration: underline;
 }
