@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import {getBlogBySlug, deleteBlog} from '../../../../api/blogsApi';
 import { useAuth0 } from "@auth0/auth0-react";
 
 
 const BlogEditor = (prop) => {
 
-  const [blog, setBlog] = useState({});
+  // const [blog, setBlog] = useState({});
   const {getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     getBlogBySlug(prop.id)
       .then(res => {
-        setBlog(res.data)
+        // setBlog(res.data)
       })
-  }, []);
+  }, [prop.id]);
 
   const onClickDelete = async () =>{
     const token = await getAccessTokenSilently();
@@ -28,8 +28,7 @@ const BlogEditor = (prop) => {
 
   return (
     <div>
-      {blog.metadata.title}
-
+    
       <div>
         <h2>Options</h2>
         <button onClick={onClickDelete}>Delete</button>
