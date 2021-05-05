@@ -14,7 +14,9 @@ const Card = ({blog}) => {
         <img className={style.blogImage} src={`https://via.placeholder.com/200x200?text=${title}"`}></img>
         <div className={style.text}>
           <h1 className={style.title}>{title}</h1>
-          <p className={style.postDate}>Date: {datePosted}</p>
+          <p className={style.postDate}>{datePosted}</p>
+
+          <p className={style.description}> {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, "}</p>
 
           <div className={style.tagGroup}>
             {tags.map((tag, _) => {
@@ -23,7 +25,6 @@ const Card = ({blog}) => {
               ) 
             })}
           </div>
-          <p className={style.description}> {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, "}</p>
         </div>
         
       </div>
