@@ -3,33 +3,9 @@
   color: white;
   border-left: 2px solid #00ff00;
   padding-left: 2%;
-  margin-top: 5%;
+  margin-left: 5%;
 }
 
-.root{
-  background-color: #1e1e1e;
-  margin: 5%;
-  padding-top: 1%;
-  padding-bottom: 1%;
-}
-
-.category {
-  font-size: 20px;
-  font-weight: bolder;
-}
-.linkContainer {
-  font-size: 1.2em;
-}
-.linkContainer p {
-  color: white;
-  font-size: smaller;
-  margin: .3em;
-}
-
-.linkContainer span {
-  color: white;
-  text-decoration: none;
-}
 
 
 

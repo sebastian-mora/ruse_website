@@ -1,0 +1,53 @@
+
+
+
+.link{
+  text-decoration: none;
+}
+
+.card {
+  background-color: #2e2e2e;
+  margin: 3% 5% 0 5% ;
+  padding: 1%;
+
+}
+
+.card:hover{
+  background-color: #313131;
+}
+
+.title {
+  color: white;
+}
+
+.tagGroup {
+  color: white;
+  display: flex;
+}
+
+.tag {
+  background-color: grey;
+  height: fit-content;
+  width: fit-content;
+  margin-right: 1%;
+  padding: 5px;
+}
+
+.postDate{
+  color: white;
+}
+
+.category {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.description{
+  color: white;
+}
+
+.blogImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
