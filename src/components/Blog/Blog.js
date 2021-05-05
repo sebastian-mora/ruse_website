@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import {Link} from 'react-router-dom';
 import {getAllBlogs} from '../../api/blogsApi';
 import style from './Blog.module.css'
 
+import Card from './Card'
 
 const Blog = () => {
 
@@ -37,20 +37,16 @@ const Blog = () => {
         <meta name="keywords" content="hacking, blog, security, cloud, pentesting"/>
         <link rel="canonical" href="http://ruse.tech/blogs" />
       </Helmet>
+
+      <h1 className={style.pageTitle}>Blogs</h1>
   
-      <ul className={style.root}>
 
         {blogs.map((blog, index) => {
           return( 
-                <div className={style.linkContainer}> 
-                  <Link key={index} to={`blogs/${blog.id}`}> <li className={style.link}>{blog.title}</li></Link>
-                  <p className={style.postDate}>Date: {blog.datePosted}</p>
-                  <p>Tags: {blog.tags.join(', ')}</p>
-                </div>
+               <Card blog={blog}></Card>
           ) 
         })}
         
-      </ul>
     </div>
   )
 }
