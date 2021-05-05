@@ -1,16 +1,28 @@
 
-
-
-.link{
+.link {
   text-decoration: none;
 }
 
 .card {
   background-color: #2e2e2e;
-  margin: 3% 5% 0 5% ;
+  display: flex;
+  margin: 3% 5% 0 5%;
+  max-width: 50%;
   padding: 1%;
-
 }
+
+.text {
+  display: inline;
+}
+
+
+.blogImage {
+  margin: 20px 30px 0 0;
+  object-fit: contain;
+  align-self: flex-start;
+}
+
+
 
 .card:hover{
   background-color: #313131;
@@ -44,10 +56,4 @@
 
 .description{
   color: white;
-}
-
-.blogImage {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
