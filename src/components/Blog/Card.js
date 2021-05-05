@@ -11,7 +11,7 @@ const Card = ({blog}) => {
     <Link className={style.link} to={`blogs/${id}`}> 
       <div className={style.card}>
 
-        <img className={style.blogImage} src={previewImageUrl || "https://cdn.ruse.tech/assets/ruse-200x200.png"}></img>
+        <img className={style.blogImage} alt="Blog Preview" src={previewImageUrl || "https://cdn.ruse.tech/assets/ruse-200x200.png"}></img>
         <div className={style.text}>
           <h1 className={style.title}>{title}</h1>
           <p className={style.postDate}>{datePosted}</p>
