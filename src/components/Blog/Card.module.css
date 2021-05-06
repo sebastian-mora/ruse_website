@@ -1,16 +1,28 @@
 
 .link {
   text-decoration: none;
+  width: 75%;
+  display: inline-block;
 }
 
 .card {
   background-color: #2e2e2e;
-  /* display: flex; */
+  display: flex;
   margin: 3% 5% 0 5%;
-  max-width: 75%;
+  width: 100%;
   padding: 1%;
 }
 
+@media only screen and (max-width: 600px) {
+  .card {
+    background-color: #2e2e2e;
+    display: inline-block;
+    margin: 3% 5% 0 5%;
+    max-width: 75%;
+    padding: 1%;
+}
+  
+}
 .text {
   display: inline;
 }
@@ -37,6 +49,7 @@
 .tagGroup {
   color: white;
   display: flex;
+  width:100%;
 }
 
 .tag {
