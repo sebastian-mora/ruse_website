@@ -39,14 +39,26 @@ const Blog = () => {
       </Helmet>
 
       <h1 className={style.pageTitle}>Blogs</h1>
-  
 
-        {blogs.map((blog, index) => {
-          return( 
-               <Card blog={blog}></Card>
-          ) 
-        })}
-        
+        <div className={style.pinnedBlogs}>
+         
+          {// eslint-disable-next-line
+            blogs.map((blog, _) => {
+              if (blog.pinned)
+              return( 
+                    <Card blog={blog}></Card>
+              )
+              
+          })}
+        </div>
+        <div>
+          { // eslint-disable-next-line
+            blogs.map((blog, _) => {
+              if (!blog.pinned)
+                return <Card blog={blog}></Card> 
+            
+            })}
+        </div>
     </div>
   )
 }

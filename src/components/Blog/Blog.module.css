@@ -6,6 +6,24 @@
   margin-left: 5%;
 }
 
+.pinnedBlogs{
+  background-color: #5d5c5c;
+  border-radius: 25px;
+  width: 75%;
+  margin: 3% 5% 0 5%;
+  padding-bottom: 2%;
+}
+
+.pinnedBlogs h1 {
+  color: white;
+  
+}
+
+.pinnedBlogs h2 {
+  color: white;
+  margin-left: 2%;
+  margin-top: 5%
+}
 
 
 
