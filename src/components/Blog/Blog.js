@@ -41,7 +41,7 @@ const Blog = () => {
       <h1 className={style.pageTitle}>Blogs</h1>
 
         <div className={style.pinnedBlogs}>
-         
+         <h2>Featured Blogs</h2>
           {// eslint-disable-next-line
             blogs.map((blog, _) => {
               if (blog.pinned)
