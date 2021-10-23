@@ -11,7 +11,7 @@ import Index from './components/Index/index'
 import About from './components/About/About'
 import Blog from './components/Blog/Blog'
 import BlogPage from './components/Blog/BlogPage'
-import Projects from './components/Projects'
+// import Projects from './components/Projects'
 import Login from './components/Login/Login';
 import Logout from './components/Logout/Logout';
 import Dashboard from './components/Dashboard/Dashboard';
