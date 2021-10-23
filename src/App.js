@@ -35,7 +35,7 @@ class App extends Component{
             <Switch>
               <Route path ="/" exact component={Index} />
               <Route path ="/about" exact component={About} />
-              {/* <Route path ="/projects" exact component={Projects} /> */}
+              <Route path ="/projects" exact component={Projects} />
               <Route exact path = "/blogs"  component={Blog} />
               <Route  path={"/blogs/:slug"} component={BlogPage}/>
               <Route exact path = "/login"  component={Login} />
