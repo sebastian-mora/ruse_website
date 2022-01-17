@@ -4,9 +4,8 @@ import style from './BlogPage.module.css'
 
 import ReactMarkdown from 'react-markdown'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {cb} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { cb } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-import ModalImage from "react-modal-image";
 
 import {getBlogBySlug} from '../../api/blogsApi';
 
@@ -31,14 +30,25 @@ const BlogPage = (props) => {
   }, [slug])
   
   const Noderender = {
-    code: ({language, value}) => {
-      return <SyntaxHighlighter style={cb} language={language} children={value} />
-    },
 
-    // Maybe add larger images in the future
-    image: ({src, alt}) => {
-      return <ModalImage style={style.imageModal} small={src} large={src} alt={alt}/>
-    }
+    
+      code({node, inline, className, children, ...props}) {
+        const match = /language-(\w+)/.exec(className || '')
+        return !inline && match ? (
+          <SyntaxHighlighter
+            children={String(children).replace(/\n$/, '')}
+            style={cb}
+            language={match[1]}
+            PreTag="div"
+            {...props}
+          />
+        ) : (
+          <code className={className} {...props}>
+            {children}
+          </code>
+        )
+      }
+    
   }
 
 
@@ -57,7 +67,11 @@ const BlogPage = (props) => {
 
           <div className={style.date}>{blog.metadata.datePosted}</div>
 
-          <ReactMarkdown className={style.post} plugins={[gfm]} renderers={Noderender} >{blog.blog}</ReactMarkdown>
+          <ReactMarkdown
+            children={blog.blog}
+            components={Noderender}
+            className={style.post}
+          />
         </>
         }
 
