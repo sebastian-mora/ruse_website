@@ -11,14 +11,13 @@
     "react-markdown": "^5.0.3",
     "react-modal-image": "^2.5.0",
     "react-router-dom": "^5.2.0",
-    "react-router-sitemap": "^1.2.0",
     "react-scripts": "^4.0.3",
     "react-syntax-highlighter": "^15.4.3",
     "remark-gfm": "^1.0.0",
     "typescript": "^4.2.3"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "react-scripts build && npm run sitemap && aws s3 sync build/ s3://ruse.tech --delete",
     "sitemap": "babel-node ./generate-sitemap/sitemap-generator.js"
