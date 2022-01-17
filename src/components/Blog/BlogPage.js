@@ -15,7 +15,7 @@ const BlogPage = (props) => {
   const [blog, setBlog] = useState();
   const [errMessage, setError] = useState("")
   const slug = props.match.params.slug;
-  const gfm = require('remark-gfm')
+  // const gfm = require('remark-gfm')
 
   useEffect(() => {
     getBlogBySlug(slug)
