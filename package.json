@@ -17,6 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "deploy": "react-scripts build && aws s3 sync build/ s3://ruse.tech --delete"
   },
   "eslintConfig": {
