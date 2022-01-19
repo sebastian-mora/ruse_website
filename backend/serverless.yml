@@ -22,6 +22,8 @@ provider:
           Resource: 
             - "arn:aws:s3:::blogs.ruse.tech"
             - "arn:aws:s3:::blogs.ruse.tech/*"
+            - "arn:aws:s3:::cdn.ruse.tech/*"
+            - "arn:aws:s3:::cdn.ruse.tech"
         - Effect: "Allow"
           Action:
             - "dynamodb:PutItem"
@@ -121,3 +123,16 @@ functions:
     package:
       include:
         - blogs/**
+
+  ## S3 Actions
+
+  listAssets:
+    handler: s3/listAssets.listAssets
+    events:
+      - http:
+          path: assets
+          method: get
+          cors: True
+    package:
+      include:
+        - s3/**
