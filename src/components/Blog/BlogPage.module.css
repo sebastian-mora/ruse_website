@@ -1,6 +1,4 @@
-div.title{
-  margin-top: 5%;
-}
+
 a {
   color: #00ff00;
   border-style: none;
@@ -14,31 +12,34 @@ a:visited{
 
 .title{
   color: white;
-  padding-left: 5%
+  /* padding-left: 5% */
 }
 
-.date{
-  padding-left: 5%;
+.titleContainer,
+div.post{
+  /* padding-left: 5%; */
+  max-width: 1024px;
+  box-sizing: border-box;
+  margin: 36px auto;
 }
+
+
 
 
 div.post{
   color: white;
   background-color: #1e1e1e;
-  padding: 2%;
-  margin-left: 5%;
-  margin-top: 5%;
-  margin-right: 5%;
-  margin-bottom: 5%;
+  padding:16px 32px 4% 32px;
   line-height: 1.5;
-
   overflow-wrap: break-word;
   word-wrap: break-word;
   hyphens: auto;
 }
 
+
+
 div.post p{
-  line-height: 1.7em;
+  line-height: 1.5em;
 }
 
 div.post p:first-of-type{
@@ -54,14 +55,11 @@ div.post ul li {
   text-decoration: underline;
 }
 .post img {
-  padding-top: 1%;
-  padding-bottom: 1%;
-  max-width: 100%;
-  object-fit: contain;
-  height: auto;
+  width: 100%;
+  max-width: 500px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin:32px auto;
+  border-radius: 8px;
 }
 
 
@@ -76,7 +74,14 @@ div.post ul li {
   word-wrap: break-word;
 }
 
+.titleContainer{
+  background-color:#1e1e1e;
+  padding:16px 32px;
+}
 
+.titleContainer h1{
+  margin-top: 0px;
+}
 
 .post pre code  {
   font-size: 14px;
@@ -97,3 +102,24 @@ div.post ul li {
   padding: 15px;
 }
 
+.post p{
+  margin: 8px 0px;
+}
+
+@media screen and (max-width:1100px){ 
+
+ 
+  .titleContainer,
+  div.post{  
+  
+  margin: 36px;
+}
+
+}
+
+@media screen and (max-width:480px){ 
+
+  div.post{
+  padding:16px;
+  }
+}
