@@ -1,0 +1,16 @@
+{
+  "id": "ecs-attack-methods",
+  "datePosted": "06-7-2021",
+  "description": "AWS ECS attack methods.",
+  "pinned": true,
+  "previewImageUrl": "https://cdn.ruse.tech/imgs/ecs-attack-methods/ecs.png",
+  "tags": [
+    {
+      "S": "research"
+    },
+    {
+      "S": "aws"
+    }
+  ],
+  "title": "AWS ECS attack methods"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "welcome!",
+  "datePosted": "12-23-2020",
+  "description": "Welcome to the new site!",
+  "pinned": "",
+  "previewImageUrl": "https://cdn.ruse.tech/assets/ruse-200x200.png",
+  "tags": [
+    {
+      "S": "pentesting"
+    },
+    {
+      "S": "general"
+    }
+  ],
+  "title": "Welcome!"
+}

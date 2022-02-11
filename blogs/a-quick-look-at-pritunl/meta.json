@@ -1,0 +1,13 @@
+{
+  "id": "a-quick-look-at-pritunl",
+  "datePosted": "01-31-2021",
+  "description": "Looking at Pritunl internals in hopes of finding a new bug.",
+  "pinned": "",
+  "previewImageUrl": "https://cdn.ruse.tech/assets/ruse-200x200.png",
+  "tags": [
+    {
+      "S": "pentesting"
+    }
+  ],
+  "title": "A Quick Look At Pritunl"
+}

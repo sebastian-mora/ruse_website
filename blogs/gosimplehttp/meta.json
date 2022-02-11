@@ -1,0 +1,16 @@
+{
+  "id": "gosimplehttp",
+  "datePosted": "03-02-2021",
+  "description": "Reworked Python's SimpleHttpServer in goland.",
+  "pinned": "",
+  "previewImageUrl": "https://cdn.ruse.tech/assets/ruse-200x200.png",
+  "tags": [
+    {
+      "S": "dev"
+    },
+    {
+      "S": "golang"
+    }
+  ],
+  "title": "GoSimpleHttp"
+}
