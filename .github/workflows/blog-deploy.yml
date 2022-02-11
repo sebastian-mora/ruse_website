@@ -1,4 +1,4 @@
-name: s3-depl
+name: blogs-deploy
 
 on:
   push:
@@ -21,4 +21,6 @@ jobs:
       - name: Upload files to S3
         run: aws s3 sync ./blogs/ s3://test.blogs.ruse.tech --delete
       - name: Upload metadata to DynamoDb
-        run:  for file in blogs/*/meta.json; do aws dynamodb put-item --table-name ${{ secrets.SECRET_DB_TABLETOKEN }} --item file://$file --region ${{ secrets.AWS_REGION }}; done
+        env:
+          DB_TABLE: ${{ secrets.DB_TABLE }}
+        run:  for file in blogs/*/meta.json; do aws dynamodb put-item --table-name $DB_TABLE --item file://$file ; done
