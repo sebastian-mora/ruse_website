@@ -1,13 +1,27 @@
 {
-  "id": "aws-sso-phishing",
-  "datePosted": "02-05-2022",
-  "description": "Phishing AWS SSO environments using AWSSOMEPHISH.",
-  "pinned": true,
-  "previewImageUrl": "https://cdn.ruse.tech/assets/ruse-200x200.png",
-  "tags": [
-    {
-      "S": "pentesting"
-    }
-  ],
-  "title": "AWS SSO Phishing"
+  "id": {
+    "S": "aws-sso-phishing"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
+  },
+  "datePosted": {
+    "S": "02-05-2022"
+  },
+  "pinned": {
+    "S": "true"
+  },
+  "description": {
+    "S": "Phishing AWS SSO environments using AWSSOMEPHISH."
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "pentesting"
+      }
+    ]
+  },
+  "title": {
+    "S": "AWS SSO Phishing"
+  }
 }

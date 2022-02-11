@@ -1,16 +1,26 @@
 {
-  "id": "rss-app-ssrf",
-  "datePosted": "04-4-2021",
-  "description": "Finding a vuln in rss.app that gave me access to the AWS account.",
-  "pinned": "",
-  "previewImageUrl": "https://cdn.ruse.tech/assets/ruse-200x200.png",
-  "tags": [
-    {
-      "S": "vuln"
-    },
-    {
-      "S": "aws"
-    }
-  ],
-  "title": "Getting AWS creds via SSRF on rss.app"
+  "id": {
+    "S": "rss-app-ssrf"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
+  },
+  "datePosted": {
+    "S": "04-4-2021"
+  },
+  "pinned": {
+    "BOOL": false
+  },
+  "description": {
+    "S": "Finding a vuln in rss.app that gave me access to the AWS account."
+  },
+  "tags": {
+    "SS": [
+      "aws",
+      "vuln"
+    ]
+  },
+  "title": {
+    "S": "Getting AWS creds via SSRF on rss.app"
+  }
 }

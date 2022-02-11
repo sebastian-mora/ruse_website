@@ -1,13 +1,24 @@
 {
-  "id": "building-the-website",
-  "datePosted": "12-24-2020",
-  "description": "Dev notes on builing my own full stack bloging application.",
-  "pinned": "",
-  "previewImageUrl": "https://cdn.ruse.tech/assets/ruse-200x200.png",
-  "tags": [
-    {
-      "S": "dev"
-    }
-  ],
-  "title": "Building The Website"
+  "id": {
+    "S": "building-the-website"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
+  },
+  "datePosted": {
+    "S": "12-24-2020"
+  },
+  "description": {
+    "S": "Dev notes on builing my own full stack bloging application."
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "dev"
+      }
+    ]
+  },
+  "title": {
+    "S": "Building The Website"
+  }
 }

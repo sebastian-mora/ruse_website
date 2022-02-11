@@ -1,13 +1,24 @@
 {
-  "id": "hacking-the-software-engineering-club",
-  "datePosted": "02-04-2021",
-  "description": "For the SEC club a conducted a web pentest on our application to judge our security.",
-  "pinned": "",
-  "previewImageUrl": "https://cdn.ruse.tech/assets/ruse-200x200.png",
-  "tags": [
-    {
-      "S": "pentesting"
-    }
-  ],
-  "title": "Hacking the Software Engineering Club"
+  "id": {
+    "S": "hacking-the-software-engineering-club"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
+  },
+  "datePosted": {
+    "S": "02-04-2021"
+  },
+  "description": {
+    "S": "For the SEC club a conducted a web pentest on our application to judge our security."
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "pentesting"
+      }
+    ]
+  },
+  "title": {
+    "S": "Hacking the Software Engineering Club"
+  }
 }

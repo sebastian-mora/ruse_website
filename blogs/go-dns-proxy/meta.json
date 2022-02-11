@@ -1,13 +1,24 @@
 {
-  "id": "go-dns-proxy",
-  "datePosted": "05-05-2021",
-  "description": "Messing around with DNS using go",
-  "pinned": "",
-  "previewImageUrl": "https://cdn.ruse.tech/imgs/preview/dnsproxy.png",
-  "tags": [
-    {
-      "S": "dev"
-    }
-  ],
-  "title": "Go DNS Proxy"
+  "id": {
+    "S": "go-dns-proxy"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/imgs/preview/dnsproxy.png"
+  },
+  "datePosted": {
+    "S": "05-05-2021"
+  },
+  "description": {
+    "S": "Messing around with DNS using go"
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "dev"
+      }
+    ]
+  },
+  "title": {
+    "S": "Go DNS Proxy"
+  }
 }

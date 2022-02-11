@@ -1,16 +1,27 @@
 {
-  "id": "aws-minecraft-bot",
-  "datePosted": "04-17-2021",
-  "description": "How I built a Minecraft Bot in AWS that is controlled by Discord using highly scalable architecture.",
-  "pinned": "",
-  "previewImageUrl": "https://cdn.ruse.tech/assets/ruse-200x200.png",
-  "tags": [
-    {
-      "S": "dev"
-    },
-    {
-      "S": "aws"
-    }
-  ],
-  "title": "High Availability Discord Minecraft Bot"
+  "id": {
+    "S": "aws-minecraft-bot"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
+  },
+  "datePosted": {
+    "S": "04-17-2021"
+  },
+  "description": {
+    "S": "How I built a Minecraft Bot in AWS that is controlled by Discord using highly scalable architecture."
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "dev"
+      },
+      {
+        "S": "aws"
+      }
+    ]
+  },
+  "title": {
+    "S": "High Availability Discord Minecraft Bot"
+  }
 }
