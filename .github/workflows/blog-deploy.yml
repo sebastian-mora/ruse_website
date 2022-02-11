@@ -1,0 +1,24 @@
+name: s3-depl
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+    - 'blogs/*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Upload files to S3
+        run: aws s3 sync ./blogs/ s3://test.blogs.ruse.tech --delete
+      - name: Upload metadata to DynamoDb
+        run:  for file in blogs/*/meta.json; do aws dynamodb put-item --table-name ${{ secrets.SECRET_DB_TABLETOKEN }} --item file://$file --region ${{ secrets.AWS_REGION }}; done
