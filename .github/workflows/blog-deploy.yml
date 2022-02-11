@@ -19,8 +19,32 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Upload files to S3
-        run: aws s3 sync ./blogs/ s3://test.blogs.ruse.tech --delete
-      - name: Upload metadata to DynamoDb
+        run: aws s3 sync ./blogs/ s3://blogs.ruse.tech --delete
+
+      - name: Upload all local metadata to db
         env:
           DB_TABLE: ${{ secrets.DB_TABLE }}
-        run:  for file in blogs/*/meta.json; do aws dynamodb put-item --table-name $DB_TABLE --item file://$file ; done
+        run: for file in blogs/*/meta.json; do aws dynamodb put-item --table-name $DB_TABLE --item file://$file ; done
+
+      - name: Prune old metadata from db
+        env:
+          DB_TABLE: ${{ secrets.DB_TABLE }}
+        run: |
+              KEYS=$(aws dynamodb scan --table-name BlogMetadata --region us-west-2 | jq -r .Items[].id.S)
+              for remote_key in $KEYS
+              do 
+                in_remote=1
+                for file in blogs/*/meta.json;
+                  do
+                    local_key=$(cat $file | jq -r .id.S)
+
+                    if [ "$local_key" == "$remote_key" ]; then
+                      delete=0
+                    fi
+                  done
+
+              if [ "$delete" -eq "1" ]; then
+                echo "Deleting blog $remote_key from remote";
+              fi
+
+              done
