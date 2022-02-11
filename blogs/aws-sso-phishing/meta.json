@@ -12,7 +12,7 @@
     "S": "true"
   },
   "description": {
-    "S": "Phishing AWS SSO environments using AWSSOMEPHISH."
+    "S": "Phishing AWS SSO using AWSSOMEPHISH."
   },
   "tags": {
     "L": [
