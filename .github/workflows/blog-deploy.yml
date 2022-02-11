@@ -22,7 +22,7 @@ jobs:
         run: aws s3 sync ./blogs/ s3://blogs.ruse.tech --delete
 
       - name: Upload images files to cdn
-        run: for path in blogs/*; do aws s3 sync $path/imgs s3://test.blogs.ruse.tech/imgs/$(basename $path)/  ;done
+        run: for path in blogs/*; do aws s3 sync $path/imgs s3://cdn.ruse.tech/imgs/$(basename $path)/  ;done
 
       - name: Upload all local metadata to db
         env:
