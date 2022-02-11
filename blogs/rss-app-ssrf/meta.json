@@ -12,7 +12,7 @@
     "BOOL": false
   },
   "description": {
-    "S": "Finding a vuln in rss.app that gave me access to the AWS account."
+    "S": "Finding a vuln in rss.app that return Ec2 instance profile credentials."
   },
   "tags": {
     "L": [
