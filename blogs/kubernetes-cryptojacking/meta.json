@@ -1,0 +1,33 @@
+{
+  "id": {
+    "S": "kubernetes-cryptojacking"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
+  },
+  "datePosted": {
+    "S": "02-17-2021"
+  },
+  "pinned": {
+    "BOOL": true
+  },
+  "description": {
+    "S": "Attacking Kubelet Api to gain access to a Kubernetes cluster but how do we Cryptojack?"
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "hacking"
+      },
+      {
+        "S": "kubernetes"
+      },
+      {
+        "S": "cryptojacking"
+      }
+    ]
+  },
+  "title": {
+    "S": "Kubernetes Cryptojacking"
+  }
+}

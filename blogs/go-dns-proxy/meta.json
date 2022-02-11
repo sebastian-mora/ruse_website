@@ -1,0 +1,24 @@
+{
+  "id": {
+    "S": "go-dns-proxy"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/imgs/preview/dnsproxy.png"
+  },
+  "datePosted": {
+    "S": "05-05-2021"
+  },
+  "description": {
+    "S": "Messing around with DNS using go"
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "dev"
+      }
+    ]
+  },
+  "title": {
+    "S": "Go DNS Proxy"
+  }
+}

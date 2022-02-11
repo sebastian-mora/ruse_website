@@ -1,0 +1,24 @@
+{
+  "id": {
+    "S": "going-serverless"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
+  },
+  "datePosted": {
+    "S": "02-13-2021"
+  },
+  "description": {
+    "S": "Turns out running and mataining a full-stack website is a pain and can be expensive. So I deleted many lines of code and moved the site to use a serverless architecture."
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "dev"
+      }
+    ]
+  },
+  "title": {
+    "S": "Going Serverless"
+  }
+}

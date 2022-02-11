@@ -1,0 +1,27 @@
+{
+  "id": {
+    "S": "welcome!"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
+  },
+  "datePosted": {
+    "S": "12-23-2020"
+  },
+  "description": {
+    "S": "Welcome to the new site!"
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "pentesting"
+      },
+      {
+        "S": "general"
+      }
+    ]
+  },
+  "title": {
+    "S": "Welcome!"
+  }
+}
