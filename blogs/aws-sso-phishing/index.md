@@ -61,9 +61,9 @@ Finally all that is required is that we send the link to the victim and wait for
 
 `curl $URL --header “x-api-key=API_KEY` URL/getTokens`
 
-Here is a video of the attack flow (click the image). 
+Here is a video of the [attack flow](http://www.youtube.com/watch?v=LtwLd4R5jsY). 
 
-[![image alt text](https://img.youtube.com/vi/LtwLd4R5jsY/0.jpg)](http://www.youtube.com/watch?v=LtwLd4R5jsY "Phishing AWS SSO")
+![image alt text](https://img.youtube.com/vi/LtwLd4R5jsY/0.jpg)
 
 
 
