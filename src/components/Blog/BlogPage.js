@@ -62,11 +62,11 @@ const BlogPage = (props) => {
               <meta name="description" content={blog.metadata.title}/>
               <meta name="keywords" content={blog.metadata.tags}/>
               <link rel="canonical" href={window.location.href} />
-            </Helmet>
-          <div className={style.title}><h1>{blog.metadata.title}</h1></div>
-
-          <div className={style.date}>{blog.metadata.datePosted}</div>
-
+            </Helmet>          
+            <div className={style.titleContainer}>
+              <div className={style.title}><h1>{blog.metadata.title}</h1></div>
+              <div className={style.date}>{blog.metadata.datePosted}</div>
+            </div>
           <ReactMarkdown
             children={blog.blog}
             components={Noderender}
