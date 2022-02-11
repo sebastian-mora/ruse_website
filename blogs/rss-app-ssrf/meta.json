@@ -15,9 +15,10 @@
     "S": "Finding a vuln in rss.app that gave me access to the AWS account."
   },
   "tags": {
-    "SS": [
-      "aws",
-      "vuln"
+    "L": [
+      {
+        "S": "aws"
+      }
     ]
   },
   "title": {
