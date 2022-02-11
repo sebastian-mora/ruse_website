@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import style from './BlogPage.module.css'
 
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import { cb } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -78,6 +79,7 @@ const BlogPage = (props) => {
             children={blog.blog}
             components={Noderender}
             className={style.post}
+            remarkPlugins={[remarkGfm]}
           />
         </>
         }
