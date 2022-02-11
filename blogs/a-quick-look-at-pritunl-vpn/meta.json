@@ -1,6 +1,6 @@
 {
   "id": {
-    "S": "a-quick-look-at-pritunl"
+    "S": "a-quick-look-at-pritunl-vpn"
   },
   "previewImageUrl": {
     "S": "https://cdn.ruse.tech/assets/ruse-200x200.png"
@@ -19,6 +19,6 @@
     ]
   },
   "title": {
-    "S": "A Quick Look At Pritunl"
+    "S": "A Quick Look At Pritunl VPN"
   }
 }
