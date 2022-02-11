@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-    - 'blogs/*'
+    - 'blogs/**'
 
 jobs:
   deploy:
