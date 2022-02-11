@@ -47,6 +47,13 @@ const BlogPage = (props) => {
             {children}
           </code>
         )
+      },
+
+      img({node, inline, className, children, ...props}) {
+        console.log(props.src)
+        return (
+          <a href={props.src} target="_blank"><img src={props.src}/></a>
+        )
       }
     
   }
