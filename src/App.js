@@ -15,7 +15,7 @@ import BlogPage from './components/Blog/BlogPage'
 import Login from './components/Login/Login';
 import Logout from './components/Logout/Logout';
 import Dashboard from './components/Dashboard/Dashboard';
-import AssetsPage from './components/Assests/AssetsPage';
+// import AssetsPage from './components/Assests/AssetsPage';
 
 // Routing 
 
@@ -36,7 +36,7 @@ class App extends Component{
             <Switch>
               <Route path ="/" exact component={Index} />
               <Route path ="/about" exact component={About} />
-              <Route  path={"/assets"} component={AssetsPage}/>
+              {/* <Route  path={"/assets"} component={AssetsPage}/> */}
               {/* <Route path ="/projects" exact component={Projects} /> */}
               <Route exact path = "/blogs"  component={Blog} />
               <Route  path={"/blogs/:slug"} component={BlogPage}/>
