@@ -1,6 +1,6 @@
 
 service: api-ruse-tech
-frameworkVersion: '2'
+frameworkVersion: '3'
 
 provider:
   name: aws
@@ -31,7 +31,7 @@ provider:
             - "dynamodb:Scan"
             - "dynamodb:GetItem"
           Resource:
-            - "arn:aws:dynamodb:us-west-2:606202301209:table/BlogMetadata"
+            - "Fn::GetAtt": [ BlogMetadata, Arn ]
 
   resources: #cloudformation syntax
     Resources:
@@ -44,6 +44,16 @@ provider:
           ResponseType: DEFAULT_4XX
           RestApiId:
             Ref: 'ApiGatewayRestApi'
+      BlogMetadata:
+          Type: AWS::DynamoDB::Table
+          Properties:
+            TableName: BlogMetadata
+            AttributeDefinitions:
+              - AttributeName: id
+                AttributeType: S
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
 
 package:
   individually: True
