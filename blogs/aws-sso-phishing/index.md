@@ -63,8 +63,6 @@ Finally, we send the link to the victim and wait for them to accept the authenti
 
 Here is a video of the [attack flow](http://www.youtube.com/watch?v=LtwLd4R5jsY). 
 
-![image alt text](https://img.youtube.com/vi/LtwLd4R5jsY/0.jpg)
-
 
 
 Notice the only suspicious domain involved is the initial API gateway URL clicked by the user. That domain could be altered to use a custom domain name to fit a pretext but I found that the API Gateway URL ending in `*.amazonaws.com` made it through emails filters.
