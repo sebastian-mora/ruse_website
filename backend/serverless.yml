@@ -1,6 +1,8 @@
+org: seb1055
+app: api-ruse-tech
 
 service: api-ruse-tech
-frameworkVersion: '3'
+frameworkVersion: '2'
 
 provider:
   name: aws
@@ -33,27 +35,21 @@ provider:
           Resource:
             - "Fn::GetAtt": [ BlogMetadata, Arn ]
 
-  resources: #cloudformation syntax
-    Resources:
-      GatewayResponseDefault4XX:
-        Type: 'AWS::ApiGateway::GatewayResponse'
-        Properties:
-          ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
-          ResponseType: DEFAULT_4XX
-          RestApiId:
-            Ref: 'ApiGatewayRestApi'
-      BlogMetadata:
-          Type: AWS::DynamoDB::Table
-          Properties:
-            TableName: BlogMetadata
-            AttributeDefinitions:
-              - AttributeName: id
-                AttributeType: S
-            KeySchema:
-              - AttributeName: id
-                KeyType: HASH
+resources: #cloudformation syntax
+  Resources: 
+    BlogMetadata:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: BlogMetadata
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
 package:
   individually: True
