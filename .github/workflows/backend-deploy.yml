@@ -19,5 +19,5 @@ jobs:
         run: npm install -g serverless && npm install
       - name: Deploy backend
         run: sls deploy
-          env:
+        env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SLS_KEY }}
