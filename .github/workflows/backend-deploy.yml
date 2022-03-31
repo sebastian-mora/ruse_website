@@ -20,4 +20,4 @@ jobs:
       - name: Deploy backend
         run: sls deploy
           env:
-          SERVERLESS_ACCESS_KEY: ${{ secrets.SLS_KEY }}
+            SERVERLESS_ACCESS_KEY: ${{ secrets.SLS_KEY }}
