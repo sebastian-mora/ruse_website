@@ -65,13 +65,6 @@ custom:
 
 functions:
   
-  auth:
-    handler: auth/auth.handler
-    package:
-      include:
-        - auth/auth.py
-        - auth/jwks.json
-
   ## BLOG FUNCTIONS
   listBlogs:
     handler: blogs/list.list
@@ -98,34 +91,6 @@ functions:
       BLOGMETADATA: metadata.json
       BUCKET: blogs.ruse.tech
       BLOGINDEX: index.md
-    package:
-      include:
-        - blogs/**
-
-  ## Admin Blog Actions
-  postBlog:
-    handler: blogs/post.post
-    events:
-      - http:
-          path: blogs/add
-          method: post
-          cors: True
-          authorizer: auth
-    environment:
-      BUCKET: blogs.ruse.tech
-    package:
-      include:
-        - blogs/**
-  deleteBlog:
-    handler: blogs/delete.delete
-    events:
-      - http:
-          path: blogs/delete
-          method: post
-          cors: True
-          authorizer: auth
-    environment:
-      BUCKET: blogs.ruse.tech
     package:
       include:
         - blogs/**
