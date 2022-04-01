@@ -8,7 +8,7 @@ const Card = ({blog}) => {
   let {title, description, datePosted, id, tags, previewImageUrl} = blog
   return (
 
-    <Link className={style.link} to={`blogs/${id}`}> 
+    <Link className={style.link} to={id}> 
       <div className={style.card}>
 
         <img className={style.blogImage} alt="Blog Preview" src={previewImageUrl || "https://cdn.ruse.tech/assets/ruse-200x200.png"}></img>
