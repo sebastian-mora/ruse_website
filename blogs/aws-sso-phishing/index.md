@@ -42,7 +42,7 @@ The SSO credentials are not normal AWS temporary credentials. They only allow th
 * sso:ListAccountRoles
 * sso:GetRoleCredentials
 
-At the core of the attack we will generate a device code url and ask an unexpecting victim to approve our request but of course we're gonna get a bit fancy than that.
+At the core of the attack we will generate a device code url and ask an unexpected victim to approve our request but of course we're gonna get a bit fancy than that.
 
 
 ## The Attack

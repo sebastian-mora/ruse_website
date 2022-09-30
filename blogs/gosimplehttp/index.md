@@ -15,7 +15,7 @@ Here we create a handler using http.FileServer(http.Dir(path)) and in its parame
 
 To take it a step further I wanted to add TLS support. This should be useful to transfer sensitve files. To add TLS change `ListenAndServe` to `ListenAndServeTLS`. `ListenAndServeTLS` requires a the following params `address, tlsCrt, tlsKey, handler`
 
-To make the program more useful we import the `flags` library which allows the user to configure some of the programs paramters.
+To make the program more useful we import the `flags` library which allows the user to configure some of the programs parameters.
 
 The last feature I wanted to add was logging. This feature is useful if I wanted to debug a connection or use the HTTP server as some type of callback for XSS or SSRF. This part was a bit confusing and I had to take a look a StackOverflow. A the core the function `logRequest(handler http.Handler) http.Handler` wraps the original http.Handler and acts as a middleware.
 
