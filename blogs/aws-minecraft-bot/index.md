@@ -56,7 +56,7 @@ https://github.com/sebastian-mora/mcdiscordbot/tree/main/ansible
 
 Logs are delivered to cloudwatch using the cloudwatch agent. The agent pushes the minecraft latest logs as well as detailed server metrics. Having these logs in log groups allows the creation of a cloudwatch dashboard and alerts to be created for events. Here is an example 
 
-![dashboard.jpg](https://cdn.ruse.tech/imgs/aws-minecraft-bot/dashboard.jpg)
+![dashboard.png](https://cdn.ruse.tech/imgs/aws-minecraft-bot/dashboard.png)
 
 Here we can aggregate all the metrics. I can see lambda event, log delivery, live logs of the instances, and below (not shown) instance stats. Instance stats can be tracked via tags so when instances are added or removed the dashboard updates dynamically. 
 
