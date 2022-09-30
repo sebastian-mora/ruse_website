@@ -41,6 +41,8 @@ Logs are delivered to cloudwatch using the cloudwatch agent. The agent pushes th
 
 ![dashboard.jpg](https://cdn.ruse.tech/imgs/aws-minecraft-bot/dashboard.jpg)
 
+Here we can aggregate all the metrics. I can see lambda event, log delivery, live logs of the instances, and below (not shown) instance stats. Instance stats can be tracked via tags so when instances are added or removed the dashboard updates dynamically. 
+
 
 ## Creating the API
 
