@@ -1,12 +1,11 @@
-name: website-deploy
+name: frontend-deploy
 
 on:
   push:
     branches:
       - master
-    paths-ignore:
-      - 'blogs/**'
-      - '.github/**'
+    paths:
+    - 'src/**'
 
 jobs:
   build:

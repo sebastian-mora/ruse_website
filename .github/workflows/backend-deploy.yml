@@ -1,0 +1,23 @@
+name: backend-deploy
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+    - 'backend/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install serverless
+        run: npm install -g serverless && npm install
+      - name: Deploy backend
+        run: sls deploy
+        env:
+          SERVERLESS_ACCESS_KEY: ${{ secrets.SLS_KEY }}

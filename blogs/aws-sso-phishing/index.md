@@ -8,6 +8,8 @@ I find this method highly impactful for the following reasons.
 * Difficult to detect and harder to triage. 
 
 
+You can find my tool [AWSSOMEPHISH](https://github.com/sebastian-mora/awsssome_phish) on github. 
+
 ## AWS SSO Auth Flow
 
 
@@ -47,7 +49,7 @@ At the core of the attack we will generate a device code url and ask an unexpect
 
 ## The Attack
 
-You can follow the GitHub page on installing the requirements but with a simple command can stand up all the infrastructure required for this automatically.
+You can follow the [GitHub](https://github.com/sebastian-mora/awsssome_phish) page on installing the requirements but with a simple command can stand up all the infrastructure required for this automatically.
 
 If you're curious about the tool architecture there will be a diagram at the end. 
 

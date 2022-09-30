@@ -10,9 +10,9 @@ const About = () => {
     <h1><code>typeof(RU$E)</code></h1>
       <img src={ruse_dark} className={style.ruseImg} alt="Ruse Logo"></img>
       <p className={style.boxedAbout}>
-        Pentester with focus on Cloud/WebApps and an intrest in privacy.
+        Pentester turned Cloud Security Engineer interest in privacy.
         This website is dedicated to whatever content I feel is interesting or relevant.
-        If you wish to contact my email is <a href="seb@ruse.tech"> seb@ruse.tech </a> (<a href="https://keys.openpgp.org/vks/v1/by-fingerprint/61594A228EE2FF3B7811A5C0423803123B071223">PGP Available</a>).
+        If you wish to contact my email is <a href="seb@ruse.tech"> seb@ruse.tech </a>
 
         <p></p>
         Links:
