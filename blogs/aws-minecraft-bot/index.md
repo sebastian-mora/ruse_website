@@ -23,6 +23,23 @@ The second script manages the billing. I started writing this in bash but then m
 
 I decided to delegate these scripts to the server rather than use lambda functions to check via a VPC using mcrcon because I am already paying to have the ec2 on so might as well save some coin. This does make the server setup slightly more complicated. 
 
+### Custom EC2 terraform module
+
+I wanna take a second to highlight my EC2 modules because I think it is pretty damn cool. To add a server to the system I just need to append a new block of the following. Take note of  `ansible_host_name     = "vanilla"` this create a mapping for the ansible-pull to its ansible role. This variable is used to template a user-data script which configured the cronjob for the ansible task. Using this repeatable module it is easy to setup new server and attach custom configuration using ansible. 
+
+```
+module "vanilla" {
+  source                = "./modules/ec2"
+  name                  = "vanilla"
+  ansible_host_name     = "vanilla"
+  instance_type         = "m5.large"
+  aws_key_pair_name     = aws_key_pair.deployer.key_name
+  instance_profile_name = aws_iam_role.minecraft_server_role.name
+  subnet_id             = module.vpc.public_subnets[0]
+  security_group_ids    = [aws_security_group.mc_sg.id, aws_security_group.allow_ssh_public.id]
+}
+```
+
 ### Server Configuration using Ansible-Pull
 
 By using ansible in a pull configuration we can launch instances with associated ansible roles. Each role can be configured for a specific minecraft server instances for example I am running the following servers
