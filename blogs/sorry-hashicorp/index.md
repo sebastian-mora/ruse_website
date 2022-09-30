@@ -90,4 +90,4 @@ I was able to meet with their security team and walk through what I was trying a
 
 Seriously shout-out to Hashicorp for being so cool. 
 
-At the end of the day no real vulns (a good thing) came from this exploration but it was fun at the very least. There is more exploration to be done in this area but that will have to wait for an authorized time. ;)
+At the end of the day no real vulns (a good thing) came from this exploration but it was fun at the very least. There is more exploration to be done in this area and I would have loved to have more time explore the host configurations, it will have to wait for an authorized time. ;)
