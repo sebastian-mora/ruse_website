@@ -27,7 +27,7 @@ I decided to delegate these scripts to the server rather than use lambda functio
 
 I wanna take a second to highlight my EC2 modules because I think it is pretty damn cool. To add a server to the system I just need to append a new block of the following. Take note of  `ansible_host_name     = "vanilla"` this create a mapping for the ansible-pull to its ansible role. This variable is used to template a user-data script which configured the cronjob for the ansible task. Using this repeatable module it is easy to setup new server and attach custom configuration using ansible. 
 
-```
+```python
 module "vanilla" {
   source                = "./modules/ec2"
   name                  = "vanilla"
