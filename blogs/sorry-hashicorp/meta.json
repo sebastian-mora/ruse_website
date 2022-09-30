@@ -3,13 +3,13 @@
     "S": "sorry-hashicorp"
   },
   "previewImageUrl": {
-    "S": "https://cdn.ruse.tech/imgs/aws-minecraft-bot/icon.png"
+    "S": "https://cdn.ruse.tech/imgs/sorry-hashicor/icon.png"
   },
   "datePosted": {
     "S": "09-29-2022"
   },
   "pinned": {
-    "BOOL": true
+    "BOOL": false
   },
   "description": {
     "S": "Exploring Terraform Enterprise and getting caught"
