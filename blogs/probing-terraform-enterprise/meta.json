@@ -1,0 +1,30 @@
+{
+  "id": {
+    "S": "sorry-hashicorp"
+  },
+  "previewImageUrl": {
+    "S": "https://cdn.ruse.tech/imgs/aws-minecraft-bot/icon.png"
+  },
+  "datePosted": {
+    "S": "09-29-2022"
+  },
+  "pinned": {
+    "BOOL": true
+  },
+  "description": {
+    "S": "Exploring Terraform Enterprise and getting caught"
+  },
+  "tags": {
+    "L": [
+      {
+        "S": "hacking"
+      },
+      {
+        "S": "terraform"
+      }
+    ]
+  },
+  "title": {
+    "S": "Sorry hashicorp :("
+  }
+}
