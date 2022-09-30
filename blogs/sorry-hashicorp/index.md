@@ -4,7 +4,7 @@ I am writing the blog a few months after the fact so some details and screenshot
 
 I am a big fan of Terraform and more recently Terraform Enterprise (TFE). TFE offers free accounts for users which I use to manage my personal projects.
 
-Using a remote TFE workspaces comes with many benefits but to me best benefits is state management and CI/CD. Simply connect your repo to TFE and commit to main and you terraform code executes. 
+Using a remote TFE workspaces comes with many cool features but to me best benefits are state management and CI/CD. Simply connect your repo to TFE and commit to main and you terraform code executes. 
 
 This got me thinking, I am running code on another persons machine....
 
@@ -50,7 +50,7 @@ Using the root access I check /etc/shadowd and found the password hash for the T
 
 Then I check several instances it was clear the all runners share the same user hash, I didn't try to crack it.
 
-While this is a cool find, there is no networking between hosts or externally so the user has is not useful in this case. I still reported it to HashiCorp. 
+While this is a cool find, there is no networking between hosts or externally so the user hash is not useful in this case. I still reported it to HashiCorp. 
 
 ## Environment Variables 
 
