@@ -13,7 +13,7 @@ Here is the design I settled on. At the core of this is a rest API which manages
 
 The first step was setting up the EC2s to be controlled by the API. Ideally this would be done with terraform or a tool to codify this process. I chose a M4.Large which is about $0.10 per hour. The EC2s do not have an elastic IPs and are dynamically assigned IPs (elastic ips cost $$ when not in use).
 
-So as a soultion when a server starts it posts it IP to the discord chat via SNS. I manually installed the Minecraft sever and setup systemd to start the process on boot. Mcrcon was is also enabled on all servers to allow scripts to interact with them. I tagged the EC2 with "Minecraft:True, Name:Vanilla". This will be used later to assign permissions and allow the lambdas to search for instances managed by the bot.
+So as a solution when a server starts it posts it IP to the discord chat via SNS. I manually installed the Minecraft sever and setup systemd to start the process on boot. Mcrcon was is also enabled on all servers to allow scripts to interact with them. I tagged the EC2 with "Minecraft:True, Name:Vanilla". This will be used later to assign permissions and allow the lambdas to search for instances managed by the bot.
 
 The server can send alerts such as when it is turning on/off and it's public IP via SNS.
 
@@ -22,6 +22,25 @@ There are two task that run along side with the minecraft process. This is the a
 The second script manages the billing. I started writing this in bash but then moved to Python because I know how to use it better lol. This script is triggered every 1 min by cron. It gets all usernames on the server then it calculates the cost of the instance per player and updates their bill in a dynamodb table. This table can be view through the mc bot to allow users to see how long they have played for and what cost they have occurred. The price scaling is nice because it gets cheaper per number of players on the server. It is really satisfying to see the mins count up in DynamoDB letting me know the whole system is alive and working. 
 
 I decided to delegate these scripts to the server rather than use lambda functions to check via a VPC using mcrcon because I am already paying to have the ec2 on so might as well save some coin. This does make the server setup slightly more complicated. 
+
+### Server Configuration using Ansible-Pull
+
+By using ansible in a pull configuration we can launch instances with associated ansible roles. Each role can be configured for a specific minecraft server instances for example I am running the following servers
+
+* Vanilla (paper)
+* RLCraft
+* Skyblock
+
+There is a shared "common" role which configures as the baseline scripts explained above for backup and alerting. Then a server specific role is called via a tag mapping on the instance, this role then will configure the correct server jar and mod files. 
+
+https://github.com/sebastian-mora/mcdiscordbot/tree/main/ansible
+
+### Logging and Alerting 
+
+Logs are delivered to cloudwatch using the cloudwatch agent. The agent pushes the minecraft latest logs as well as detailed server metrics. Having these logs in log groups allows the creation of a cloudwatch dashboard and alerts to be created for events. Here is an example 
+
+![dashboard.jpg](https://cdn.ruse.tech/imgs/aws-minecraft-bot/dashboard.jpg)
+
 
 ## Creating the API
 
