@@ -7,6 +7,7 @@ div.container{
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
 
   margin-top: 15%;
 }
@@ -19,7 +20,7 @@ li.crypto {
   float: left;
   border-bottom: 1px solid #00ff00;
   margin: 0 50px 0 0;
-  font-size: 8em;
+  font-size: 15em;
 }
 
 
