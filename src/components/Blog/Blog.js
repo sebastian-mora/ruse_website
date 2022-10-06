@@ -46,16 +46,16 @@ const Blog = () => {
             blogs.map((blog, _) => {
               if (blog.pinned)
               return( 
-                    <Card blog={blog}></Card>
+                <><Card blog={blog}></Card> <hr/></> 
               )
               
           })}
         </div>
-        <div>
+        <div className={style.cardDiv} >
           { // eslint-disable-next-line
             blogs.map((blog, _) => {
               if (!blog.pinned)
-                return <Card blog={blog}></Card> 
+                return (<><Card blog={blog} ></Card> <hr/></> )
             
             })}
         </div>

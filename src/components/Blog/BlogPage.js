@@ -56,7 +56,7 @@ const BlogPage = () => {
     img({ node, inline, className, children, ...props }) {
       console.log(props.src)
       return (
-        <a href={props.src} target="_blank" rel="noreferrer" ><img alt="" src={props.src} /></a>
+        <a href={props.src} target="_blank" rel="noopener noreferrer" ><img alt="" src={props.src} /></a>
       )
     }
 

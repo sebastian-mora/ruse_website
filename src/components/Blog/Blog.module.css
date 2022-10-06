@@ -1,4 +1,8 @@
 
+hr {
+  border: 1px solid #00ff00;
+  margin: 1% 25% 0% 25%;
+}
 .pageTitle {
   color: white;
   border-left: 2px solid #00ff00;
@@ -7,24 +11,23 @@
 }
 
 .pinnedBlogs{
-  background-color: #5d5d5c59;
-  width: 87%;
-  margin: 3% 5% 0 5%;
-  padding-bottom: 2%;
-}
+  /* background-color: #5d5d5c59; */
+  margin: 0% 10% 0 10%;
+  padding-bottom: 0%;
+} 
 
-.pinnedBlogs h1 {
+ .pinnedBlogs h1 {
   color: white;
 }
 
 .pinnedBlogs h2 {
   color: white;
-  margin-left: 5%;
   padding-top: 2%;
 }
 
-
-
+.cardDiv {
+  margin: 3% 5% 0 5%;
+}
 
 
 

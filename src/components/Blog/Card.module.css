@@ -1,25 +1,17 @@
 
 .link {
-  text-decoration: none;
-  width: 85%;
-  display: inline-block;
-  padding-left: 1%;
-  
+  text-decoration: none;  
 }
 
 .card {
-  background-color: #2e2e2e;
-  display: flex;
-  margin: 2% 0% 0 5%;
+  /* margin: 2% 0% 0 5%; */
   width: 100%;
   padding: 1%;
-  border-left: #00ff00 solid 1px;
+  border-left: 1px solid white;
 }
 
 @media only screen and (max-width: 600px) {
   .card {
-    background-color: #2e2e2e;
-    display: inline-block;
     margin: 3% 5% 0 5%;
     max-width: 75%;
     padding: 1%;
@@ -27,14 +19,17 @@
   
 }
 .text {
-  display: inline;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 2%;
 }
 
 
 .blogImage {
-  margin: 20px 30px 0 0;
-  object-fit: contain;
   align-self: flex-start;
+  display: inline-block;
+  vertical-align: middle;
+  width: 100px;
 }
 
 
