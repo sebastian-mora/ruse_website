@@ -27,11 +27,11 @@ li.crypto {
 
 @media all and (max-device-width: 720px){
   li.crypto {
-      font-size: 4em;
+      font-size: 2em;
   }
 
   div.container{
-    margin-top: 50%;
+    margin-top: 25%;
   }
 
 }
