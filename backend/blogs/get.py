@@ -8,14 +8,15 @@ headers = {
 }
 
 
-client = boto3.client('s3')
-dynamodb = boto3.resource('dynamodb')
+
+
 
 bucket = os.environ['BUCKET']
 blog_index_file = os.environ['BLOGINDEX']
 
 
 def get_blog_content(blog_id):
+    client = boto3.client('s3')
     key =  blog_id + '/' +  blog_index_file
     try:
         obj = client.get_object(Bucket=bucket, Key=key)
@@ -26,11 +27,12 @@ def get_blog_content(blog_id):
         return e
 
 def get_blog_metadata(blog_id):
+    dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('BlogMetadata')
     response = table.get_item(Key={
         "id": blog_id
     })
-    return response['Item']
+    return response.get('Item')
 
 
 def get(event, context):
@@ -48,8 +50,16 @@ def get(event, context):
 
     
     # Load the blog contents from S3
-    blog_body = get_blog_content(blog_id)
     blog_metadata = get_blog_metadata(blog_id)
+    if not blog_metadata:
+        return {
+            "statusCode": 404,
+            "body": json.dumps({"message":"Blog not found."}),
+            "headers":headers,
+            'isBase64Encoded': False
+        }
+
+    blog_body = get_blog_content(blog_id)
     
     # Load blog meta data
     if blog_body and blog_metadata:
