@@ -52,7 +52,7 @@ for p in Path(path).glob('**/*.md'):
     id, clean_metadata = format_object_for_db(md.Meta)
 
     if validate_metadata(p, clean_metadata):
-        data = {"id": id ,"metadata": clean_metadata}
+        data = {"id": id, "blog": text, "metadata": clean_metadata}
         res = table.put_item(Item = data)
         logger.info(f"Saved {p}")
     else:
