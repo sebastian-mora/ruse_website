@@ -36,20 +36,24 @@ def format_object_for_db(obj):
     new_obj = {}
 
     for k in obj:
+
+        if(k == "id"): # No need to write id to metadata block
+            pass
         if len(obj[k]) == 1 and k != "tags":
             new_obj[k] = obj[k][0]
         else:
             new_obj[k] = obj[k]
-
-    return new_obj
+    
+    return obj["id"][0], new_obj
 
 for p in Path(path).glob('**/*.md'):
     text = p.read_text()
     md.convert(text)
-    clean = format_object_for_db(md.Meta)
+    id, clean_metadata = format_object_for_db(md.Meta)
 
-    if validate_metadata(p, clean):
-        res = table.put_item(Item = clean)
+    if validate_metadata(p, clean_metadata):
+        data = {"id": id ,"metadata": clean_metadata}
+        res = table.put_item(Item = data)
         logger.info(f"Saved {p}")
     else:
         logger.info(f"Skipping {p}")
