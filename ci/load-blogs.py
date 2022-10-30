@@ -2,6 +2,7 @@ import logging
 import boto3
 from pathlib import Path
 import markdown
+from os import getenv
 
 import logging
 logger = logging.getLogger()
@@ -9,7 +10,8 @@ logger.setLevel(logging.INFO)
 
 path = "../blogs"
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('ruse-tech-blogs')
+table = dynamodb.Table(getenv('DB_TABLE'))
+
 md = markdown.Markdown(extensions=['meta'])
 
 def validate_metadata(p, meta_data: dict):
