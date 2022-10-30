@@ -1,3 +1,13 @@
+---
+id: sorry-hashicorp
+previewImageUrl: https://cdn.ruse.tech/imgs/sorry-hashicorp/icon.png
+datePosted: 09-29-2022
+pinned: false
+description: Exploring Terraform Enterprise and getting caught
+tags: hacking
+      terraform
+title: Sorry hashicorp
+---
 # Intro
 
 I am writing the blog a few months after the fact so some details and screenshots were lost along the way. 

@@ -1,3 +1,13 @@
+---
+id: ecs-attack-methods
+previewImageUrl: https://cdn.ruse.tech/imgs/ecs-attack-methods/ecs.png
+datePosted: 06-7-2021
+pinned: 'true'
+description: AWS ECS attack methods.
+tags: research
+      aws
+title: AWS ECS attack methods
+---
 In this blog, I'm going to talk about my research into ECS internals as well as the attack methodology which I have developed for this specific service. Each section will be a different scenario or an objective. This will include SSRF, RCE, container escape, privilege escalation, and cluster hijacking.
 
 ECS or Elastic Container Service is a fully managed container orchestration service similar but separate from EKS (AWS Kubernetes). It supports serverless and managed deployment of containers. There are two main types of deployments: Fargate and EC2. Fargate being the serverless deployment option and EC2 being the managed worker node option.
