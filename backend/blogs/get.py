@@ -13,7 +13,7 @@ blog_index_file = os.environ['BLOGINDEX']
 
 def get_blog(blog_id):
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table('ruse-tech-blog')
+    table = dynamodb.Table('ruse-tech-blogs')
     response = table.get_item(Key={
         "id": blog_id
     })
