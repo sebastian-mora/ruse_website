@@ -40,7 +40,7 @@ resources: #cloudformation syntax
     BlogMetadata:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: BlogMetadata
+        TableName: ruse-tech-blogs
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
