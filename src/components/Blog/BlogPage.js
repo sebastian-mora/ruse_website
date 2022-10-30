@@ -54,7 +54,6 @@ const BlogPage = () => {
     },
 
     img({ node, inline, className, children, ...props }) {
-      console.log(props.src)
       return (
         <a href={props.src} target="_blank" rel="noopener noreferrer" ><img alt="" src={props.src} /></a>
       )
@@ -76,7 +75,7 @@ const BlogPage = () => {
           </Helmet>
           <div className={style.titleContainer}>
             <div className={style.title}><h1>{blog.metadata.title}</h1></div>
-            <div className={style.date}>{blog.metadata.datePosted}</div>
+            <div className={style.date}>{blog.metadata.dateposted}</div>
           </div>
           <ReactMarkdown
             children={blog.blog}

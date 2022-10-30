@@ -15,7 +15,7 @@ const Blog = () => {
     getAllBlogs()
       .then(res => {
         res.data.sort((a, b) => {
-          return  convertStringToDate(b.datePosted) - convertStringToDate(a.datePosted) 
+          return  convertStringToDate(b.metadata.dateposted) - convertStringToDate(a.metadata.dateposted) 
         })
         setBlogs(res.data)
       })
@@ -55,7 +55,7 @@ const Blog = () => {
           { // eslint-disable-next-line
             blogs.map((blog, _) => {
               if (!blog.pinned)
-                return (<><Card blog={blog} ></Card> <hr/></> )
+                return (<div key={blog.id}><Card blog={blog} ></Card> <hr/></div> )
             
             })}
         </div>
