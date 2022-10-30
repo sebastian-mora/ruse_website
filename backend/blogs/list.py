@@ -10,7 +10,7 @@ headers = {
 }
 
 def get_blogs():
-    table = dynamodb.Table('BlogMetadata')
+    table = dynamodb.Table('ruse-tech-blog')
     response = table.scan()
     data = response['Items']
     return data
