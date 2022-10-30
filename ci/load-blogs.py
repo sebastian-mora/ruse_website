@@ -1,10 +1,12 @@
+from cgi import test
 import logging
 import boto3
 from pathlib import Path
 import markdown
 from os import getenv
-
+import re
 import logging
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -46,13 +48,19 @@ def format_object_for_db(obj):
     
     return obj["id"][0], new_obj
 
+def removed_metadata_from_body(text):
+    return re.sub("---(.*?)---", "", text , flags=re.S)
+
 for p in Path(path).glob('**/*.md'):
     text = p.read_text()
     md.convert(text)
+
+    body = removed_metadata_from_body(text)
+
     id, clean_metadata = format_object_for_db(md.Meta)
 
     if validate_metadata(p, clean_metadata):
-        data = {"id": id, "blog": text, "metadata": clean_metadata}
+        data = {"id": id, "blog": body, "metadata": clean_metadata}
         res = table.put_item(Item = data)
         logger.info(f"Saved {p}")
     else:
