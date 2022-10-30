@@ -6,6 +6,7 @@ on:
       - master
     paths:
     - 'blogs/**'
+    - 'ci/**'
 
 jobs:
   upload-blogs-to-db:
