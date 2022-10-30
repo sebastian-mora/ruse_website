@@ -1,3 +1,11 @@
+---
+id: going-serverless
+previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+datePosted: 02-13-2021
+description: Turns out running and maintaining a full-stack website is a pain and can be expensive. So I deleted many lines of code and moved the site to use a serverless architecture.
+tags: dev
+title: Going Serverless
+---
 I ported the website to be cloud-native/serverless in AWS. In the process significantly reducing the codebase, improving security and performance. While all those are great I did it because of cost. I was renting an EC2.small for  $12 /month. On that server, I ran the API for this website and some other small projects.
 
 I built the API so I could manage the content on the site remotely and from an admin area within the site. I started thinking about how to reduce the cost of my simple site. I realized that the whole backend could be stored in a few files in S3 rather than managing a custom API and MySQL instance. 

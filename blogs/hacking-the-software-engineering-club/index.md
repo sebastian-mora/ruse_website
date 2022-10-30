@@ -1,3 +1,11 @@
+---
+id: hacking-the-software-engineering-club
+previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+datePosted: 02-04-2021
+description: Conducted a Web pentest on the SJSU SEC club website.
+tags: pentesting
+title: Hacking the Software Engineering Club
+---
 # Software/Computer Engineering Club Website
 
 Back at college with permission from the club, I decided to hack the SCE website. Once I had some notes on my findings I presented them to the club and helped them to find and fix the bugs. From the experience, they gave me an officer position during my last semester where I helped student developers with better coding practices and gave presentations on cybersecurity and AWS. Here are some of the notes I took along the way.

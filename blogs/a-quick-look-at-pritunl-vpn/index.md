@@ -1,3 +1,11 @@
+---
+id: a-quick-look-at-pritunl-vpn
+previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+datePosted: 01-31-2021
+description: Looking at Pritunl internals in hopes of finding new bugs.
+tags: pentesting
+title: A Quick Look At Pritunl VPN
+---
 # Pritunl
 
 A few weeks ago I set up my Pritunl. Overall, I have had a great experience. Very easy to configure and manage compared to other VPN's I have used in the past. 

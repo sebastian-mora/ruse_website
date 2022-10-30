@@ -1,3 +1,12 @@
+---
+id: gosimplehttp
+previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+datePosted: 03-02-2021
+description: Reworked Python's SimpleHttpServer in goland.
+tags: dev
+      golang
+title: GoSimpleHttp
+---
 # An exercise in Golang
 
 I have been wanting to learn Golang for a while now so about two weeks ago I finally bought a book. After looking around on Amazon I decided on the book [Go Programming Language, The (Addison-Wesley Professional Computing Series)](https://www.amazon.com/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440/ref=sr_1_3?dchild=1&keywords=golang&qid=1614821054&s=books&sr=1-3). I am most of the way through the book and it has been great. The book has well-written practical code examples but one of the best features of the book is its depth/insight into the design choices and implementation of the language. I would not recommend this book for a beginner looking to learn how to code.

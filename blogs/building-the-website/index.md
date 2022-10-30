@@ -1,3 +1,11 @@
+---
+id: building-the-website
+previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+datePosted: 12-24-2020
+description: Dev notes on building my own full stack blogging application.
+tags: dev
+title: Building The Website
+---
 # Ruse.tech
 
 This project is my personal website. The source code can be found on [Github](https://github.com/seb1055/ruse_website). The objective of this project was to build a full-stack application that I could use to post and manage my own blogs. Through this project, I experimented with creating my own API written in NodeJs using the express framework, interfaced and managed MySQL database for authentication and metadata, and React for the frontend. 

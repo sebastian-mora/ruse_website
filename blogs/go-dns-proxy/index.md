@@ -1,3 +1,11 @@
+---
+id: go-dns-proxy
+previewImageUrl: https://cdn.ruse.tech/imgs/preview/dnsproxy.png
+datePosted: 05-05-2021
+description: Messing around with DNS using go
+tags: dev
+title: Go DNS Proxy
+---
 # DNS Proxy
 
 Is it going to be a quick blog on messing around with DNS using golang. I've been running a bunch of small things and go line just to get better at using the go line syntax, become familiar with packages, reading documentation, and price tickets currency. 

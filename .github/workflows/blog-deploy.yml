@@ -8,46 +8,29 @@ on:
     - 'blogs/**'
 
 jobs:
-  deploy:
+  upload-blogs-to-db:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ci
     steps:
-      - uses: actions/checkout@v2
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip' # caching pip dependencies
+    - uses: aws-actions/configure-aws-credentials@v1
+      with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Upload markdown files to S3
-        run: aws s3 sync ./blogs/ s3://blogs.ruse.tech --delete
+          aws-region: us-west-2
 
-      - name: Upload images files to cdn
-        run: for path in blogs/*; do [ -d "$path/imgs" ] &&  aws s3 sync $path/imgs s3://cdn.ruse.tech/imgs/$(basename $path)/; done;  exit 0
+    - run: pip install -r requirements.txt
 
-      - name: Upload all local metadata to db
-        env:
-          DB_TABLE: ${{ secrets.DB_TABLE }}
-        run: for file in blogs/*/meta.json; do aws dynamodb put-item --table-name $DB_TABLE --item file://$file ; done
+    - name: Upload images files to cdn
+      run: for path in blogs/*; do [ -d "$path/imgs" ] &&  aws s3 sync $path/imgs s3://cdn.ruse.tech/imgs/$(basename $path)/; done;  exit 0
 
-      - name: Prune old metadata from db
-        env:
-          DB_TABLE: ${{ secrets.DB_TABLE }}
-        run: |
-              KEYS=$(aws dynamodb scan --table-name BlogMetadata --region us-west-2 | jq -r .Items[].id.S)
-              for remote_key in $KEYS
-              do 
-                in_remote=1
-                for file in blogs/*/meta.json;
-                  do
-                    local_key=$(cat $file | jq -r .id.S)
-
-                    if [ "$local_key" == "$remote_key" ]; then
-                      delete=0
-                    fi
-                  done
-
-              if [ "$delete" -eq "1" ]; then
-                echo "Deleting blog $remote_key from remote";
-              fi
-
-              done
+    - name: Upload all local metadata to db
+      env:
+        DB_TABLE: ${{ secrets.DB_TABLE }}
+      run: python load-blogs.py

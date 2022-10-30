@@ -1,3 +1,12 @@
+---
+id: aws-sso-phishing
+previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+datePosted: 02-05-2022
+pinned: 'true'
+description: Phishing AWS SSO using AWSSOMEPHISH.
+tags: pentesting
+title: AWS SSO Phishing
+---
 This blog covers a niche but powerful form of AWS Phishing by leveraging SSO. This method was originally published in a blog by [Christophe Tafani-Dereeper](https://blog.christophetd.fr/phishing-for-aws-credentials-via-aws-sso-device-code-authentication/). It is also important to note this method only works against AWS organizations that utilize AWS SSO.
 
 I find this method highly impactful for the following reasons.  

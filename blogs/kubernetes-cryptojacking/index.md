@@ -1,3 +1,14 @@
+---
+id: kubernetes-cryptojacking
+previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+datePosted: 02-17-2021
+pinned: true
+description: Attacking Kubelet Api to gain access to a Kubernetes cluster but how do we Cryptojack?
+tags: hacking
+      kubernetes
+      cryptojacking
+title:Kubernetes Cryptojacking
+---
 # Intro
 
 This blog will cover start to finish attacking a publicly exposed Kubernetes kubelet API to gain access to the cluster and deploy a distributed Monero Cryptojacker. This blog is purely for research and test only on your cluster.

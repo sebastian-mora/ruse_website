@@ -1,3 +1,12 @@
+---
+id: rss-app-ssrf
+previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+datePosted: 04-4-2021
+pinned: false
+description: Finding a vuln in rss.app that return Ec2 instance profile credentials.
+tags: aws
+title: Getting AWS creds via SSRF on rss.app
+---
 I wanted to build an RSS feed for my website so I went looking for a pre-built solution before building my own. I came across https://rss.app which seemed like a very popular choice. 
 
 I navigated to their RSS builder at https://rss.app/rss-feed/rss-builder and put in my website ruse.tech. Of course, because I built ruse.tech in React nothing renders correctly for these types of apps or search engines. Rip SEO.

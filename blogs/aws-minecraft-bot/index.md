@@ -1,3 +1,12 @@
+---
+id: minecraft-bot
+previewImageUrl: https://cdn.ruse.tech/imgs/aws-minecraft-bot/post-logo.png
+datePosted: 09-05-2022
+description: How I built a Minecraft Bot in AWS that is controlled by Discord using highly scalable architecture.
+tags: dev
+      aws
+title: High Availability Discord Minecraft Bot
+---
 # Minecraft Bot
 
 My friends and I like to play Minecraft and we go through waves of playing it frequently and typically self host. So when people are playing at different times we get pings on discord asking to turn the server on and it’s not convenient. So I wanted to build a way for discord users to type a command to turn on a Minecraft server and start playing and I wanted to do this as cheap as possible. 
