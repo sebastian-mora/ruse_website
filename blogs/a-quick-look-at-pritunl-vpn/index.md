@@ -10,7 +10,7 @@ title: A Quick Look At Pritunl VPN
 
 A few weeks ago I set up my Pritunl. Overall, I have had a great experience. Very easy to configure and manage compared to other VPN's I have used in the past. 
 
-Pritunl is open-source so I decided to spend a few hours of my Sunday checking out the source code and web instance for vulns. 
+Pritunl is an open-source so I decided to spend a few hours of my Sunday checking out the source code and web instance for vulns. 
 
 
 ## Setup 
