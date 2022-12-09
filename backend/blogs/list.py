@@ -14,8 +14,9 @@ def get_blogs():
     response = table.scan()
     data = response['Items']
     # Drop the blog data in the response
-    del data['blog']
-    
+    for b in data:
+        del b['blog']
+
     return data
 
 
