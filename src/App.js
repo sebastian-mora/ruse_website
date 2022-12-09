@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Helmet } from 'react-helmet'
+
 
 import './App.css';
 
@@ -21,11 +21,6 @@ class App extends Component {
 
     return (
       <div >
-        <Helmet>
-          <title>Ruse</title>
-          <meta name="description" content="An indirect means to gain an end. Ruse may imply deception,
-                  illusion, and either an evil or harmless end." />
-        </Helmet>
         <Nav />
         <Routes>
           <Route path="/" exact element={<Index />} />

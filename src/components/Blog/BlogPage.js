@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import style from './BlogPage.module.css'
 
 import { useParams } from "react-router-dom";
@@ -67,12 +66,6 @@ const BlogPage = () => {
 
       {blog &&
         <>
-          <Helmet>
-            <title>{blog.metadata.title}</title>
-            <meta name="description" content={blog.metadata.title} />
-            <meta name="keywords" content={blog.metadata.tags} />
-            <link rel="canonical" href={window.location.href} />
-          </Helmet>
           <div className={style.titleContainer}>
             <div className={style.title}><h1>{blog.metadata.title}</h1></div>
             <div className={style.date}>{blog.metadata.dateposted}</div>

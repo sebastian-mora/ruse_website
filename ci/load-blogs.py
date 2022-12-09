@@ -1,4 +1,3 @@
-from cgi import test
 import logging
 import boto3
 from pathlib import Path
@@ -22,7 +21,7 @@ def validate_metadata(p, meta_data: dict):
     if not meta_data:
         logger.error(f"{p} does not contain metadata")
         return False
-   
+        
     for att in required_atts:
         if att.lower() not in meta_data:
             logger.error(f"{p} is missing attribute {att}")

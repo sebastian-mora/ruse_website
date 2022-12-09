@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet';
 import {getAllBlogs} from '../../api/blogsApi';
 import style from './Blog.module.css'
 
@@ -31,17 +30,10 @@ const Blog = () => {
   return (
     <div className={style.center}>
 
-      <Helmet>
-        <title>Blogs</title>
-        <meta name="description" content="Ruse.tech blog posts."/>
-        <meta name="keywords" content="hacking, blog, security, cloud, pentesting"/>
-        <link rel="canonical" href="http://ruse.tech/blogs" />
-      </Helmet>
-
       <h1 className={style.pageTitle}>Blogs</h1>
 
         <div className={style.pinnedBlogs}>
-         <h2>Featured</h2>
+          <h2>Featured</h2>
           {// eslint-disable-next-line
             blogs.map((blog, _) => {
               if (blog.pinned)

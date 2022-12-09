@@ -57,12 +57,6 @@ package:
     # Exclude everything first.
     - '**/*'
 
-plugins:
-  - serverless-layers
-custom:
-  serverless-layers:
-    layersDeploymentBucket: ruse-api-layers
-
 functions:
   
   ## BLOG FUNCTIONS

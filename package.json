@@ -6,7 +6,6 @@
     "axios": "^0.26.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-helmet": "^6.1.0",
     "react-markdown": "^8.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.0",
@@ -17,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "react-scripts build && aws s3 sync build/ s3://ruse.tech --delete"
+    "deploy": ""
   },
   "eslintConfig": {
     "extends": "react-app"

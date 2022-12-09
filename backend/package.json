@@ -2,7 +2,6 @@
   "name": "api-ruse-tech",
   "version": "1.0.0",
   "devDependencies": {
-    "serverless-layers": "^2.5.4",
     "serverless-python-requirements": "^5.1.0"
   },
   "dependencies": {
