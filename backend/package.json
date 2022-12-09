@@ -5,7 +5,7 @@
     "serverless-python-requirements": "^5.1.0"
   },
   "dependencies": {
-    "serverless": "^2.29.0",
+    "serverless": "^3.25.1",
     "serverless-python-individually": "^0.1.9"
   },
   "main": "index.js",
