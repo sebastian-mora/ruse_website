@@ -2,7 +2,7 @@ org: seb1055
 app: api-ruse-tech
 
 service: api-ruse-tech
-frameworkVersion: '2'
+frameworkVersion: '3'
 
 provider:
   name: aws

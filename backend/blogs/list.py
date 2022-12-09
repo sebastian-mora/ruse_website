@@ -13,6 +13,9 @@ def get_blogs():
     table = dynamodb.Table('ruse-tech-blogs')
     response = table.scan()
     data = response['Items']
+    # Drop the blog data in the response
+    del data['blog']
+    
     return data
 
 
