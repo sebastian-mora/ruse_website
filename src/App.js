@@ -14,7 +14,6 @@ import BlogPage from './components/Blog/BlogPage'
 // import Projects from './components/Projects'
 // import AssetsPage from './components/Assests/AssetsPage';
 
-
 class App extends Component {
 
   render() {
