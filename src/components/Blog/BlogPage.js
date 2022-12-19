@@ -41,8 +41,11 @@ const BlogPage = () => {
         <SyntaxHighlighter
           children={String(children).replace(/\n$/, '')}
           style={cb}
+          customStyle = {{backgroundColor: "#080717"}}
           language={match[1]}
           PreTag="div"
+          wrapLines={true}
+          wrapLongLines={true}
           {...props}
         />
       ) : (
