@@ -19,8 +19,6 @@ provider:
           Action:
             - "s3:ListBucket"
             - "s3:GetObject"
-            - "s3:PutObject"
-            - "s3:DeleteObject"
           Resource: 
             - "arn:aws:s3:::blogs.ruse.tech"
             - "arn:aws:s3:::blogs.ruse.tech/*"
@@ -28,8 +26,6 @@ provider:
             - "arn:aws:s3:::cdn.ruse.tech"
         - Effect: "Allow"
           Action:
-            - "dynamodb:PutItem"
-            - "dynamodb:DeleteItem"
             - "dynamodb:Scan"
             - "dynamodb:GetItem"
           Resource:
@@ -71,7 +67,6 @@ functions:
       include:
         - blogs/**
     environment:
-      BLOGMETADATA: metadata.json
       BUCKET: blogs.ruse.tech
 
   getBlog:
@@ -82,23 +77,8 @@ functions:
           method: get
           cors: True
     environment:
-      BLOGMETADATA: metadata.json
       BUCKET: blogs.ruse.tech
       BLOGINDEX: index.md
     package:
       include:
         - blogs/**
-
-  ## S3 Actions
-
-  listAssets:
-    handler: s3/listAssets.listAssets
-    events:
-      - http:
-          path: assets
-          method: get
-          cors: True
-    package:
-      include:
-        - s3/**
-        
