@@ -76,7 +76,7 @@ To be clear I was doing all this testing in my own environment in an isolated ac
 
 I called it a night and when I woke up, I had a polite email from Hashicorp.
 
-```bash
+```text
 Hi there!
 
 We noticed that you are interested in our Terraform Cloud worker configuration and saw that you were active late last night / this morning.
