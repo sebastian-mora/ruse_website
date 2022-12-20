@@ -5,7 +5,7 @@ import style from './Card.module.css'
 
 const Card = ({ blog }) => {
 
-  let { title, description, dateposted, tags, previewimageurl } = blog.metadata
+  let { title, dateposted, tags, previewimageurl } = blog.metadata
   return (
 
 
