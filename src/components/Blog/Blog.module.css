@@ -1,8 +1,5 @@
 
-hr {
-  border: 1px solid #00ff00;
-  margin: 1% 25% 0% 25%;
-}
+
 .pageTitle {
   color: white;
   border-left: 2px solid #00ff00;
@@ -16,7 +13,7 @@ hr {
   padding-bottom: 0%;
 } 
 
- .pinnedBlogs h1 {
+.pinnedBlogs h1 {
   color: white;
 }
 

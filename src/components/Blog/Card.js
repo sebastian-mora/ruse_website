@@ -18,14 +18,14 @@ const Card = ({ blog }) => {
           <h1 className={style.title}>{title}</h1>
           <p className={style.postDate}>{dateposted}</p>
 
-          <p className={style.description}> {description}</p>
-
           <div className={style.tagGroup}>
-            {tags.map((tag, _) => {
+            {
+            tags.map((tag, _) => {
               return (
-                <p className={style.tag}>{tag}</p>
+                "#"+ tag
               )
-            })}
+            }).join(" ")
+            }
           </div>
         </div>
 

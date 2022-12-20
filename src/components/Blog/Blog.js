@@ -32,22 +32,24 @@ const Blog = () => {
 
       <h1 className={style.pageTitle}>Blogs</h1>
 
-        <div className={style.pinnedBlogs}>
+        {/* <div className={style.pinnedBlogs}>
           <h2>Featured</h2>
           {// eslint-disable-next-line
             blogs.map((blog, _) => {
               if (blog.pinned)
               return( 
-                <><Card blog={blog}></Card> <hr/></> 
+                <><Card blog={blog}></Card></> 
               )
               
           })}
-        </div>
+        </div> */}
+
+
         <div className={style.cardDiv} >
           { // eslint-disable-next-line
             blogs.map((blog, _) => {
-              if (!blog.pinned)
-                return (<div key={blog.id}><Card blog={blog} ></Card> <hr/></div> )
+              // if (!blog.pinned)
+                return (<div key={blog.id}><Card blog={blog} ></Card></div> )
             
             })}
         </div>

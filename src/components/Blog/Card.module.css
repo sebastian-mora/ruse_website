@@ -4,11 +4,13 @@
 }
 
 .card {
-  /* margin: 2% 0% 0 5%; */
   width: 100%;
-  padding: 1%;
+  padding: 1em;
   border-left: 1px solid white;
+  margin-bottom: 1.3em;
+  color: white;
 }
+
 
 @media only screen and (max-width: 600px) {
   .card {
@@ -18,10 +20,12 @@
 }
   
 }
+
 .text {
   display: inline-block;
   vertical-align: middle;
-  margin-left: 2%;
+  margin-left: 2em;
+  padding: 0%;
 }
 
 
@@ -29,10 +33,8 @@
   align-self: flex-start;
   display: inline-block;
   vertical-align: middle;
-  width: 100px;
+  width: 5em;
 }
-
-
 
 .card:hover{
   -webkit-box-shadow: 6px 6px 46px -21px rgba(0,255,0,0.65);
@@ -42,31 +44,13 @@
 
 .title {
   color: white;
+  margin: 0%;
 }
 
 .tagGroup {
   color: white;
-  display: flex;
-  width:100%;
-}
-
-.tag {
-  background-color: grey;
-  height: fit-content;
-  width: fit-content;
-  margin-right: 1%;
-  padding: 5px;
 }
 
 .postDate{
-  color: white;
-}
-
-.category {
-  font-size: 20px;
-  font-weight: bolder;
-}
-
-.description{
   color: white;
 }
