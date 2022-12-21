@@ -1,6 +1,6 @@
 .cardContainer{
   display: flex;
-  padding-top: 10%;
+  padding-top: 1em;
   box-sizing: border-box;
   max-width: 100%;
   min-width: 0px;
