@@ -83,7 +83,7 @@ The parser creates a flat list of `Operations` that will be given to the interpr
 ```go
 type Operation struct {
 	Token lexer.Token
-	Count int // used for instruction optimation
+	Count int // used for instruction optimization
 	Jump  int // set only if loop
 }
 ```
