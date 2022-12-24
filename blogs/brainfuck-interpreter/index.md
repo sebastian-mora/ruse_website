@@ -189,4 +189,6 @@ func main() {
 // Returns: 7210110810811144328711111410810033 (wtf)
 ```
 
-Convert the output from decimal to ascii and you get `Hello, World!`
+Convert the output from decimal to ascii and you get `Hello, World!`.
+
+There is more testing to be done but, I am pretty happy with the results!
