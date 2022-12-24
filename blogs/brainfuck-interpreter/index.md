@@ -18,18 +18,18 @@ Brainfuck is an esoteric programming language created in 1993 by Urban Müller.
 Notable for its extreme minimalism, the language consists of only eight simple commands, a data pointer and an instruction pointer. While it is fully Turing complete, it is not intended for practical use, but to challenge and amuse programmers. Brainfuck requires one to break commands into microscopic steps.
 ```
 
-To me brainfuck feels like a simple way to interface with a turning machine. From the description we can pull out most of the requirements.
+From the description we can pull out most of the requirements.
 
 - 8 Instructions
 - Data pointer
 - Instruction Pointer
 - Memory
 
-To create an interpreter implemented some concepts I once learned about in College. First, a lexer which will validate the syntax and convert the characters to tokenized values. Next, a parser that will interpreter the tokens into an AST (abstract syntax tree). Honestly not sure if AST is the correct term for this, the "tree" is a linear set of instructions because the language does not have conditionals or assignments. Finally the "AST" will be used by the interpreter to execute the instruction set.
+To create an interpreter I implemented some concepts I learned about in College. First, a lexer which will validate the syntax and convert the characters to tokenized list. Next, a parser that will interpreter the tokens into an AST (abstract syntax tree). Honestly not sure if AST is the correct term for this, the "tree" is a linear set of instructions because the language does not have conditionals or assignments. Lets just consider it an list of "enhanced" operations to be interpreted by the parser. Finally the "AST" will be used by the interpreter to execute the instruction set.
 
 ## Lexer
 
-The lexer was the easiest part to implement. A lexers job is take the raw string input and turn it into a flat list of operator types. For brainfuck I implemented a `Token` Type based on the language specifications. A token has an Enum and literal that represents the raw input.
+The lexer was the easiest part to implement. A lexers job is take the raw string input and turn it into a flat list of Token types. For Brainfuck I implemented a `Token` Type based on the language specifications. A token has an Enum and literal that represents the raw input.
 
 ```go
 package lexer
