@@ -174,6 +174,8 @@ Similar to all the examples above I used a switch statements to execute the beha
 
 Now I can test the interpreter by running the following BrainFuck Program; take a guess of what a first program might be.
 
+- [Github](https://github.com/sebastian-mora/brainfuck-interpreter)
+
 ```go
 func main() {
     program := "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
@@ -194,6 +196,7 @@ There is more testing to be done but, I am pretty happy with the results!
 
 ### References
 
+- https://github.com/sebastian-mora/brainfuck-interpreter
 - https://en.wikipedia.org/wiki/Brainfuck
 - https://esolangs.org/wiki/Brainfuck
 - https://thorstenball.com/blog/2017/01/04/a-virtual-brainfuck-machine-in-go/
