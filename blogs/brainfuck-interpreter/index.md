@@ -172,13 +172,10 @@ Similar to all the examples above I used a switch statements to execute the beha
 
 Now I can test the interpreter by running the following BrainFuck Program. Please take a guess of what a first program might be.
 
-```brainfuck
-++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.
-```
-
 ```go
 func main() {
-	bf, err := interpreter.NewBrainfuck("++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.")
+    program := "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
+	bf, err := interpreter.NewBrainfuck(program)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(2)
