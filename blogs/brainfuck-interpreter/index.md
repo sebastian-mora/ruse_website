@@ -88,9 +88,9 @@ type Operation struct {
 }
 ```
 
-Operations have a `lexer.Token` and `Jump` attributes. The `Jump` attribute is only set when loop tokens are parsed. The jump attribute is used to tell the interpreter where the loop operations show move the instructions pointer (IP). I left out the `Count` parameter because I have not implemented it but, it represents the number of identical operations that can be compressed by the parser. For example ">++++" reads as "Shift Data Pointer Right and Increment 4 times". Rather than generating 4 individual increment operations we could optimized this by setting count to 4 on the first operation and discard the duplicates.
+Operations have a `lexer.Token` and `Jump` attributes. The `Jump` attribute is only set when loop tokens are parsed. The jump attribute tells the interpreter where to move the instructions pointer (IP). I left out the `Count` parameter because I have not implemented it but, it represents the number of identical operations that can be compressed by the parser. For example ">++++" reads as "Shift Data Pointer Right and Increment 4 times". Rather than generating 4 individual increment operations we could optimized this by setting count to 4 on the first operation and discard the duplicates.
 
-In the code notice the only operations that need extra consideration are the loops and EOF. For the loops I used a stack to make sure all the loops have matching parenthesis and store their jump points in the AST. When the parser reaches the EOF then the stack should be empty, indicating that all parenthesis have matching sets. If you had to do any leetcode code questions on stacks this might be familiar lmao.
+In the code notice the only operations that need extra consideration are the loops and EOF. For the loops I used a stack to make sure all the loops parenthesis match and store their jump points in the AST node. When the parser reaches the EOF then the stack should be empty, indicating that all parenthesis have matching sets. If you had to do any leetcode code questions on stacks this might be familiar lmao.
 
 ```go
 		switch token.TokenType {
@@ -123,7 +123,7 @@ In the code notice the only operations that need extra consideration are the loo
 
 ## Interpreter
 
-LETS GO now I have all the instructions lexed and parsed, now I can implement the execution. From the description, I can simulate the environment by adding the pointers and memory. The memory is set ot 30000 bytes as described in the wiki.
+LETS GO now I have all the instructions lexed and parsed, I can implement the execution flow. From the description, I can simulate the environment by adding the pointers and memory. The memory is set ot 30000 bytes as described in the wiki.
 
 ```go
 type Brainfuck struct {
@@ -170,7 +170,7 @@ Similar to all the examples above I used a switch statements to execute the beha
 
 ## Testing
 
-Now I can test the interpreter by running the following BrainFuck Program. Please take a guess of what a first program might be.
+Now I can test the interpreter by running the following BrainFuck Program; take a guess of what a first program might be.
 
 ```go
 func main() {
