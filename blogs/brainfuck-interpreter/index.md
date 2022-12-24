@@ -18,6 +18,8 @@ Brainfuck is an esoteric programming language created in 1993 by Urban Müller.
 Notable for its extreme minimalism, the language consists of only eight simple commands, a data pointer and an instruction pointer. While it is fully Turing complete, it is not intended for practical use, but to challenge and amuse programmers. Brainfuck requires one to break commands into microscopic steps.
 ```
 
+A program in Brainfuck might look something like this `>>++++[>++++++++<-]`. In sample we can see some of the valid characters used. Most of the characters are visually descriptive of their actions like ">" represent shifts in the direction like an arrow and "+-" represent increment or decrement operations.
+
 I want to create a program in Go that can take a Brainfuck program as input and execute it.
 
 From the description we can pull out most of the requirements.
