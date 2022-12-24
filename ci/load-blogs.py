@@ -1,13 +1,11 @@
-import logging
 import boto3
 from pathlib import Path
 import markdown
 from os import getenv
 import re
-import logging
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+import logging
+logging.basicConfig(level=logging.INFO)
 
 path = "../blogs"
 dynamodb = boto3.resource('dynamodb')
@@ -15,19 +13,22 @@ table = dynamodb.Table(getenv('DB_TABLE'))
 
 md = markdown.Markdown(extensions=['meta'])
 
+
 def validate_metadata(p, meta_data: dict):
     # print(meta_data)
-    required_atts = [ "previewImageUrl", "datePosted", "description", "tags", "title", "id"]
+    required_atts = ["previewImageUrl", "datePosted",
+                     "description", "tags", "title", "id"]
     if not meta_data:
-        logger.error(f"{p} does not contain metadata")
+        logging.error(f"{p} does not contain metadata")
         return False
-        
+
     for att in required_atts:
         if att.lower() not in meta_data:
-            logger.error(f"{p} is missing attribute {att}")
+            logging.error(f"{p} is missing attribute {att}")
             return False
 
     return True
+
 
 def format_object_for_db(obj):
     """
@@ -38,17 +39,19 @@ def format_object_for_db(obj):
 
     for k in obj:
 
-        if(k == "id"): # No need to write id to metadata block
+        if (k == "id"):  # No need to write id to metadata block
             pass
         if len(obj[k]) == 1 and k != "tags":
             new_obj[k] = obj[k][0]
         else:
             new_obj[k] = obj[k]
-    
+
     return obj["id"][0], new_obj
 
+
 def removed_metadata_from_body(text):
-    return re.sub("---(.*?)---", "", text , flags=re.S)
+    return re.sub("---(.*?)---", "", text, flags=re.S)
+
 
 for p in Path(path).glob('**/*.md'):
     text = p.read_text()
@@ -60,7 +63,7 @@ for p in Path(path).glob('**/*.md'):
 
     if validate_metadata(p, clean_metadata):
         data = {"id": id, "blog": body, "metadata": clean_metadata}
-        res = table.put_item(Item = data)
-        logger.info(f"Saved {p}")
+        res = table.put_item(Item=data)
+        logging.info(f"Saved {p}")
     else:
-        logger.info(f"Skipping {p}")
+        logging.error(f"Invalid metadata {p}")
