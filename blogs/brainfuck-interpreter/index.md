@@ -1,9 +1,9 @@
 ---
 id: brainfuck-interpreter
-previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
+previewImageUrl: https://cdn.ruse.tech/imgs/brainfuck-interpreter/post-icon.png
 datePosted: 12-23-2022
 pinned: "true"
-description: A brainfuck interperter
+description: A Brainfuck interpreter
 tags: code
 title: GoLang Brainfuck Interpreter
 ---
