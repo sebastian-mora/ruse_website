@@ -1,6 +1,6 @@
 ---
 id: brainfuck-interpreter
-previewImageUrl: https://cdn.ruse.tech/imgs/brainfuck-interpreter/post-icon.png
+previewImageUrl: https://cdn.ruse.tech/imgs/brainfuck-interpreter/post-icon.jpg
 datePosted: 12-23-2022
 pinned: "true"
 description: A Brainfuck interpreter
@@ -12,7 +12,7 @@ Let me open by saying I have near no idea what I am doing other than learning an
 
 With that disclaimer lets start with what is Brainfuck. Brainfuck is, here is a blurb I stole from the wiki
 
-```
+```text
 Brainfuck is an esoteric programming language created in 1993 by Urban Müller.
 
 Notable for its extreme minimalism, the language consists of only eight simple commands, a data pointer and an instruction pointer. While it is fully Turing complete, it is not intended for practical use, but to challenge and amuse programmers. Brainfuck requires one to break commands into microscopic steps.
