@@ -8,9 +8,9 @@ tags: code
 title: GoLang Brainfuck Interpreter
 ---
 
-Let me open by saying I have near no idea what I am doing other than learning and experimenting.
+Let me open by saying I have no idea what I am doing other than learning and experimenting.
 
-With that disclaimer lets start with what is Brainfuck. Brainfuck is, here is a blurb I stole from the wiki
+With that disclaimer lets start with what is Brainfuck? Let this blurb I stole from [wiki](https://en.wikipedia.org/wiki/Brainfuck) do the work for me...
 
 ```text
 Brainfuck is an esoteric programming language created in 1993 by Urban Müller.
@@ -18,14 +18,14 @@ Brainfuck is an esoteric programming language created in 1993 by Urban Müller.
 Notable for its extreme minimalism, the language consists of only eight simple commands, a data pointer and an instruction pointer. While it is fully Turing complete, it is not intended for practical use, but to challenge and amuse programmers. Brainfuck requires one to break commands into microscopic steps.
 ```
 
-To me brainfuck feel like a simple way to interface with a turning machine like system. From the description there is all the items that we will need to implement in Go that can execute these types of instruction.
+To me brainfuck feels like a simple way to interface with a turning machine. From the description we can pull out most of the requirements.
 
 - 8 Instructions
 - Data pointer
 - Instruction Pointer
 - Memory
 
-To create an interpreter I followed some items I learned about when reading about compilers. First a lexer which will validate the syntax and convert the characters to tokenized values. Next, a parser that will interpreter the tokens into an AST (abstract syntax tree). Honestly not sure if AST is the correct term for this, the "tree" is a linear set of instructions because the language does not have conditionals or assignments. Finally the "AST" will be used by the interpreter to execute the instruction set.
+To create an interpreter implemented some concepts I once learned about in College. First, a lexer which will validate the syntax and convert the characters to tokenized values. Next, a parser that will interpreter the tokens into an AST (abstract syntax tree). Honestly not sure if AST is the correct term for this, the "tree" is a linear set of instructions because the language does not have conditionals or assignments. Finally the "AST" will be used by the interpreter to execute the instruction set.
 
 ## Lexer
 
@@ -57,28 +57,28 @@ type Token struct {
 
 `NEW_LINE` allows for new lines to be included in the input and `EOF` represents the end of the input.
 
-The lexer then uses a large case statement to map the character inputs to the correct types. Using the default as the error catch allows us to surface invalid syntax to the users.
+The lexer then uses a large case statement to map the character inputs to the correct types. Using the default as the error catch surfaces the unknown characters to the user.
 
 ```go
-		switch char {
-		case '+':
-			tokens[i] = Token{TokenType: INCREMENT, Literal: string(char)}
-		case '-':
-			tokens[i] = Token{TokenType: DECREMENT, Literal: string(char)}
-		case '>':
-			tokens[i] = Token{TokenType: SHIFT_RIGHT, Literal: string(char)}
-        .
-        .
-        .
-		default:
-			err := fmt.Sprintf("Error at %d: Invalid character \"%s\" ", i, string(char))
-			return nil, errors.New(err)
-		}
+    switch char {
+    case '+':
+        tokens[i] = Token{TokenType: INCREMENT, Literal: string(char)}
+    case '-':
+        tokens[i] = Token{TokenType: DECREMENT, Literal: string(char)}
+    case '>':
+        tokens[i] = Token{TokenType: SHIFT_RIGHT, Literal: string(char)}
+    .
+    .
+    .
+    default:
+        err := fmt.Sprintf("Error at %d: Invalid character \"%s\" ", i, string(char))
+        return nil, errors.New(err)
+    }
 ```
 
 ## Parse
 
-Brainfuck is simple so parser looks similar to the Lexer but with some extra twists. The parser creates a flat list of `Operations` that will be given to the interpreter to run.
+The parser creates a flat list of `Operations` that will be given to the interpreter to run. The parser looks similar to the Lexer but with some extra features to handel loops.
 
 ```go
 type Operation struct {
@@ -88,9 +88,9 @@ type Operation struct {
 }
 ```
 
-Operations have a `lexer.Token` and `Jump`. The `Jump` attribute is only set when loop tokens are parsed. The jump variable is used to tell the interpreter where the loop operations show move the instructions pointer (IP). I left out the `Count` parameter because I have not implemented it but, it represents the number of identical operations that can be compressed by the parser. For example ">++++" reads as "Shift Data Pointer Right and Increment 4 times". Rather than generating 4 individual increment operations we could optimized this by setting count to 4 on the first operation and discard the duplicates.
+Operations have a `lexer.Token` and `Jump` attributes. The `Jump` attribute is only set when loop tokens are parsed. The jump attribute is used to tell the interpreter where the loop operations show move the instructions pointer (IP). I left out the `Count` parameter because I have not implemented it but, it represents the number of identical operations that can be compressed by the parser. For example ">++++" reads as "Shift Data Pointer Right and Increment 4 times". Rather than generating 4 individual increment operations we could optimized this by setting count to 4 on the first operation and discard the duplicates.
 
-Here are the instruction sets for the parser, notice the only operations that need extra consideration are the loops and EOF. For the loops I used a stack to make sure all the loops have matching parenthesis and store their jump points in the AST. When the parser reaches the EOF then the stack should be empty, indicating there are no extra parenthesis. If you had to do any leetcode code questions on stacks this might be familiar lmao.
+In the code notice the only operations that need extra consideration are the loops and EOF. For the loops I used a stack to make sure all the loops have matching parenthesis and store their jump points in the AST. When the parser reaches the EOF then the stack should be empty, indicating that all parenthesis have matching sets. If you had to do any leetcode code questions on stacks this might be familiar lmao.
 
 ```go
 		switch token.TokenType {
@@ -123,7 +123,7 @@ Here are the instruction sets for the parser, notice the only operations that ne
 
 ## Interpreter
 
-LETS GO now I have all the instructions lexed and parsed, now I can implement the execution. From the description I can simulate the environment by adding the pointers and memory. The memory is set ot 30000 bytes as described in the wiki.
+LETS GO now I have all the instructions lexed and parsed, now I can implement the execution. From the description, I can simulate the environment by adding the pointers and memory. The memory is set ot 30000 bytes as described in the wiki.
 
 ```go
 type Brainfuck struct {
@@ -189,3 +189,9 @@ func main() {
 Convert the output from decimal to ascii and you get `Hello, World!`.
 
 There is more testing to be done but, I am pretty happy with the results!
+
+### References
+
+- https://en.wikipedia.org/wiki/Brainfuck
+- https://esolangs.org/wiki/Brainfuck
+- https://thorstenball.com/blog/2017/01/04/a-virtual-brainfuck-machine-in-go/
