@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - master
+      - dev
     paths:
-    - 'blogs/**'
-    - 'ci/**'
+      - "blogs/**"
+      - "ci/**"
 
 jobs:
   upload-blogs-to-db:
@@ -15,23 +16,28 @@ jobs:
       run:
         working-directory: ci
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-        cache: 'pip' # caching pip dependencies
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip" # caching pip dependencies
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
+      - name: Set environment for branch
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+              echo "ENV=prod" >> "$GITHUB_ENV"
+          elif [[ $GITHUB_REF == 'refs/heads/dev' ]]; then
+              echo "ENV=dev" >> "$GITHUB_ENV"
+          fi
+      - run: pip install -r requirements.txt
+      - name: Upload images files to cdn
+        run: for path in blogs/*; do [ -d "$path/imgs" ] &&  aws s3 sync $path/imgs s3://cdn.ruse.tech/imgs/$(basename $path)/; done;  exit 0
 
-    - run: pip install -r requirements.txt
-
-    - name: Upload images files to cdn
-      run: for path in blogs/*; do [ -d "$path/imgs" ] &&  aws s3 sync $path/imgs s3://cdn.ruse.tech/imgs/$(basename $path)/; done;  exit 0
-
-    - name: Upload all local metadata to db
-      env:
-        DB_TABLE: ${{ secrets.DB_TABLE }}
-      run: python load-blogs.py
+      - name: Upload all local metadata to db
+        env:
+          DB_TABLE: $ENV-ruse-tech-blogs
+        run: python load-blogs.py
