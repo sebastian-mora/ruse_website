@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - master
+      - dev
     paths:
-    - 'backend/**'
+      - "backend/**"
 
 jobs:
   deploy:
@@ -15,9 +16,16 @@ jobs:
         working-directory: ./backend
     steps:
       - uses: actions/checkout@v2
+      - name: Set environment for branch
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
+              echo "SLS_STAGE=prod" >> "$GITHUB_ENV"
+          elif [[ $GITHUB_REF == 'refs/heads/dev' ]]; then
+              echo "SLS_STAGE=dev" >> "$GITHUB_ENV"
+          fi
       - name: Install serverless
         run: npm install -g serverless && npm install
       - name: Deploy backend
-        run: sls deploy
+        run: sls deploy --stage $SLS_STAGE
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SLS_KEY }}
