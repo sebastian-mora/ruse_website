@@ -9,7 +9,7 @@ title: High Availability Discord Minecraft Bot
 ---
 # Minecraft Bot
 
-My friends and I like to play Minecraft and we go through waves of playing it frequently and typically self host. So when people are playing at different times we get pings on discord asking to turn the server on and it’s not convenient. So I wanted to build a way for discord users to type a command to turn on a Minecraft server and start playing and I wanted to do this as cheap as possible. 
+My friends and I like to play Minecraft and we go through waves of playing it frequently. So when people are playing at different times we get pings on discord asking to turn the server on and it’s not convenient. So I wanted to build a way for discord users to type a command to turn on a Minecraft server and start playing and I wanted to do this as cheap as possible. 
 
 ## Diagram
 
