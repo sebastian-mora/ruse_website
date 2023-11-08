@@ -66,7 +66,7 @@ functions:
       include:
         - blogs/**
     environment:
-      BUCKET: blogs.ruse.tech
+      db_table: ${opt:stage}-ruse-tech-blogs
 
   getBlog:
     name: ${opt:stage}-get-blog
@@ -79,3 +79,5 @@ functions:
     package:
       include:
         - blogs/**
+    environment:
+      db_table: ${opt:stage}-ruse-tech-blogs

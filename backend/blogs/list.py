@@ -1,13 +1,16 @@
 import json
 import boto3
+import os
 
 dynamodb = boto3.resource("dynamodb")
 
 headers = {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
+db_table = os.getenv("db_table")
+
 
 def get_blogs():
-    table = dynamodb.Table("ruse-tech-blogs")
+    table = dynamodb.Table(db_table)
     response = table.scan()
     data = response["Items"]
     # Drop the blog data in the response
