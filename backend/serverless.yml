@@ -2,13 +2,12 @@ org: seb1055
 app: api-ruse-tech
 
 service: api-ruse-tech
-frameworkVersion: '3'
+frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: python3.8
   lambdaHashingVersion: 20201221
-  stage: v1
   region: us-west-2
   apiGateway:
     shouldStartNameWithService: True
@@ -19,7 +18,7 @@ provider:
           Action:
             - "s3:ListBucket"
             - "s3:GetObject"
-          Resource: 
+          Resource:
             - "arn:aws:s3:::blogs.ruse.tech"
             - "arn:aws:s3:::blogs.ruse.tech/*"
             - "arn:aws:s3:::cdn.ruse.tech/*"
@@ -29,14 +28,14 @@ provider:
             - "dynamodb:Scan"
             - "dynamodb:GetItem"
           Resource:
-            - "Fn::GetAtt": [ BlogMetadata, Arn ]
+            - "Fn::GetAtt": [BlogMetadata, Arn]
 
 resources: #cloudformation syntax
-  Resources: 
+  Resources:
     BlogMetadata:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ruse-tech-blogs
+        TableName: ${opt:stage}-ruse-tech-blogs
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -51,12 +50,12 @@ package:
   individually: True
   exclude:
     # Exclude everything first.
-    - '**/*'
+    - "**/*"
 
 functions:
-  
   ## BLOG FUNCTIONS
   listBlogs:
+    name: ${opt:stage}-list-blogs
     handler: blogs/list.list
     events:
       - http:
@@ -70,15 +69,13 @@ functions:
       BUCKET: blogs.ruse.tech
 
   getBlog:
+    name: ${opt:stage}-get-blog
     handler: blogs/get.get
     events:
       - http:
           path: blogs/{title}
           method: get
           cors: True
-    environment:
-      BUCKET: blogs.ruse.tech
-      BLOGINDEX: index.md
     package:
       include:
         - blogs/**
