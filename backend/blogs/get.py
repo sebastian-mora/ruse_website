@@ -4,10 +4,12 @@ import os
 
 headers = {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*"}
 
+db_table = os.getenv("db_table")
+
 
 def get_blog(blog_id):
     dynamodb = boto3.resource("dynamodb")
-    table = dynamodb.Table("ruse-tech-blogs")
+    table = dynamodb.Table(db_table)
     response = table.get_item(Key={"id": blog_id})
     return response.get("Item")
 
