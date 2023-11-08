@@ -39,5 +39,5 @@ jobs:
 
       - name: Upload all local metadata to db
         env:
-          DB_TABLE: $ENV-ruse-tech-blogs
+          DB_TABLE: ${{ env.ENV }}-ruse-tech-blogs
         run: python load-blogs.py
