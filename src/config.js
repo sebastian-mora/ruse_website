@@ -1,1 +1,1 @@
-export const API_ENDPOINT = " https://api.ruse.tech"
+export const API_ENDPOINT = " https://api.ruse.tech";

@@ -34,6 +34,10 @@
   max-height: 300px;
 }
 
+.container a {
+  color: black;
+}
+
 .projectTitle{
   display: flex;
   box-sizing: border-box;
@@ -51,13 +55,13 @@
 
 .projectDescription{
   display: flex;
-box-sizing: border-box;
-max-width: 100%;
-margin: 12px;
--moz-box-align: center;
-align-items: center;
-min-width: 0px;
-min-height: 0px;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 12px;
+  -moz-box-align: center;
+  align-items: center;
+  min-width: 0px;
+  min-height: 0px;
 flex-direction: column;
 }
 

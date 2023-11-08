@@ -36,8 +36,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Upload images files to cdn
         run: for path in blogs/*; do [ -d "$path/imgs" ] &&  aws s3 sync $path/imgs s3://cdn.ruse.tech/imgs/$(basename $path)/; done;  exit 0
-
       - name: Upload all local metadata to db
         env:
           DB_TABLE: ${{ env.ENV }}-ruse-tech-blogs
         run: python load-blogs.py
+

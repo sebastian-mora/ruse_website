@@ -6,19 +6,20 @@ description: Messing around with DNS using go
 tags: dev
 title: Go DNS Proxy
 ---
+
 # DNS Proxy
 
-Is it going to be a quick blog on messing around with DNS using golang. I've been running a bunch of small things and go line just to get better at using the go line syntax, become familiar with packages, reading documentation, and price tickets currency. 
+I've been writing a bunch of small things in go just to get better at using it.
 
- I was falling if you would have blogs regarding DNS and I decided to create my own implementation. Unless I'm only going to use the go standard Library although there exist other popular DNS libraries to make this easier.
+I was reading a blog regarding DNS and I decided to create my own implementation using the go standard library.
 
- The packages that we will need are the net package and golang.org/x/net/dns/dnsmessage. At the core we are going to accept UDP DNS packets, save the client address then forward the request to a DNS server. We can log the request to the console and even modify it before sending it back to allow us to perform a MITM attack.
+The packages that we will need are the net package and golang.org/x/net/dns/dnsmessage. At the core we are going to accept UDP DNS packets, save the client address then forward the request to a DNS server. We can log the request to the console and even modify it before sending it back to allow us to perform a MITM attack.
 
 ![proxy](https://cdn.ruse.tech/imgs/go-dns-proxy/working.png)
 
- Code will be accessible on gist and it commented on each section.
- 
- https://gist.github.com/sebastian-mora/7fbcc16f7e903abede951049e1691b54
+Code will be accessible on gist and it commented on each section.
+
+https://gist.github.com/sebastian-mora/7fbcc16f7e903abede951049e1691b54
 
 ```go
 package main
@@ -38,7 +39,7 @@ func main() {
 	var clientIp *net.UDPAddr
 
 	for {
-		
+
 		// Create a buffer to store UDP packet
 		buf := make([]byte, 512)
 		_, addr, err := conn.ReadFromUDP(buf)
@@ -61,7 +62,7 @@ func main() {
 
 			// HERE YOU COULD MODIFY RES BEFORE SENDING TO CLIENT\
 			// replaceIp(m)
-			
+
 			// Log the request to the client
 			printDNSRequest(clientIp.IP.String(), m)
 
@@ -78,8 +79,8 @@ func main() {
 				fmt.Fprintf(os.Stderr, "Failed to send DNS packet")
 			}
 
-		} else { // Request is coming from client 
-			
+		} else { // Request is coming from client
+
 			// Save the client IP to know where to respond
 			clientIp = addr
 
@@ -88,7 +89,7 @@ func main() {
 			if err != nil {
 				fmt.Fprintf(os.Stderr, "Failed to pack DNS packet")
 			}
-			
+
 			// create net.UDPAddr for request
 			resolver := net.UDPAddr{IP: net.IP{1, 1, 1, 1}, Port: 53}
 			// send packet to DNS server at 1.1.1.1
@@ -111,4 +112,3 @@ func printDNSRequest(clientIp string, m dnsmessage.Message) {
 
 
 ```
-
