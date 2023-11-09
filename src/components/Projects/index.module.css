@@ -1,4 +1,4 @@
-.cardContainer{
+.cardContainer {
   display: flex;
   padding-top: 1em;
   box-sizing: border-box;
@@ -9,4 +9,6 @@
   flex: 1 1 0%;
   -moz-box-pack: center;
   justify-content: center;
+  border-radius: 0;
+  /* Set border-radius to 0 for sharper edges */
 }

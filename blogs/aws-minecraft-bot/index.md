@@ -1,5 +1,5 @@
 ---
-id: Minecraft-bot
+id: minecraft-bot
 previewImageUrl: https://cdn.ruse.tech/imgs/aws-minecraft-bot/post-logo.png
 datePosted: 09-05-2022
 description: Minecraft Bot in AWS that is controlled by Discord using highly scalable architecture.

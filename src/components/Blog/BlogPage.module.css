@@ -1,44 +1,40 @@
-
-a {
-  color: #00ff00;
-  border-style: none;
+/* Links and Visited Links */
+a,
+a:visited {
+  color: #3b3bb3;
+  /* Green for links */
+  text-decoration: none;
+  /* Remove underlines from links */
 }
-a:visited{
-  color: #00ff00;
-}
 
-
-/* ------------- Main Body --------------- */
-
-.title{
-  color: white;
-  /* padding-left: 5% */
+/* Main Body */
+.title {
+  color: #fff;
+  /* White for titles */
 }
 
 .titleContainer,
-div.post{
-  /* padding-left: 5%; */
+div.post {
   max-width: 1024px;
   box-sizing: border-box;
   margin: 36px auto;
+  padding: 8px 5% 0;
+  /* Adjusted padding to reduce the gap between title and body */
 }
 
-
-
-
-div.post{
-  color: white;
-  background-color: #1e1e1e;
-  padding:16px 32px 4% 32px;
+div.post {
+  color: #ccc;
+  /* Light gray for text content */
+  background-color: #000;
+  /* Black background */
+  padding: 16px 32px 4% 32px;
   line-height: 1.5;
   overflow-wrap: break-word;
   word-wrap: break-word;
   hyphens: auto;
 }
 
-
-
-div.post p{
+div.post p {
   line-height: 1.5em;
 }
 
@@ -46,70 +42,87 @@ div.post ul li {
   padding-bottom: 1%;
 }
 
-.post :is(h1, h2) {
-  color: white;
+/* Headings */
+.post h1,
+.post h2 {
+  color: #00ff00;
+  /* Green for headings */
   text-decoration: underline;
 }
+
+/* Images */
 .post img {
   width: 100%;
   max-width: 600px;
   display: block;
-  margin:32px auto;
+  margin: 32px auto;
   border-radius: 8px;
 }
 
-.post code{ 
+/* Inline Code Blocks */
+.post code {
   color: #00ff00;
+  /* Green for code */
+  background-color: #333;
+  /* Dark background for code blocks */
+  padding: 2px;
+  /* Add padding to the inline code blocks */
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
 
-.titleContainer{
-  background-color:#1e1e1e;
-  padding:16px 32px;
+/* Title Container */
+.titleContainer {
+  background-color: #000;
+  /* Black background for title container */
+  padding: 8px 32px;
+  /* Adjusted padding to reduce the gap */
 }
 
-.titleContainer h1{
-  margin-top: 0px;
+.titleContainer h1 {
+  margin-top: 0;
 }
 
-.post pre code  {
+/* Preformatted Code Blocks */
+.post pre code {
   font-size: 14px;
-  white-space: pre-wrap;       /* css-3 */
-  white-space: -moz-pre-wrap;
-  background-color: rgb(34, 34, 34);
-
-} 
-
-.post table{
-  margin-left: auto;
-  margin-right: auto;
-
+  white-space: pre-wrap;
+  background-color: #222;
+  /* Dark background for code blocks within pre tags */
 }
 
-.post th, td{
-  border-bottom: 1px solid #ddd;
+/* Tables */
+.post table {
+  margin: 0 auto;
+  /* Center the table */
+  width: 100%;
+}
+
+.post th,
+.post td {
+  border-bottom: 1px solid #333;
+  /* Darker border color for table cells */
   padding: 15px;
 }
 
-.post p{
-  margin: 8px 0px;
+/* Paragraphs */
+.post p {
+  margin: 8px 0;
 }
 
-@media screen and (max-width:1100px){ 
+/* Media Queries */
+@media screen and (max-width: 1100px) {
 
- 
   .titleContainer,
-  div.post{  
-  
-  margin: 36px;
+  div.post {
+    margin: 36px;
+    padding: 8px 5% 0;
+    /* Adjusted padding to reduce the gap between title and body */
+  }
 }
 
-}
-
-@media screen and (max-width:480px){ 
-
-  div.post{
-  padding:16px;
+@media screen and (max-width: 480px) {
+  div.post {
+    padding: 16px;
   }
 }

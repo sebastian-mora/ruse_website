@@ -53,6 +53,7 @@ def removed_metadata_from_body(text):
     return re.sub("---(.*?)---", "", text, flags=re.S)
 
 
+
 for p in Path(path).glob('**/*.md'):
     text = p.read_text()
     md.convert(text)
