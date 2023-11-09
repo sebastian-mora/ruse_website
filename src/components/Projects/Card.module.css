@@ -3,22 +3,22 @@
   box-sizing: border-box;
   max-width: 100%;
   margin: 12px;
-  background-color:#cfcece;
-  color: black;
+  background-color: #1e1e1e;
+  color: #00ff00;
   min-width: 0px;
   min-height: 0px;
   flex-direction: column;
   width: 300px;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.container:hover{
-  background-color: #bbbbbb;
+.container:hover {
+  background-color: #333;
 }
 
-.contentContaier{
+.contentContaier {
   display: flex;
   box-sizing: border-box;
   max-width: 100%;
@@ -35,49 +35,49 @@
 }
 
 .container a {
-  color: black;
+  color: #00ff00;
 }
 
-.projectTitle{
+.projectTitle {
   display: flex;
   box-sizing: border-box;
   max-width: 100%;
   margin: 12px;
-  -moz-box-align: center;
   align-items: center;
   min-width: 0px;
   min-height: 0px;
   flex-direction: row;
   font-size: larger;
-  font-style:bold;
+  font-weight: bold;
   text-decoration: underline;
+  color: #00ff00;
+  /* Added text color */
 }
 
-.projectDescription{
+.projectDescription {
   display: flex;
   box-sizing: border-box;
   max-width: 100%;
   margin: 12px;
-  -moz-box-align: center;
   align-items: center;
   min-width: 0px;
   min-height: 0px;
-flex-direction: column;
+  flex-direction: column;
+  color: #ccc;
 }
 
-.projectFooter{
+.projectFooter {
   display: flex;
   box-sizing: border-box;
   max-width: 100%;
-  -moz-box-align: center;
   align-items: center;
-  background-color: #696969;
-  color: rgb(255, 255, 255);
+  background-color: #cccccc52;
+  color: #00ff00;
+  /* Added text color */
   min-width: 0px;
   min-height: 0px;
   flex-direction: row;
   flex: 0 0 auto;
-  -moz-box-pack: justify;
   justify-content: space-between;
   padding-left: 12px;
   padding-right: 12px;
@@ -89,4 +89,6 @@ flex-direction: column;
   width: 24px;
   height: 24px;
   padding-top: 20%;
+  color: #00ff00;
+  /* Added text color */
 }
