@@ -68,5 +68,3 @@ for p in Path(path).glob('**/*.md'):
         logging.info(f"Saved {p}")
     else:
         logging.error(f"Invalid metadata {p}")
-
-delete_orphaned_blogs(blog_ids)
