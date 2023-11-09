@@ -1,0 +1,74 @@
+/* Page Title */
+.pageTitle {
+  color: #00ff00;
+  /* Green text */
+  border-left: 2px solid #00ff00;
+  padding-left: 2%;
+  font-size: 20px;
+  /* Slightly smaller font size */
+  margin-left: 5%;
+}
+
+/* Pinned Blogs Container */
+.pinnedBlogs {
+  background-color: #000;
+  /* Black background */
+  margin: 1% 5% 1% 5%;
+  /* Slightly reduced margins */
+  padding: 10px;
+  border: 2px solid #00ff00;
+  border-radius: 5px;
+}
+
+.pinnedBlogs h1 {
+  color: #00ff00;
+  /* Green text */
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.pinnedBlogs h2 {
+  color: #00ff00;
+  /* Green text */
+  margin: 10px 0;
+}
+
+/* Card Container */
+.cardDiv {
+  margin: 3% 5% 0 5%;
+}
+
+/* Year Filter Horizontal List */
+.horizontalList {
+  display: flex;
+  margin: 1% 5% 0 5%;
+  list-style: none;
+  /* Remove default list styles */
+  padding: 0;
+  /* Remove default padding */
+}
+
+/* Year Buttons */
+.yearButton,
+.selectedYear {
+  background: none;
+  border: none;
+  color: #00ff00;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+/* Make the selected year button stand out */
+.selectedYear {
+  font-weight: bold;
+  /* Bold text for selected year */
+}
+
+/* Hover effect for year buttons */
+.yearButton:hover {
+  background-color: #000;
+  /* Black background on hover */
+}
