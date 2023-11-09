@@ -1,6 +1,6 @@
 ---
 id: brainfuck-interpreter
-previewImageUrl: https://cdn.ruse.tech/imgs/brainfuck-interpreter/post-icon.jpg
+previewImageUrl: https://cdn.ruse.tech/imgs/brainfuck-interpreter/post-icon.png
 datePosted: 12-23-2022
 pinned: "true"
 description: A Brainfuck interpreter
