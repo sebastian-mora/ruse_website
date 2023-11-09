@@ -8,9 +8,9 @@ tags: research
       aws
 title: AWS ECS attack methods
 ---
-In this blog, I'm going to talk about my research into ECS internals as well as the attack methodology which I have developed for this specific service. Each section will be a different scenario or an objective. This will include SSRF, RCE, container escape, privilege escalation, and cluster hijacking.
+In this blog, I'm going to talk about my research into ECS internals as well as the attack methodology that I have developed for this specific service. Each section will be a different scenario or an objective. This will include SSRF, RCE, container escape, privilege escalation, and cluster hijacking.
 
-ECS or Elastic Container Service is a fully managed container orchestration service similar but separate from EKS (AWS Kubernetes). It supports serverless and managed deployment of containers. There are two main types of deployments: Fargate and EC2. Fargate being the serverless deployment option and EC2 being the managed worker node option.
+ECS or Elastic Container Service is a fully managed container orchestration service similar to but separate from EKS (AWS Kubernetes). It supports serverless and managed deployment of containers. There are two main types of deployments: Fargate and EC2. Fargate is the serverless deployment option and EC2 is the managed worker node option.
 
 Let's quickly talk about containers. The containers are deployed using Docker and their images are stored in ECR. Containers can have roles attached, the role credentials can be accessed via the container metadata service. If you're familiar with the EC2 to metadata service then it is similar but has slightly different formatting.
 
@@ -20,7 +20,7 @@ It is to be noted in the AWS documentation for EC2 ECS deployments that the cust
 
 ## EC2 Deployment
 
-The EC2 deployment allows customers to provision and manages their infrastructure. By default ECS provisions a role `ecsRole` for the EC2 instance to allow basic access to ECR, ECS, and a few other APIs. Without this role, the instance can not interact with ECS. It is important to note this is separate from container roles which are user-specified and may or may not exist for any container.
+The EC2 deployment allows customers to provision and manage their infrastructure. By default, ECS provisions a role `ecsRole` for the EC2 instance to allow basic access to ECR, ECS, and a few other APIs. Without this role, the instance can not interact with ECS. It is important to note this is separate from container roles which are user-specified and may or may not exist for any container.
 
 ```json
 {
@@ -60,7 +60,7 @@ Looking at the default instance policy there are a few permissions that stand ou
 
 While I have not seen it, it would not be far-fetched that people might modify the default instance policy to give their cluster more permissions within the environment, which could be very dangerous. For this blog, I will not speculate and use only the default policies defined by ECS.
 
-To explore how the EC2 nodes connect to ECS I appended my SSH key to the worker instance and accessed the worker node directly. Once inside the worker it is clear the worker uses docker to run containers. Listing the running container there is a single process running called “ECS Agent” on all worker instances. This agent is the interface to the ECS service. Details about this agent and how to configure it can be found in the AWS documentation.
+To explore how the EC2 nodes connect to ECS I appended my SSH key to the worker instance and accessed the worker node directly. Once inside the worker, it is clear the worker uses docker to run containers. Listing the running container there is a single process running called “ECS Agent” on all worker instances. This agent is the interface to the ECS service. Details about this agent and how to configure it can be found in the AWS documentation.
 
 From the worker node policy above we can see the agent uses the two permissions ecs:DeregisterContainerInstance and ecs:RegisterContainerInstance these allow the agent to tell ECS whether or not the EC2 is part of a cluster. Additionally, the agent also reports the status of the Docker containers running on the host. If you are now thinking “What happens when an EC2 worker lies to the ECS service?” you are on the right track.
 
@@ -79,7 +79,7 @@ curl "${ECS_CONTAINER_METADATA_URI}/task"
 ```
 ![task-meta.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/task-meta.png)
 
-To access the container's role credentials use the endpoint below. All the required environment variables should be set if metadata service is enabled. If a permissive role has been attached to the container you can use that role to pivot or exfil data from the account.
+To access the container's role credentials use the endpoint below. All the required environment variables should be set if the metadata service is enabled. If a permissive role has been attached to the container you can use that role to pivot or exfil data from the account.
 
 ```
  curl 169.254.170.2$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
@@ -98,7 +98,7 @@ curl http://169.254.169.254/latest/meta-data/identity-credentials/ec2/security-c
 
 ## Abusing Instance Node Default Role
 
-First, using the worker node credentials gotten from SSRF or another method, you can authenticate to ECR.
+First, using the worker node credentials obtained from SSRF or another method, you can authenticate to ECR.
 
 ```
 aws ecr get-login-password --region region | docker login --username AWS --password-stdin aws_account_id.dkr.ecr.region.amazonaws.com
@@ -106,7 +106,7 @@ aws ecr get-login-password --region region | docker login --username AWS --passw
 
 ![ecr.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/ecr.png)
 
-Once authenticated to the ECR you can use normal docker commands to enumerate and pull images from the private registries. While best practices state you should not store credentials in images, I have had success on previous engagements enumerating ECR. Additionally, you will gain access to source code or binaries used by the account for further research. Unfortunately using these credentials only allow read access to ECR.
+Once authenticated to the ECR you can use normal docker commands to enumerate and pull images from the private registries. While best practices state you should not store credentials in images, I have had success on previous engagements enumerating ECR. Additionally, you will gain access to source code or binaries used by the account for further research. Unfortunately using these credentials only allows read access to ECR.
 
 Second, you can use `aws ec2 describe-tags` to enumerate all EC2 tags in the environment. This can provide more context about the account and what assets are available.
 
@@ -118,9 +118,9 @@ Finally, you can modify the status of your containers and worker instance in ECS
 
 If you get remote code execution in a container it won't get you much farther into AWS relative to exploiting SSRF. Of course, the benefit is that you will get control over the container filesystem but to go farther into AWS you will need to be able to escape the container. Let us say you were able to escape the container, then what?
 
-Once on the host you will be able to compromise other containers running or that will be run on that instance. This greatly increases your chances of gaining access to a container that has a permissive role attached to it.
+Once on the host, you will be able to compromise other containers running or that will be run on that instance. This greatly increases your chances of gaining access to a container that has a permissive role attached to it.
 
-Here is a short demo of how something like this would look. Let's start at the point at which I have gained shell access to a container via an exploit of a running service. I notice that this container has the `docker.sock` mounted in `/var/run/docker.sock`. Using the docker socket we can deploy a new privileged container to the host and mount the root file system.
+Here is a short demo of how something like this would look. Let's start at the point at which I have gained shell access to a container via an exploit of a running service. I noticed that this container has the `docker.sock` mounted in `/var/run/docker.sock`. Using the docker socket we can deploy a new privileged container to the host and mount the root file system.
 
 ![socket.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/socket.png)
 
@@ -134,7 +134,7 @@ Now we have access to the host as well as the docker socket. We can modify any f
 
 To find all other EC2 that are part of the cluster we can use the permission `iam:describeTags` in the default policy.
 
-Here we can see a few EC2 names with `ECS Instance - EC2ContainerService-<clustername>` that indicates they are part of the cluster.
+Here we can see a few EC2 names with `ECS Instance - EC2ContainerService-<clustername>` that indicate they are part of the cluster.
 
 Finally, the ECS agent endpoint can be reached from within the container instance. The endpoint has two routes /metadata and /tasks. The /metadata will give you the ARN of the instance and the name of the cluster. /tasks will give you details about all tasks running in that instance. 
 
@@ -154,21 +154,21 @@ Let us also assume there exist two instances in this cluster we are attacking. T
 ![setup.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/setup.png)
 
 
-At the top of the screenshot, we see the compromised worker running two containers and on the bottom, we see a second worker node with an Nginx container running on it. Now that we discovered the other workers' cluster-instance-id we can use ecs:DegregisterContainerInstance as permitted in the default policy. After deregistering the second worker node and given there are enough resources for our compromised node, ECS will reschedule the task.
+At the top of the screenshot, we see the compromised worker running two containers and on the bottom, we see a second worker node with an Nginx container running on it. Now that we discovered the other workers' cluster-instance-id we can use ecs:DegregisterContainerInstance as permitted in the default policy. After deregistering the second worker node and giving there are enough resources for our compromised node, ECS will reschedule the task.
 
 ![dereg.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/dereg.png)
 
-After deregistering the worker, give ECS will reschedule the tasks to our worker node. After a few minutes run `docker ps` to see the new containers running on the host.
+After deregistering the worker, ECS will reschedule the tasks to our worker node. After a few minutes run `docker ps` to see the new containers running on the host.
 
 
 ![reschd.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/reschd.png)
 
 
-What is interesting about this is that when using the `--force` flag with deregister instance it does not stop the containers on that host. As you can see on the bottom deregister instance the containers are still running. In the top terminal (our compromised host) the Nginx container was rescheduled properly and the original container is no longer tracked by ECS.
+What is interesting about this is that when using the `--force` flag with a deregister instance it does not stop the containers on that host. As you can see on the bottom deregister instance the containers are still running. In the top terminal (our compromised host) the Nginx container was rescheduled properly and the original container is no longer tracked by ECS.
 
 ## SSM:StartSession
 
-This one I was a little bit surprised to find. I was reading the ECS documentation about best practices and I noticed a section that recommended limiting access to SSM start sessions. I found this odd but reading the documentation more I was able to find this article that explains that SSM start-session is used by `ecs:RunCommand`. https://aws.amazon.com/blogs/containers/new-using-amazon-ecs-exec-access-your-containers-fargate-ec2/. Furthermore in the documentation for ecs-exec it is mentioned that sessions created using ssm:start-sessions will not be logged. 
+This one I was a little bit surprised to find. I was reading the ECS documentation about best practices and I noticed a section that recommended limiting access to SSM start sessions. I found this odd but after reading the documentation more I was able to find this article that explains that SSM start-session is used by `ecs:RunCommand`. https://aws.amazon.com/blogs/containers/new-using-amazon-ecs-exec-access-your-containers-fargate-ec2/. Furthermore in the documentation for ecs-exec it is mentioned that sessions created using ssm:start-sessions will not be logged. 
 
 ```
 While starting SSM sessions outside of the execute-command action is possible, this results in the sessions not being logged and being counted against the session limit. We recommend limiting this access by denying the ssm:start-session action using an IAM policy. For more information, see Limiting access to the Start Session action. 
@@ -189,7 +189,7 @@ I posted this on Twitter and to my surprise, a developer who works on ECS replie
 ![image14.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/tweet.png)
 
 
-I find this a little bit concerning as I'm sure a lot of people don't realize this and they might only restrict ECS run tasks but allow other users to use SSM start sessions. Indirectly if you have an SSM start session you could get a shell on any container which supports commands to be run on it.
+I find this a little bit concerning as I'm sure a lot of people don't realize this and they might only restrict ECS run tasks but allow other users to use SSM start sessions. Indirectly if you have an SSM start session you could get a shell on any container that supports commands to be run on it.
 
 ## Privilege Escalation
 
@@ -202,9 +202,9 @@ https://rhinosecuritylabs.com/aws/weaponizing-ecs-task-definitions-steal-credent
 
 ### Privileged Container
 
-In the case that you have permissions to deploy tasks but don't have access to a privileged role, you can deploy a privileged container to an EC2 worker. While there are many methods you could use, the most simple is deploying a privileged container and mounting the docker socket from the host's filesystem. This will allow you to interact with containers running on the host as well as create your docker deployments to access the file system.
+In the case that you have permission to deploy tasks but don't have access to a privileged role, you can deploy a privileged container to an EC2 worker. While there are many methods you could use, the most simple is deploying a privileged container and mounting the docker socket from the host's filesystem. This will allow you to interact with containers running on the host as well as create your docker deployments to access the file system.
 
-First, create a new task definition. Specify a new volume and set the Source path to “/var/run/docker.sock” this references the docker socket on the host instance. Now in the container configuration, add a new Mount Point and set the source volume to the new volume and the Container Path to /var/run/docker.sock. Now once you access the container you will be able to use the docker cli normally.
+First, create a new task definition. Specify a new volume and set the Source path to “/var/run/docker.sock” This references the docker socket on the host instance. Now in the container configuration, add a new Mount Point and set the source volume to the new volume and the Container Path to /var/run/docker.sock. Now once you access the container you will be able to use the docker cli normally.
 
 To get a root shell on the host I recommend using this command.
 
@@ -212,7 +212,7 @@ To get a root shell on the host I recommend using this command.
 docker run -ti --privileged --net=host --pid=host --ipc=host --volume /:/host busybox chroot /host
 ```
 
-It will create a new privileged container and mount the root dir of the host machine and give access to process and networking.
+It will create a new privileged container mount the root dir of the host machine and give access to process and networking.
 
 ## Cluster Hijacking
 
@@ -220,7 +220,7 @@ This scenario requires you to have access to EC2 and very limited access to ECS.
 
 ![hijack.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/hijack.png)
 
-The first step is setting up the ECS. First, launch an EC2 with the ECS optimized AMI. Next, attach the default ECS role to the instance, and finally add the following script to the user data.
+The first step is setting up the ECS. First, launch an EC2 with the ECS-optimized AMI. Next, attach the default ECS role to the instance, and finally add the following script to the user data.
 
 ```
 #!/bin/bash
@@ -229,7 +229,7 @@ echo ECS_CLUSTER=temp >> /etc/ecs/ecs.config;echo ECS_BACKEND_HOST= >> /etc/ecs/
 
 Now the instance will connect to the cluster once the instance is started.
 
-Finally, we can deregister all other worker nodes in the cluster. This will force tasks to fail and be rescheduled to our worker. Now you will have control over the docker container running in the cluster. These steps are identical to the steps detailed in the RCE + Container Escape section.
+Finally, we can deregister all other worker nodes in the cluster. This will force tasks to fail and be rescheduled by our workers. Now you will have control over the docker container running in the cluster. These steps are identical to the steps detailed in the RCE + Container Escape section.
 
 An additional method to force rescheduling is to use the ECS API `ecs:update-container-instances-state`. Using this we can update the status of any instance node to `DRANING`. Setting a node to `DRANING` will cause all tasks to be rescheduled and the node will be in a suspended state. Once we are done we can set the status back to `ACTIVE` and the cluster will resume as normal. This is a less invasive method to force reschedules as it can be reverted without having access to the underlying node. Drain gang.
 
@@ -242,7 +242,7 @@ aws ecs update-container-instances-state
 
 ## Hiding a task
 
-The worker node is responsible for reporting the status of tasks on a node to ECS. This allows ECS to track task states and rescheduled tasks if needed. This is done using the APIs
+The worker node is responsible for reporting the status of tasks on a node to ECS. This allows ECS to track task states and reschedule tasks if needed. This is done using the APIs
 
 - submit-attachment-state-changes
 - submit-container-state-change
@@ -264,7 +264,7 @@ This doesn't have any security impact other than it's a quirk I found in the API
 
 ![max.jpg](https://cdn.ruse.tech/imgs/ecs-attack-methods/max.jpg)
 
-The screen shows I registered a worker node with a trillion virtual CPUs and trillion gigabytes of RAM. This number is the int 32 ax. I find it weird that the API would allow me to re-register an EC2 that already exists in the cluster and create such absurd numbers for the resources. I'm not sure what this could be used for from a security standpoint other than just adding confusion. As you can see in the screenshot, it is working at still registered to the same instance ID. Another note about this is that you must be able to access the metadata of the EC2 you want to register as it requires a signature from the EC2 before adding it to the cluster
+The screen shows I registered a worker node with a trillion virtual CPUs and a trillion gigabytes of RAM. This number is the int 32 ax. I find it weird that the API would allow me to re-register an EC2 that already exists in the cluster and create such absurd numbers for the resources. I'm not sure what this could be used for from a security standpoint other than just adding confusion. As you can see in the screenshot, it is working at still registered to the same instance ID. Another note about this is that you must be able to access the metadata of the EC2 you want to register as it requires a signature from the EC2 before adding it to the cluster
 
 Running ecs:register Instance Cluster will append the instance to the cluster. Here we can also specify the available resources on the cluster.
 
@@ -290,7 +290,7 @@ In the screenshot, we gather the instance signature and document and store them.
 
 ## API Permission Summary
 
-A quick and dirty list of ECS APIS to abuse. I will be skipping the obvious ones like creating or deleting clusters, services, tasks.
+A quick and dirty list of ECS APIS to abuse. I will be skipping the obvious ones like creating or deleting clusters, services, and tasks.
 
 - ecs:deregister-container-instance
     - Degristers cluster instances to force re-scheduling of tasks.

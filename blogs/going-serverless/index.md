@@ -14,7 +14,7 @@ I built the API so I could manage the content on the site remotely and from an a
 
 I hate wasting work but in this instance, I delete a lot of code. Namely, ALL of the nodeJS backend and some of the client react code. It was a good experience to write it all from scratch but a pain in the ass to maintain.
 
-The API was replaced with two lambda functions and API gateway. More on this later. I was also able to remove large sections of the client such as the admin area, text editor, and all of Redux. 
+The API was replaced with two lambda functions and an API gateway. More on this later. I was also able to remove large sections of the client such as the admin area, text editor, and all of Redux. 
 
 What I am left with is a super simple API driven by lambda functions that parse content from s3 buckets and a simplified client.
 
@@ -28,7 +28,7 @@ The website no longer requires authentication. If I wish to manage blogs now pus
 
 ### Metadata
 
-The previous website attached metadata to a blog post by creating a row in MySQL. This allowed the blog to have custom slugs, tags, date, title, and whatever items I wanted. 
+The previous website attached metadata to a blog post by creating a row in MySQL. This allowed the blog to have custom slugs, tags, dates, title, and whatever items I wanted. 
 
 The replacement for this was adding a `metadata.json` file to each blog post in S3. Now when the API is called a lambda function can query the S3 bucket for blogs and load their associated metadata files before returning. 
 
@@ -45,7 +45,7 @@ There is a private bucket separate from the bucket hosting the client called "bl
   - metadata.json
 ```
 
-To add a new blog to the website, I create a folder with the blog slug and create a file `metadata.json` and `index.md`. Notice that images and other content are not stored in this bucket. While it would be nice to have a /imgs folder in the blogs bucket the URLs required by CloudFront to index the files were not ideal. Cloudfront allows multi buckets per distribution but they need to be mapped to a specific route such as "/imgs". Here is an example of a URL to access an image if I used the approach mentioned above `http://ruse/tech/imgs/blog1/img/*.jpg`. It works but I was not happy with having /imgs twice in the URL. I might be missing something here so I plan on revisiting it but, for now, I am content with my current solution.
+To add a new blog to the website, I create a folder with the blog slug and create a file `metadata.json` and `index.md`. Notice that images and other content are not stored in this bucket. While it would be nice to have a /imgs folder in the blogs bucket the URLs required by CloudFront to index the files were not ideal. Cloudfront allows multiple buckets per distribution but they need to be mapped to a specific route such as "/imgs". Here is an example of a URL to access an image if I used the approach mentioned above `http://ruse/tech/imgs/blog1/img/*.jpg`. It works but I was not happy with having /imgs twice in the URL. I might be missing something here so I plan on revisiting it but, for now, I am content with my current solution.
 
 To fix this issue I created a bucket called cdn. Here in the CDN bucket, I put the assets I want to include in the blog. Like this image ...
 
@@ -63,7 +63,7 @@ The bucket is private and content is accessible via a CloudFront distribution. T
 
 ### Managing the Buckets 
 
-I wrote a quick Bash script to manage by buckets on the fly. Using `./update local` the script sync both bucket contents to the CWD. Here you can add or modify blogs. Once you are ready you can `./update remote` and local changes will be pushed to the remote buckets. Access keys are required for this.
+I wrote a quick Bash script to manage by buckets on the fly. Using `./update local` the script syncs both bucket contents to the CWD. Here you can add or modify blogs. Once you are ready you can `./update remote` and local changes will be pushed to the remote buckets. Access keys are required for this.
 
 ```bash
 #!/bin/bash
@@ -95,7 +95,7 @@ fi
 
 ### API Gateway
 
-I killed the API running on the EC2 I replaced it using API gateway. I was able to reduce the API to two routes 
+I killed the API running on the EC2 and replaced it using API gateway. I was able to reduce the API to two routes 
 
 - /blogs
 - /blogs/{slug}
@@ -117,7 +117,7 @@ result = s3.list_objects(Bucket=bucket,  Delimiter='/')
     blogs.append({"path": blog_path, "metadata":meta})
 ```
 
-get-blogs take a parameter. Again pretty simple here. It finds the requested blog and returns the blog content along with any metadata. Here is a snip-it of its core.
+get-blogs take a parameter. Again pretty simple here. It finds the requested blog and returns the blog content along with any metadata. Here is a snippet of its core.
 
 ```python 
  # Load the blog contents from S3
