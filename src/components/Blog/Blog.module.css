@@ -1,5 +1,3 @@
-
-
 .pageTitle {
   color: white;
   border-left: 2px solid #00ff00;
@@ -7,11 +5,11 @@
   margin-left: 5%;
 }
 
-.pinnedBlogs{
+.pinnedBlogs {
   /* background-color: #5d5d5c59; */
   margin: 0% 10% 0 10%;
   padding-bottom: 0%;
-} 
+}
 
 .pinnedBlogs h1 {
   color: white;
@@ -26,6 +24,31 @@
   margin: 3% 5% 0 5%;
 }
 
+/* Year filter horizontal list */
+.horizontalList {
+  display: flex;
+  margin: 1% 5% 0 5%;
+}
 
+.yearButton {
+  background: none;
+  border: none;
+  color: #00ff00;
+  /* Change text color to #00ff00 */
+  cursor: pointer;
+  text-decoration: underline;
+  /* Add underline */
+  margin-right: 10px;
+  /* Adjust spacing between buttons */
+}
 
-
+.selectedYear {
+  background: none;
+  border: none;
+  color: #00ff00;
+  /* Change text color to #00ff00 */
+  text-decoration: underline;
+  /* Add underline */
+  margin-right: 10px;
+  /* Adjust spacing between buttons */
+}
