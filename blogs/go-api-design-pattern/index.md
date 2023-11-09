@@ -8,18 +8,15 @@ tags: code
 title: Golang API Design and Dependency Injection
 ---
 
-I started working on an API service in Go that would handle JITA access for multi-cloud environments. The goal of this project was to try to build something that could maybe make me money rather than some esoteric idea but after doing plenty of coding and not enough planning. I started to look at the market to see what other solutions exist. Maybe it’s my ego but there are a few solutions and some are better than others but I think they all miss the mark. Regardless, I abandoned the project as I didn't feel I had much to add to the space nor did I think I could do it better than any existing company solo. 
+I started working on a Go API service that would handle JITA access for multi-cloud environments. The goal of this project was to potentially create a revenue-generating solution, rather than pursuing an esoteric idea. However, after extensive coding and insufficient planning, I began to examine the existing solutions in the market. I abandoned the project because I didn't feel I had much to add to the space, and I doubted that I could outperform existing companies on my own.
 
-What I did take away from this project is design patterns and dependency injection in Go. I'm not a software engineer nor do I claim to be one. Tbg I'm not even sure if these patterns are good but it's still interesting and I think at least partially correct.
+Despite discontinuing the project, I did gain valuable insights into design patterns and dependency injection in Go. I'm not a software engineer, nor do I claim to be one. To be honest, I'm not entirely sure if these patterns are ideal, but I still find them interesting and, to some extent, correct.
 
+In building this API, my aim was to create a scalable solution that could support multiple integrations and facilitate easy testing. After conducting some research, I decided to implement the following pattern:
 
-When building this API I wanted to create something scalable, that could support multiple integrations and allowed for easy testing. After doing some research I decided on this pattern to implement.
+The pattern abstracts the API into three layers: a handler, a service, and a repository. Each layer is implemented using an interface and can be substituted through dependency injection to enable straightforward testing or alternative implementations. We anticipate the flow to proceed as follows:
 
-The pattern abstracts the API into three layers. A handler, service, and repo.  Each layer is implemented using an interface and can be substituted via dependency injection to allow for easy testing or alternate implementations.
-
-We expect the flow to go like this 
-
-Handler -> Service -> Repo
+Handler -> Service -> Repository
 
 
 Here is the directory tree of my project setup I've removed everything but the references to the user's service an an example.
@@ -47,9 +44,11 @@ Here is the directory tree of my project setup I've removed everything but the r
         └── user_service_test.go
 ```
 
-## Interface
+## Interface 
 
-In the domain and models directories, we define in a global scope what our interfaces look like for each layer, as well as the data structures. Here in domain/user.go we define an interface for the repository and service. In modules, we define a userStruct and RawUserStruct. It is important to think ahead in this part as going back and changing or appending an interface will have a propagating refactor in each layer that can be annoying. As the project progressed, I also struggled to keep interfaces minimal without creating a ton of subservience. There is a balance here or maybe it's an indicator I was not doing my design very well. 
+In the "domain" and "models" directories, we define the structure of our interfaces for each layer and the data structures in a global scope. In the `domain/user.go` file, we define interfaces for the repository and service. In the "modules," we specify the `UserService` and `UserRepository` interfaces. 
+
+Interfaces provide an abstraction for the actual implementations of services or repositories. This abstraction allows us to use the same interface in various parts of the codebase without needing to be aware of the specific implementation details. This approach promotes decoupling, making it easier to change the underlying implementations without impacting the rest of the code.It's essential to plan ahead in this phase because revising an interface later can lead to a cascading refactoring process across multiple layers, which can be quite cumbersome.
 
 ```go
 // domain/user.go
@@ -84,7 +83,7 @@ type User struct {
 
 ## Data Layer
 
-Starting at the bottom of the Data Layer, we will handle all the logic that stores and fetches our users from a backend database. To create a repository for Users we need to implement the interface defined in the domain. As long as we implement the interface functions the backend integration or behavior of the functions can change, this allows us to create many repos if we want to have one for Postgres, Redis, etc. In this case, we will create on that uses Gorm + Postgress and another implementation to Mock. 
+Starting at the bottom of the Data Layer, we manage all the logic responsible for storing and retrieving our users from a backend database. To create a repository for Users, we need to implement the interface defined in the domain. As long as we implement the interface functions, the backend integration or behavior of these functions can vary. This flexibility allows us to create multiple repositories if we want to have separate ones for Postgres, Redis, and so on. In this case, we will create one that uses Gorm + Postgres and another implementation for mocking purposes.
 
 ```go
 type userRepository struct {
@@ -109,7 +108,7 @@ func (r *userRepository) FindByID(id int) (*models.User, error) {
 
 ```
 
-We also want to create a MockUserRepo to allow us to mock the database layer to make testing other layers much easier. 
+We create a MockUserRepo to allow us to mock the database layer to make testing other layers much easier. 
 
 ```go
 type UserRepositoryMock struct {
@@ -141,7 +140,7 @@ func (_m *UserRepositoryMock) FindByID(id int) (*models.User, error) {
 ```
 
 
-Notice the mock still implements the same function signature from our UserRepo interfaces, making them both valid to be consumed by other layers that expect Type `domain.UserRepository`! 
+Notice that the mock still implements the same function signature as our UserRepository interface, making it valid for consumption by other layers that expect a type of `domain.UserRepository`! Additionally, this implementation holds a key advantage by allowing seamless interchangeability between the actual database-backed repository and a mock implementation. This means that during testing or when working on various parts of the application, you can effortlessly switch between the real database repository and the mock repository, ensuring that your testing remains isolated and your codebase remains flexible and resilient. This flexibility simplifies the testing process and allows for robust, maintainable code that can adapt to changing requirements without extensive refactoring.
 
 
 ## Service
@@ -176,11 +175,9 @@ func (s *userService) Get(id int) (*models.User, error) {
 }
 ```
 
-The struct USConfig is very important to enable dependency injection, we can see it has an attribute of `domain.UserRepository` interface. This allows us to pass in any implementation of `domain.UserRepository` to our service. We could sub it out for a mock, in-memory data store, or Postgres. 
+The USConfig struct plays a crucial role in enabling dependency injection. It contains an attribute of the `domain.UserRepository` interface, which provides flexibility to pass in various implementations of `domain.UserRepository` to our service. Whether it's a mock, in-memory data store, or Postgres, this flexibility allows us to easily switch out the underlying data source.
 
-The implementation of the functions here are mostly is a proxy to the data layer but you could do more complex logic and validation here. 
-
-Let's take a look at how we can leverage dep injection to test our service layer, in user_test.go
+Now, let's explore how we can harness dependency injection to test our service layer in the user_test.go file.
 
 ```go
 func TestGet(t *testing.T) {
@@ -210,14 +207,14 @@ func TestGet(t *testing.T) {
     })
 ```
 
-We see we can create a UserRepositoryMock we defined earlier to handle the behavior of our repository layer. This allows us to focus on testing the service layer behavior without worrying about the implementation of the behavior of the repo layer. 
+As we can observe, we have the capability to create a `UserRepositoryMock`, which we defined earlier to manage the behavior of our repository layer. This approach enables us to concentrate on testing the behavior of the service layer without being concerned about the specifics of the repository layer's implementation.
 
 
 ## Handler
 
-I said this was an API so let's look at how we take requests and pass them to the Service layer. In handler.go we collect all the handlers and register them to routers.
+As previously mentioned, this is an API, so let's see into how we receive requests and forward them to the Service layer. In `handler.go`, we aggregate all the handlers and associate them with routers.
 
-Note how we pass in the interface of domain.UserService to be consumed by the handler.
+Notice how we provide the `domain.UserService` interface for use by the handler.
 
 ```go
 // handler.go
@@ -263,7 +260,7 @@ Very similar to a Service we create a config that allows us to inject the sublay
 
 ## Inject
 
-Finally, we can bring all the layers together in `inject.go` which gets executed on run. The use of this file is to set up all the proper injections/configs for each layer. You could do fancy things at runtime such as using variables or feature flags to inject different implemnation to each layer. Maybe if you wanted to migrate from Postgres to Redis you would add a new repository implementation that implements the interface `domain.UserRepository` and inject it into `UserServiceConfig`. Here is an example of how that might look.
+Finally, all the layers are brought together in `inject.go`, which gets executed when the application runs. This file's purpose is to configure all the necessary injections and configurations for each layer. It offers the flexibility to perform dynamic configurations at runtime, such as using variables or feature flags to inject different implementations into each layer. For instance, if there's a need to migrate from a Postgres database to Redis, you can create a new repository implementation that adheres to the `domain.UserRepository` interface and inject it into the `UserServiceConfig`. Here's an example of how that might look.
 
 ```go
 func inject(d *dataSources, useRedis bool) (*gin.Engine, error) {
