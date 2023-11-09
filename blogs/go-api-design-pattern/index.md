@@ -3,12 +3,12 @@ id: golang-api-design-pattern
 previewImageUrl: 
 datePosted: 11-09-2023
 pinned: 'true'
-description: An experiment into Golang api design patterns and dependeic injection.
+description: An experiment into Golang API design patterns and dependency injection.
 tags: code
 title: Golang API Design and Depencty Injectiopjn
 ---
 
-I started working on an API service in Go that would handle JITA access for multi-cloud environments. The goal of this project was to try to build something that could maybe make me money rather than some esoteric idea, but after doing plenty of coding and not enough planning. I started to look at the market to see what other solutions exist. Maybe it’s my ego but there are a few solutions and some are better than others but I think they all  miss the mark. Regardless, I abandoned the project as I didn't feel I had much to add to the space nor did I think I could do it better than any exising company solo. 
+I started working on an API service in Go that would handle JITA access for multi-cloud environments. The goal of this project was to try to build something that could maybe make me money rather than some esoteric idea but after doing plenty of coding and not enough planning. I started to look at the market to see what other solutions exist. Maybe it’s my ego but there are a few solutions and some are better than others but I think they all miss the mark. Regardless, I abandoned the project as I didn't feel I had much to add to the space nor did I think I could do it better than any existing company solo. 
 
 What I did take away from this project is design patterns and dependency injection in Go. I'm not a software engineer nor do I claim to be one. Tbg I'm not even sure if these patterns are good but it's still interesting and I think at least partially correct.
 
@@ -49,22 +49,22 @@ Here is the directory tree of my project setup I've removed everything but the r
 
 ## Interface
 
-In the domain and models dirtouries we define in a global scope what our interfaces look like for each layer, as well as the data structures. Here in domain/user.go we define an interface for the repository and service. In modules, we define a userStruct and RawUserStruct. It is important to think ahead in this part as going back and chaning or appending an interface will have propagteing refacotring in each layer that can be annoying. As the project progress I also struglged to keep interfaces minial wihtouth creating a ton of subservices. THere is a balence here or maybe its an indicatior I was not doing my desing very well. 
+In the domain and models directories, we define in a global scope what our interfaces look like for each layer, as well as the data structures. Here in domain/user.go we define an interface for the repository and service. In modules, we define a userStruct and RawUserStruct. It is important to think ahead in this part as going back and changing or appending an interface will have a propagating refactor in each layer that can be annoying. As the project progressed, I also struggled to keep interfaces minimal without creating a ton of subservience. There is a balance here or maybe it's an indicator I was not doing my design very well. 
 
 ```go
 // domain/user.go
 type UserService interface {
-	Get(id int) (*models.User, error)
-	List() ([]models.User, error)
-	FindByOktaSub(sub string) (*models.User, error)
+    Get(id int) (*models.User, error)
+    List() ([]models.User, error)
+    FindByOktaSub(sub string) (*models.User, error)
 }
 
 type UserRepository interface {
-	FindByID(id int) (*models.User, error)
-	FindByOktaSub(sub string) (*models.User, error)
-	Create(u *models.User) error
-	Update(u *models.User) error
-	List() ([]models.User, error)
+    FindByID(id int) (*models.User, error)
+    FindByOktaSub(sub string) (*models.User, error)
+    Create(u *models.User) error
+    Update(u *models.User) error
+    List() ([]models.User, error)
 }
 
 ```
@@ -84,7 +84,7 @@ type User struct {
 
 ## Data Layer
 
-Starting at the bottom at the Data Layer, we will handel all the logic that stores and fetches our users from a backend database. To create a repository for Users we need to implement the interface defined in the domain. As long as we implement the interface functions the backend integration or behavior of the functions can change, this allows us to create amny repos if we want to have one for Postgres, Redis, etc. In this case we will create on that users Gorm + Postgress and another implementaioon to Mock. 
+Starting at the bottom of the Data Layer, we will handle all the logic that stores and fetches our users from a backend database. To create a repository for Users we need to implement the interface defined in the domain. As long as we implement the interface functions the backend integration or behavior of the functions can change, this allows us to create many repos if we want to have one for Postgres, Redis, etc. In this case, we will create on that uses Gorm + Postgress and another implementation to Mock. 
 
 ```go
 type userRepository struct {
@@ -263,7 +263,7 @@ Very similar to a Service we create a config that allows us to inject the sublay
 
 ## Inject
 
-Finally, we can bring all the layers together in `inject.go` which gets executed on run. The use of this file is to set up all the proper injections/configs for each layer. You could do fancy things at runtime such as using variables or feature flags to inject diffrent implemnation to each layer. Maybe you wanted to migrate from Postgres to Redis you would add a new repository implementation that implements the interface `domain.UserRepository` and inject it inot `UserServiceConfig`. Here is an example of how that might look.
+Finally, we can bring all the layers together in `inject.go` which gets executed on run. The use of this file is to set up all the proper injections/configs for each layer. You could do fancy things at runtime such as using variables or feature flags to inject different implemnation to each layer. Maybe if you wanted to migrate from Postgres to Redis you would add a new repository implementation that implements the interface `domain.UserRepository` and inject it into `UserServiceConfig`. Here is an example of how that might look.
 
 ```go
 func inject(d *dataSources, useRedis bool) (*gin.Engine, error) {
