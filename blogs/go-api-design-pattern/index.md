@@ -5,7 +5,7 @@ datePosted: 11-09-2023
 pinned: 'true'
 description: An experiment into Golang API design patterns and dependency injection.
 tags: code
-title: Golang API Design and Depencty Injectiopjn
+title: Golang API Design and Dependency Injection
 ---
 
 I started working on an API service in Go that would handle JITA access for multi-cloud environments. The goal of this project was to try to build something that could maybe make me money rather than some esoteric idea but after doing plenty of coding and not enough planning. I started to look at the market to see what other solutions exist. Maybe it’s my ego but there are a few solutions and some are better than others but I think they all miss the mark. Regardless, I abandoned the project as I didn't feel I had much to add to the space nor did I think I could do it better than any existing company solo. 
