@@ -234,10 +234,11 @@ func NewHandler(c *Config) *gin.Engine {
 
 userHandler.Routes(baseRouter)
 }
+```
 
+In `user_handler.go` we define the routes
 
-In `user_handler.go` we define the routes and services we need to create a handler 
-
+```go
 type UserHandler struct {
     userService domain.UserService
 }
@@ -251,6 +252,12 @@ func NewUserHandler(c UserHandlerConfig) *UserHandler {
     return &UserHandler{
         userService: c.UserService,
     }
+}
+
+func (s *userService) List() ([]models.User, error) {
+	users, err := s.UserRepository.List()
+
+	return users, err
 }
 ```
 
