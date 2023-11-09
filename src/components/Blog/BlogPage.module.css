@@ -1,7 +1,7 @@
 /* Links and Visited Links */
 a,
 a:visited {
-  color: #00ff00;
+  color: #3b3bb3;
   /* Green for links */
   text-decoration: none;
   /* Remove underlines from links */
