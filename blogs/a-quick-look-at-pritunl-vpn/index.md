@@ -8,14 +8,14 @@ title: A Quick Look At Pritunl VPN
 ---
 # Pritunl
 
-A few weeks ago I set up my Pritunl. Overall, I have had a great experience. Very easy to configure and manage compared to other VPN's I have used in the past. 
+A few weeks ago I set up my Pritunl. Overall, I have had a great experience. Very easy to configure and manage compared to other VPNs I have used in the past. 
 
 Pritunl is an open-source so I decided to spend a few hours of my Sunday checking out the source code and web instance for vulns. 
 
 
 ## Setup 
 
-The source code can be found on [Github](https://github.com/pritunl/pritunl/tree/master). The build instructions are a bit old and I was unable to get it working from source. I would like to revisit this when I get some more time. There is likely an easy way to create a patch to get all the features but, please buy a license and support the devlopers.  Anyways, here was a start of a Dockerfile to get an instance created. It only kinda works but, it will get the dependencies and the pritunl package installed. No promises from there. 
+The source code can be found on [Github](https://github.com/pritunl/pritunl/tree/master). The build instructions are a bit old and I was unable to get it working from source. I would like to revisit this when I get some more time. There is likely an easy way to create a patch to get all the features but, please buy a license and support the developers.  Anyways, here was the start of a Dockerfile to get an instance created. It only kinda works but, it will get the dependencies and the pritunl package installed.
 
 ```docker
 FROM ubuntu
@@ -39,7 +39,7 @@ RUN  apt --assume-yes install pritunl mongodb-server
 
 ## Source Code
 
-I started first by checking out the source code to see if there was any low hanging fruit I could grab. The app is written using Python using the Django framework. I cloned the source from Github and used the tool bandit to scan the repo. 
+I started first by checking out the source code to see if there was any low-hanging fruit I could grab. The app is written using Python using the Django framework. I cloned the source from Github and used the tool Bandit to scan the repo. 
 ```bash
 git clone https://github.com/pritunl/pritunl/tree/master
 cd pritunl
@@ -66,7 +66,7 @@ From the code, we can pull out the authentication for each route. Each route is 
 - @auth.session
 - @auth.open_auth
 
-You can check out the implementation of @auth.session_light_auth and @auth.session in `./auth.app.py` but the main difference is that "light_auth" does not require and CSRF token while "session" does. open_auth is as it sounds is an unauthenticated route.
+You can check out the implementation of @auth.session_light_auth and @auth.session in `./auth.app.py` but the main difference is that "light_auth" does not require and CSRF token while "session" does. open_auth is as it sounds an unauthenticated route.
 
 Here is a list of unauthenticated routes I found in the code.
 
@@ -96,13 +96,13 @@ Here is a list of unauthenticated routes I found in the code.
 - @app.app.route('/sso/yubico', methods=['POST'])
 - @app.app.route('/key/sync/<org_id>/<user_id>/<server_id>/<key_hash>',
 
-The first thing that jumps out at me is the URLs in /key, /k, /ku that allow the retrieval of VPN profiles. To find how these are used I created a new user and click get download links. In this area, it will show you all the routes above and the associated keys 
+The first thing that jumps out at me is the URLs in /key, /k, /ku that allow the retrieval of VPN profiles. To find how these are used I created a new user and clicked get download links. In this area, it will show you all the routes above and the associated keys 
 
 ![alt text](https://cdn.ruse.tech/imgs/a-quick-look-at-pritunl-vpn/keys-redacted.png)
 
 In the image above the two top links show the keyid and the bottom two show the short_key_id. The link is only good for 24 hrs from creation so good luck brute-forcing them.
 
-So maybe if I can't brute-force them they are not being generated correctly. I also found that in some of these methods that interface with the API random sleep times are inserted to prevent timing attacks. Not really how sure how effective some of these are but, it at least shows the devs were writing these functions with security in mind.
+So maybe if I can't brute-force them they are not being generated correctly. I also found that in some of these methods that interface with the API random sleep times are inserted to prevent timing attacks. Not sure how effective some of these are but, it at least shows the devs were writing these functions with security in mind.
 
 The method for key id generation can be found in `./utils/misc.py`
 
@@ -172,7 +172,7 @@ While loading users in the interface the API returns nearly all the information 
 }
 ```
 
-The next one I was kinda shocked to see. If you click "settings" make any change and observe the response. The API will return every secret in the config. In my version I can not see alot of these settings so I went over to https://demo.pritunl.com/ and the settings area allows configuration of pretty much every secret from the UI. This sense but I am not a fan of the implementation. To me, it seems there should be configured on the server hosting the app. This would prevent a set of stolen credentials completely comprising the underlying AWS accounts, SSO/MFA implementation, even the SSL certificated for the Web UI. Again, I understand this is from an Admin perspective but this seems very dangerous to me. 
+The next one I was kinda shocked to see. If you click "settings" make any changes and observe the response. The API will return every secret in the config. In my version, I can not see a lot of these settings so I went over to https://demo.pritunl.com/ and the settings area allows configuration of pretty much every secret from the UI. This sense but I am not a fan of the implementation. To me, it seems there should be configured on the server hosting the app. This would prevent a set of stolen credentials completely comprising the underlying AWS accounts, SSO/MFA implementation, and even the SSL certificated for the Web UI. Again, I understand this is from an Admin perspective but this seems very dangerous to me. 
 
 I've shorted it by quite a bit for brevity but you can see how much is returned. 
 
@@ -237,10 +237,10 @@ I've shorted it by quite a bit for brevity but you can see how much is returned.
 
 ## Conclusion
 
-I did not have any findings in this, did I waste your time maybe, did I waste my time also maybe. Anyhow it good exercise to dig into the tools you use often and give them a look over. 
+I did not have any findings in this, did I waste your time maybe, or did I waste my time also? Anyhow it is good exercise to dig into the tools you use often and give them a look over. 
 
-I do not have any major issues with Pritunl other than how they handle the configuration of sensitive secrets via the Web UI as I think it unnecessary increases risk.  You just better hope you have a secure admin password and that there is never an auth bypass otherwise you are screwed. 
+I do not have any major issues with Pritunl other than how they handle the configuration of sensitive secrets via the Web UI as I think it unnecessarily increases risk.  You just better hope you have a secure admin password and that there is never an auth bypass otherwise you are screwed. 
 
-I will continue to use Pritunl and I think it is a great service. It's 1 PM now and plan on going to continuing my day. Maybe sometime in the future, I can dig deeper into the implementation of some of the sync function and some other bits of the code. For now I am satisfied.
+I will continue to use Pritunl and I think it is a great service. It's 1 PM now and plan on going to continuing my day. Maybe sometime in the future, I can dig deeper into the implementation of some of the sync functions and some other bits of the code. For now, I am satisfied.
 
 -Ruse

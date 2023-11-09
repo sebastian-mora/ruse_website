@@ -12,7 +12,7 @@ This blog covers a niche but powerful form of AWS Phishing by leveraging SSO. Th
 
 I find this method highly impactful for the following reasons.
 
-- Environment Context: high impact services and sensitive data.
+- Environment Context: high-impact services and sensitive data.
 - Limited user interaction.
 - Relatively trusted sources and domains.
 - Difficult to detect and harder to triage.
@@ -48,17 +48,17 @@ The SSO credentials are not normal AWS temporary credentials. They only allow th
 - sso:ListAccountRoles
 - sso:GetRoleCredentials
 
-At the core of the attack we will generate a device code url and ask an unexpected victim to approve our request but of course we're gonna get a bit fancy than that.
+At the core of the attack, we will generate a device code url and ask an unexpected victim to approve our request but of course, we're gonna get a bit fancy than that.
 
 ## The Attack
 
-You can follow the [GitHub](https://github.com/sebastian-mora/awsssome_phish) page on installing the requirements but with a simple command can stand up all the infrastructure required for this automatically.
+You can follow the [GitHub](https://github.com/sebastian-mora/awsssome_phish) page to install the requirements but with a simple command can set up all the infrastructure required for this automatically.
 
 If you're curious about the tool architecture there will be a diagram at the end.
 
 Once deployed there is an API gateway endpoint and an API key for the management endpoints. All logic is done via serverless functions.
 
-First, we craft the phishing url by base64 encoding the victim's email. This step is not required but it allows the tool track each url click by an attribute.
+First, we craft the phishing url by base64 encoding the victim's email. This step is not required but it allows the tool to track each url click by an attribute.
 
 `https://{restapi_id}.execute-api.{region}.amazonaws.com/{stage_name}/?v=abcd`
 
@@ -68,17 +68,17 @@ Finally, we send the link to the victim and wait for them to accept the authenti
 
 Here is a video of the [attack flow](http://www.youtube.com/watch?v=LtwLd4R5jsY).
 
-Notice the only suspicious domain involved is the initial API gateway URL clicked by the user. That domain could be altered to use a custom domain name to fit a pretext but I found that the API Gateway URL ending in `*.amazonaws.com` made it through emails filters.
+Notice the only suspicious domain involved is the initial API gateway URL clicked by the user. That domain could be altered to use a custom domain name to fit a pretext but I found that the API Gateway URL ending in `*.amazonaws.com` made it through email filters.
 
 ## Impact
 
 The only prerequisite to this attack is that the victim is using AWS SSO which can be found trivially via subdomain enumeration on `*.awsapps.com`.
 
-This is also not an area that's typically monitored by detections. The detections that are available are post compromise. This gives the attack a time advantage to secure a foothold in the environment.
+This is also not an area that's typically monitored by detections. The available detections are post-compromise. This gives the attack a time advantage to secure a foothold in the environment.
 
-Even after detection there are many methods a prepared attacker could take to secure access to the environment after the SSO user is deactivated. Such as generating temporary credentials for all available roles and role juggling to maintain access.
+Even after detection, there are many methods a prepared attacker could take to secure access to the environment after the SSO user is deactivated. Such as generating temporary credentials for all available roles and role juggling to maintain access.
 
-Finally, SSO token invalidation does not exist. The best remediation for this is to remove the access to accounts/roles using the SSO interface. While this won't invalidate the SSO token it will remove the the attacker from the accounts or roles the user has access to. Unfortunately, at this point the response team will need to check cloudtrail for all accounts to see if any additional session tokens were generated as an attacker could have already jumped into an AWS account role.
+Finally, SSO token invalidation does not exist. The best remediation for this is to remove the access to accounts/roles using the SSO interface. While this won't invalidate the SSO token it will remove the the attacker from the accounts or roles the user has access. Unfortunately, at this point, the response team will need to check Cloudtrail for all accounts to see if any additional session tokens were generated as an attacker could have already jumped into an AWS account role.
 
 ## Detections
 
@@ -88,9 +88,9 @@ The two main detection points are
 - sso:ListAccounts
 - sso:ListAccountRoles
 
-These detections are post exploitation. The best bet here is to alert of unrecognized IPs making API calls. Again refer back to [Christophe Tafani-Dereeper](https://blog.christophetd.fr/phishing-for-aws-credentials-via-aws-sso-device-code-authentication/) blog as he goes deeper into detection and offers some sample alerts.
+These detections are post-exploitation. The best bet here is to alert of unrecognized IPs making API calls. Again refer back to [Christophe Tafani-Dereeper](https://blog.christophetd.fr/phishing-for-aws-credentials-via-aws-sso-device-code-authentication/) blog as he goes deeper into detection and offers some sample alerts.
 
-There is a method to specifically defeat my tool and it is to monitor for failed calls to sso-oidc:CreateToken. The tool periodically polls this method to check if a token has become active (a user has been compromised) and as a result there should be failed actions in cloudtrail. In general failed actions to this method should be an anomaly as it is abnormal a user would call this method manually.
+There is a method to specifically defeat my tool and it is to monitor for failed calls to sso-oidc:CreateToken. The tool periodically polls this method to check if a token has become active (a user has been compromised) and as a result there should be failed actions in Cloudtrail. In general failed actions to this method should be an anomaly as it is abnormal for a user would call this method manually.
 
 ## Tool Architecture
 
