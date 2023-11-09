@@ -52,27 +52,8 @@ def format_object_for_db(obj):
 def removed_metadata_from_body(text):
     return re.sub("---(.*?)---", "", text, flags=re.S)
 
-# deletes blogs from db that do not exist in the dir
-def delete_orphaned_blogs(existing_id):
-
-    if len(blog_ids) <= 0 :
-        return 
-        
-    response = dynamodb.scan(TableName=table)
-    blogs = response.get('Items', [])
-
-    for item in items:
-    item_id = item.get('id', {}).get('S')
-    
-    # Check if the item's id is not in the existing_ids list
-    if item_id not in existing_ids:
-        # Delete the orphaned item
-        dynamodb.delete_item(TableName=table_name, Key={'id': {'S': item_id}})
-        print(f"Deleted orphaned item with ID: {item_id}")
 
 
-
-blog_ids = []
 for p in Path(path).glob('**/*.md'):
     text = p.read_text()
     md.convert(text)
@@ -85,7 +66,6 @@ for p in Path(path).glob('**/*.md'):
         data = {"id": id, "blog": body, "metadata": clean_metadata}
         res = table.put_item(Item=data)
         logging.info(f"Saved {p}")
-        blog_ids.append(id)
     else:
         logging.error(f"Invalid metadata {p}")
 
