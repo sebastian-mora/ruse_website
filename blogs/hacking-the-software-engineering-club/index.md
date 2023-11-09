@@ -13,7 +13,7 @@ Back at college with permission from the club, I decided to hack the SCE website
 
 ## Enumeration 
 
-This was not a complete "Black-box" test as the source code is available on Github. I was able to view all the API features of the app before creating an account. From this, I discovered several unauthenticated endpoints that could be used maliciously. I will cover these later. Burpsuite was used as an HTTP proxy to help explore and exploit available endpoints. Overall, the site had alot of cool features but, lack of standardized auth middleware that left routes unprotected.
+This was not a complete "Black-box" test as the source code is available on GitHub. I was able to view all the API features of the app before creating an account. From this, I discovered several unauthenticated endpoints that could be used maliciously. I will cover these later. Burpsuite was used as an HTTP proxy to help explore and exploit available endpoints. Overall, the site had a lot of cool features but, a lack of standardized auth middleware that left routes unprotected.
 
 ### Core Issues
   - No access control on API routes
@@ -26,7 +26,7 @@ This was not a complete "Black-box" test as the source code is available on Gith
 ## **User Enumeration**
 
   **Description**:
-   An unauthenticated user can enumerated accounts using /checkIfUserExists. This can be done by making a POST request to the endpoint passing the following JSON body. The response will contain a boolean value alerting if the email is registered or not.
+   An unauthenticated user can enumerate accounts using /checkIfUserExists. This can be done by making a POST request to the endpoint passing the following JSON body. The response will contain a boolean value alerting if the email is registered or not.
 
   **Remediation**: Remove route if not in use by the app. If the function is required implement rate-limiting to slow down attacker enumeration.
 
@@ -42,7 +42,7 @@ This was not a complete "Black-box" test as the source code is available on Gith
 
   **Description**:
 
-   A user is allowed to login when the email is not verified. 
+   A user is allowed to log in when the email is not verified. 
    
    Additionally, an unverified user could manually verify their email by making a POST  
    /setEmailToVerified. This function does not properly verify the hash in the POST body. This allows any user to register and verify emails that they do not control.
@@ -74,7 +74,7 @@ This was not a complete "Black-box" test as the source code is available on Gith
 
 ## **Creating Events**
 
-**Description**: The affected routes allows any registered user to manage club events via the API. The API does not properly check the role associated with the session token. Making a POST request to /API/event/createEvent with the correct JSON body allows any user to append a new event. Note, the JWT token is passed via the JSON body which is a bit odd. Standard implementations sent the JWT via headers.
+**Description**: The affected routes allow any registered user to manage club events via the API. The API does not properly check the role associated with the session token. Making a POST request to /API/event/createEvent with the correct JSON body allows any user to append a new event. Note, that the JWT token is passed via the JSON body which is a bit odd. Standard implementations sent the JWT via headers.
 
 **Risk**: Critical
 
@@ -95,11 +95,11 @@ This was not a complete "Black-box" test as the source code is available on Gith
 
 ## **Insecure Direct Object Reference**
 
-**Description**: Modify other users' account attributes such as passwords and email. The endpoint uses the user email in the body request to "look-up" the account to modifiy rather than checking the session token. As a result, an authenticated user can modify any other user's account including password.
+**Description**: Modify other users' account attributes such as passwords and email. The endpoint uses the user email in the body request to "look up" the account to modify rather than checking the session token. As a result, an authenticated user can modify any other user's account including a password.
 
 **Risk**: Critical
 
-**Effected routes**
+**Affected routes**
 - /api/user/edit
 
 **Testing Process**:
@@ -115,9 +115,9 @@ This was not a complete "Black-box" test as the source code is available on Gith
 
 **Risk**: Critical
 
-**Remedaiton**: If possible restrict the route to admin users only. If the application allows a listing of all users remove sensitive information from API response such as the password hash.
+**Remediation**: If possible restrict the route to admin users only. If the application allows a listing of all users remove sensitive information from API response such as the password hash.
 
-**Effected routes**
+**Affected routes**
 - /api/User/users
 
 **Testing process** 
@@ -130,7 +130,7 @@ This was not a complete "Black-box" test as the source code is available on Gith
 
 **Description**: All user's password hashes are exposed. Hash can be taken offline and cracked. See the image above.  
 
-**Remedaiton**: Remove all password hashes from the response. 
+**Remediation**: Remove all password hashes from the response. 
 
 ## Privilege Escalation
 
@@ -152,13 +152,13 @@ I am now an admin.
 
 
 **Description**:
-Using truflhog I was able to find some secrets in previous commits. They included MongoDB creds, GCP key, and SSL certs. GCP keys have been changed, the MongoDB still works.
+Using truffelhog I was able to find some secrets in previous commits. They included MongoDB creds, GCP keys, and SSL certs. GCP keys have been changed, and the MongoDB still works.
 
 **Risk**: Med
 
 **Testing Process**: 
 
-1. Run TrufffleHog using docker 
+1. Run TrufffleHog using Docker 
 ```bash
 docker run  dxa4481/trufflehog --entropy=false --regex https://github.com/SCE-Development/Core-v4
 ```
