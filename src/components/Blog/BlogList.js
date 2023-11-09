@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { getAllBlogs } from "../../api/blogsApi";
-import style from "./Blog.module.css";
+import style from "./BlogList.module.css";
 
 import Card from "./Card";
 
 const BlogList = () => {
   // store the blogs from the API in blogs
   const [blogs, setBlogs] = useState([]);
-  const [selectedYear, setSelectedYear] = useState(""); // State for selected year
+  const [selectedYear, setSelectedYear] = useState("ALL");
 
   useEffect(() => {
     getAllBlogs().then((res) => {

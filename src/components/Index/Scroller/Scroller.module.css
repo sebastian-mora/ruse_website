@@ -1,7 +1,6 @@
-
 /* ---------------- cryto --------------------- */
 
-div.container{
+div.container {
 
   display: flex;
   justify-content: center;
@@ -12,7 +11,7 @@ div.container{
   margin-top: 15%;
 }
 
-ul.crypto{
+ul.crypto {
   list-style-type: none;
 }
 
@@ -25,12 +24,12 @@ li.crypto {
 
 
 
-@media all and (max-device-width: 720px){
+@media all and (max-device-width: 720px) {
   li.crypto {
-      font-size: 2em;
+    font-size: 2em;
   }
 
-  div.container{
+  div.container {
     margin-top: 25%;
   }
 
