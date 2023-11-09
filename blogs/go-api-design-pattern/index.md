@@ -1,5 +1,5 @@
 ---
-id: golang-api-design-pattern
+id: golang-api-with-dep-injection
 previewImageUrl: 
 datePosted: 11-09-2023
 pinned: 'true'
