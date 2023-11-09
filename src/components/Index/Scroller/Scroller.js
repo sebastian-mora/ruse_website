@@ -46,6 +46,7 @@ const Scroller = () => {
         clearTimeout(timeoutId);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [letters, completed, animationDelay]);
 
   return (
