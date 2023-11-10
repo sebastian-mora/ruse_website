@@ -9,8 +9,8 @@ headers = {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*
 db_table = os.getenv("db_table")
 
 
-def get_data_without_blog():
-    table = dynamodb.Table(table_name)
+def list_blog_metadata():
+    table = dynamodb.Table(db_table)
 
     projection_expression = "#id, #metadata"
     expression_attribute_names = {
@@ -29,7 +29,7 @@ def get_data_without_blog():
 
 def list(event, context):
     try:
-        data = get_data_without_blog()
+        data = list_blog_metadata()
         return {
             "statusCode": 200,
             "body": json.dumps(data),
@@ -40,7 +40,7 @@ def list(event, context):
     except Exception as e:
         return {
             "statusCode": 500,
-            "body": json.dumps({"message": "Failed to load blogs."}),
+            "body": json.dumps({"message": "failed to fetch blogs"}),
             "headers": {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
