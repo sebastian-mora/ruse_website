@@ -9,20 +9,27 @@ headers = {"Content-Type": "application/json", "Access-Control-Allow-Origin": "*
 db_table = os.getenv("db_table")
 
 
-def get_blogs():
+def list_blog_metadata():
     table = dynamodb.Table(db_table)
-    response = table.scan()
-    data = response["Items"]
-    # Drop the blog data in the response
-    for b in data:
-        del b["blog"]
 
-    return data
+    projection_expression = "#id, #metadata"
+    expression_attribute_names = {
+        "#id": "id",
+        "#metadata": "metadata"
+    }
+
+    response = table.scan(
+        ProjectionExpression=projection_expression,
+        ExpressionAttributeNames=expression_attribute_names
+    )
+
+    items = response.get('Items', [])
+    return items
 
 
 def list(event, context):
     try:
-        data = get_blogs()
+        data = list_blog_metadata()
         return {
             "statusCode": 200,
             "body": json.dumps(data),
@@ -33,7 +40,7 @@ def list(event, context):
     except Exception as e:
         return {
             "statusCode": 500,
-            "body": json.dumps({"message": "Failed to load blogs."}),
+            "body": json.dumps({"message": "failed to fetch blogs"}),
             "headers": {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
