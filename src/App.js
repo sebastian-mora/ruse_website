@@ -23,7 +23,10 @@ const App = () => {
     ReactGA.send({
       hitType: "pageview",
       page: location.pathname,
+      title: location.pathname,
     });
+
+    console.log(location.pathname);
   }, [location]);
 
   return (
