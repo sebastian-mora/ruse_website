@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import ReactGA from "react-ga4";
 import style from "./BlogPage.module.css";
-import ReactGA from "react-ga";
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -12,23 +12,13 @@ const BlogPage = () => {
   const [blog, setBlog] = useState();
   const [errMessage, setError] = useState("");
   const { slug } = useParams();
+  const [startTime, setStartTime] = useState(new Date());
 
   useEffect(() => {
-    const startTime = new Date();
-
     getBlogBySlug(slug)
       .then((result) => {
         setBlog(result.data);
-
-        // Track blog pageview
-        ReactGA.pageview(`/blogs/${slug}`);
-
-        // Track timing for reading the blog post
-        ReactGA.timing({
-          category: "Reading Time",
-          variable: "Blog Reading",
-          value: new Date() - startTime,
-        });
+        setStartTime(new Date());
       })
       .catch((err) => {
         if (err.response && err.response.status === 404) {
@@ -36,6 +26,30 @@ const BlogPage = () => {
         }
       });
   }, [slug]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      // Calculate reading duration when user leaves the page
+      const endTime = new Date();
+      const durationInSeconds = Math.round((endTime - startTime) / 1000);
+
+      // Send GA event for reading duration only when navigating away
+      if (event) {
+        ReactGA.event({
+          category: "Blog",
+          action: "ReadDuration",
+          label: slug,
+          value: durationInSeconds,
+        });
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [startTime, slug]);
 
   const NodeRenderer = {
     code({ node, inline, className, children, ...props }) {
