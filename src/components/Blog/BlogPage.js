@@ -1,35 +1,43 @@
 import React, { useState, useEffect } from "react";
 import style from "./BlogPage.module.css";
-
+import ReactGA from "react-ga";
 import { useParams } from "react-router-dom";
-
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { cb } from "react-syntax-highlighter/dist/esm/styles/prism";
-
 import { getBlogBySlug } from "../../api/blogsApi";
 
 const BlogPage = () => {
   const [blog, setBlog] = useState();
   const [errMessage, setError] = useState("");
-
-  // pull slug from route
-  let { slug } = useParams();
+  const { slug } = useParams();
 
   useEffect(() => {
+    const startTime = new Date();
+
     getBlogBySlug(slug)
       .then((result) => {
         setBlog(result.data);
+
+        // Track blog pageview
+        ReactGA.pageview(`/blogs/${slug}`);
+
+        // Track timing for reading the blog post
+        ReactGA.timing({
+          category: "Reading Time",
+          variable: "Blog Reading",
+          value: new Date() - startTime,
+        });
       })
       .catch((err) => {
-        if (err.response.status === 404) {
+        if (err.response && err.response.status === 404) {
           setError("Blog not Found");
         }
       });
   }, [slug]);
 
-  const Noderender = {
+  const NodeRenderer = {
     code({ node, inline, className, children, ...props }) {
       const match = /language-(\w+)/.exec(className || "");
       return !inline && match ? (
@@ -61,7 +69,7 @@ const BlogPage = () => {
 
   return (
     <div>
-      {blog && (
+      {blog ? (
         <>
           <div className={style.titleContainer}>
             <div className={style.title}>
@@ -71,16 +79,16 @@ const BlogPage = () => {
           </div>
           <ReactMarkdown
             children={blog.blog}
-            components={Noderender}
+            components={NodeRenderer}
             className={style.post}
             remarkPlugins={[remarkGfm]}
           />
         </>
+      ) : (
+        <div className={style.title}>
+          <h1>{errMessage}</h1>
+        </div>
       )}
-
-      <div className={style.title}>
-        <h1>{errMessage}</h1>
-      </div>
     </div>
   );
 };
