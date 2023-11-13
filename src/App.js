@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import ReactGA from "react-ga";
 
 import "./App.css";
 
@@ -11,22 +12,29 @@ import BlogList from "./components/Blog/BlogList";
 import BlogPage from "./components/Blog/BlogPage";
 import Projects from "./components/Projects/index";
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Nav />
-        <Routes>
-          <Route path="/" exact element={<Index />} />
-          <Route path="/about" exact element={<About />} />
-          {/* <Route  path={"/assets"} component={AssetsPage}/> */}
-          <Route path="/projects" exact element={<Projects />} />
-          <Route path="/blogs" element={<BlogList />} />
-          <Route path={"/blogs/:slug"} element={<BlogPage />} />
-        </Routes>
-      </div>
-    );
-  }
-}
+const TRACKING_ID = "G-VL1JR0CST3"; // YOUR_TRACKING_ID
+
+ReactGA.initialize(TRACKING_ID);
+
+const App = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+  }, [location]);
+
+  return (
+    <div>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/blogs" element={<BlogList />} />
+        <Route path="/blogs/:slug" element={<BlogPage />} />
+      </Routes>
+    </div>
+  );
+};
 
 export default App;
