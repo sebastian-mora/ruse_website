@@ -1,18 +1,13 @@
-import React from 'react';
+import React from "react";
 
-
-import Scroller from './Scroller/Scroller'
-
+import Scroller from "./Scroller/Scroller";
 
 const Index = () => {
-
-  
   return (
-      <div>
-        <Scroller/>
-      </div>
-  )
-
-}
+    <div>
+      <Scroller text={"RUSE"} />
+    </div>
+  );
+};
 
 export default Index;

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import style from "./Scroller.module.css";
 
-const Scroller = () => {
-  const asciiLow = 50;
+const Scroller = ({ text }) => {
+  const stringToAsciiArray = (inputString) =>
+    inputString.split("").map((char) => char.charCodeAt());
+
+  const asciiLow = 48;
   const asciiHigh = 90;
-  const matchLetters = [82, 85, 83, 69]; // "RUSE" in ASCII
+  const matchLetters = stringToAsciiArray(text); // "RUSE" in ASCII
   const animationDelay = 50; // Set the animation delay in milliseconds
 
   const getRandomAscii = () => {
@@ -12,7 +15,9 @@ const Scroller = () => {
   };
 
   const seedLetters = () => {
-    return Array(4).fill().map(() => getRandomAscii());
+    return Array(matchLetters.length)
+      .fill()
+      .map(() => getRandomAscii());
   };
 
   const [letters, setLetters] = useState(seedLetters());

@@ -11,6 +11,7 @@ import About from "./components/About/About";
 import BlogList from "./components/Blog/BlogList";
 import BlogPage from "./components/Blog/BlogPage";
 import Projects from "./components/Projects/index";
+import NotFound from "./components/NotFound";
 
 const TRACKING_ID = "G-VL1JR0CST3"; // YOUR_TRACKING_ID
 
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/blogs" element={<BlogList />} />
         <Route path="/blogs/:slug" element={<BlogPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
