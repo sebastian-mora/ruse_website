@@ -2,12 +2,13 @@
 id: ecs-attack-methods
 previewImageUrl: https://cdn.ruse.tech/imgs/ecs-attack-methods/ecs.png
 datePosted: 06-7-2021
-pinned: 'true'
-description: AWS ECS attack methods.
+pinned: "true"
+description: Exploring attack methods for AWS ECS
 tags: research
-      aws
-title: AWS ECS attack methods
+  aws
+title: AWS ECS Attack Methods
 ---
+
 In this blog, I'm going to talk about my research into ECS internals as well as the attack methodology that I have developed for this specific service. Each section will be a different scenario or an objective. This will include SSRF, RCE, container escape, privilege escalation, and cluster hijacking.
 
 ECS or Elastic Container Service is a fully managed container orchestration service similar to but separate from EKS (AWS Kubernetes). It supports serverless and managed deployment of containers. There are two main types of deployments: Fargate and EC2. Fargate is the serverless deployment option and EC2 is the managed worker node option.
@@ -24,37 +25,37 @@ The EC2 deployment allows customers to provision and manage their infrastructure
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "ec2:DescribeTags",
-                "ecs:CreateCluster",
-                "ecs:DeregisterContainerInstance",
-                "ecs:DiscoverPollEndpoint",
-                "ecs:Poll",
-                "ecs:RegisterContainerInstance",
-                "ecs:StartTelemetrySession",
-                "ecs:UpdateContainerInstancesState",
-                "ecs:Submit*",
-                "ecr:GetAuthorizationToken",
-                "ecr:BatchCheckLayerAvailability",
-                "ecr:GetDownloadUrlForLayer",
-                "ecr:BatchGetImage",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-            ],
-            "Resource": "*"
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeTags",
+        "ecs:CreateCluster",
+        "ecs:DeregisterContainerInstance",
+        "ecs:DiscoverPollEndpoint",
+        "ecs:Poll",
+        "ecs:RegisterContainerInstance",
+        "ecs:StartTelemetrySession",
+        "ecs:UpdateContainerInstancesState",
+        "ecs:Submit*",
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    }
+  ]
 }
 ```
 
 Looking at the default instance policy there are a few permissions that stand out to me.
 
 - ecs:DeregisterContainerInstance
-- ecs:Submit*
+- ecs:Submit\*
 - ecs:RegisterContainerInstance
 - ecr:GetAuthorizationToken
 
@@ -66,9 +67,9 @@ From the worker node policy above we can see the agent uses the two permissions 
 
 As I mentioned before, containers have a container metadata service they can use to access the role attached to their container. The EC2 instance also has its metadata service enabled and by default is reachable from all containers running on the worker. As a result, all containers on the host can gain the worker node role and mess with the cluster status.
 
-## SSRF 
+## SSRF
 
-If an attacker can find an SSRF vulnerability or another method to retrieve data from the instance there are a few routes to enumerate data. By default, all these routes will be available. Unlike EC2 the metadata service, to access the container metadata the attacker will need to be able to read the relative paths from the environment variables `file:///proc/self/environ`  
+If an attacker can find an SSRF vulnerability or another method to retrieve data from the instance there are a few routes to enumerate data. By default, all these routes will be available. Unlike EC2 the metadata service, to access the container metadata the attacker will need to be able to read the relative paths from the environment variables `file:///proc/self/environ`
 
 ![ssrf.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/ssrf.png)
 
@@ -77,6 +78,7 @@ From the container metadata, you can gain detailed information on the context of
 ```
 curl "${ECS_CONTAINER_METADATA_URI}/task"
 ```
+
 ![task-meta.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/task-meta.png)
 
 To access the container's role credentials use the endpoint below. All the required environment variables should be set if the metadata service is enabled. If a permissive role has been attached to the container you can use that role to pivot or exfil data from the account.
@@ -86,7 +88,6 @@ To access the container's role credentials use the endpoint below. All the requi
 ```
 
 ![container-meta.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/container-meta.png)
-
 
 In this case, there exists no permissive container role; we can access the EC2 metadata from the container as long as the route has not been blocked with IP rules.
 
@@ -136,7 +137,7 @@ To find all other EC2 that are part of the cluster we can use the permission `ia
 
 Here we can see a few EC2 names with `ECS Instance - EC2ContainerService-<clustername>` that indicate they are part of the cluster.
 
-Finally, the ECS agent endpoint can be reached from within the container instance. The endpoint has two routes /metadata and /tasks. The /metadata will give you the ARN of the instance and the name of the cluster. /tasks will give you details about all tasks running in that instance. 
+Finally, the ECS agent endpoint can be reached from within the container instance. The endpoint has two routes /metadata and /tasks. The /metadata will give you the ARN of the instance and the name of the cluster. /tasks will give you details about all tasks running in that instance.
 
 ```
 curl http://172.17.0.1:51678/v1/metadata
@@ -153,25 +154,22 @@ Let us also assume there exist two instances in this cluster we are attacking. T
 
 ![setup.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/setup.png)
 
-
 At the top of the screenshot, we see the compromised worker running two containers and on the bottom, we see a second worker node with an Nginx container running on it. Now that we discovered the other workers' cluster-instance-id we can use ecs:DegregisterContainerInstance as permitted in the default policy. After deregistering the second worker node and giving there are enough resources for our compromised node, ECS will reschedule the task.
 
 ![dereg.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/dereg.png)
 
 After deregistering the worker, ECS will reschedule the tasks to our worker node. After a few minutes run `docker ps` to see the new containers running on the host.
 
-
 ![reschd.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/reschd.png)
-
 
 What is interesting about this is that when using the `--force` flag with a deregister instance it does not stop the containers on that host. As you can see on the bottom deregister instance the containers are still running. In the top terminal (our compromised host) the Nginx container was rescheduled properly and the original container is no longer tracked by ECS.
 
 ## SSM:StartSession
 
-This one I was a little bit surprised to find. I was reading the ECS documentation about best practices and I noticed a section that recommended limiting access to SSM start sessions. I found this odd but after reading the documentation more I was able to find this article that explains that SSM start-session is used by `ecs:RunCommand`. https://aws.amazon.com/blogs/containers/new-using-amazon-ecs-exec-access-your-containers-fargate-ec2/. Furthermore in the documentation for ecs-exec it is mentioned that sessions created using ssm:start-sessions will not be logged. 
+This one I was a little bit surprised to find. I was reading the ECS documentation about best practices and I noticed a section that recommended limiting access to SSM start sessions. I found this odd but after reading the documentation more I was able to find this article that explains that SSM start-session is used by `ecs:RunCommand`. https://aws.amazon.com/blogs/containers/new-using-amazon-ecs-exec-access-your-containers-fargate-ec2/. Furthermore in the documentation for ecs-exec it is mentioned that sessions created using ssm:start-sessions will not be logged.
 
 ```
-While starting SSM sessions outside of the execute-command action is possible, this results in the sessions not being logged and being counted against the session limit. We recommend limiting this access by denying the ssm:start-session action using an IAM policy. For more information, see Limiting access to the Start Session action. 
+While starting SSM sessions outside of the execute-command action is possible, this results in the sessions not being logged and being counted against the session limit. We recommend limiting this access by denying the ssm:start-session action using an IAM policy. For more information, see Limiting access to the Start Session action.
 ```
 
 Based on the documentation I wanted to see if it was possible to use ssm:StartSession directly I was able to create a persistent `RunCommand` session and find how the SSM connection ID was structured. The connection ID is required by ssm:StartSession to specify a host. Knowing this structure allows a user or role to directly use SSM on a container that supports ecs:RunCommand. I found that the target ID is structured as follows `"ecs:CLUSTERNAME_TASKID_RUNTIMEID"`
@@ -188,13 +186,11 @@ I posted this on Twitter and to my surprise, a developer who works on ECS replie
 
 ![image14.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/tweet.png)
 
-
 I find this a little bit concerning as I'm sure a lot of people don't realize this and they might only restrict ECS run tasks but allow other users to use SSM start sessions. Indirectly if you have an SSM start session you could get a shell on any container that supports commands to be run on it.
 
 ## Privilege Escalation
 
 An account with ECS permissions and iam:PassRole can privilege escalate in the environment by creating or updating a task definition and deploying it to the cluster. The specified role will be passed to the container and its credentials will be accessible through the API. This method can be used for both EC2 and Fargate deployments. A step-by-step method can be followed using this blog by Rhino Security Labs.
-
 
 ![7eb4297dec26b374be4d053c33c8162b.png](https://cdn.ruse.tech/imgs/ecs-attack-methods/priv-esc.png)
 
@@ -272,20 +268,21 @@ In the screenshot, we gather the instance signature and document and store them.
 
 ```json
 [
-    {
-        "name": "CPU",
-        "type": "INTEGER",
-        "doubleValue": 0.0,
-        "longValue": 0,
-        "integerValue": 1536
-    },
-    {
-        "name": "MEMORY",
-        "type": "INTEGER",
-        "doubleValue": 0.0,
-        "longValue": 0,
-        "integerValue": 7462
-}]
+  {
+    "name": "CPU",
+    "type": "INTEGER",
+    "doubleValue": 0.0,
+    "longValue": 0,
+    "integerValue": 1536
+  },
+  {
+    "name": "MEMORY",
+    "type": "INTEGER",
+    "doubleValue": 0.0,
+    "longValue": 0,
+    "integerValue": 7462
+  }
+]
 ```
 
 ## API Permission Summary
@@ -293,22 +290,22 @@ In the screenshot, we gather the instance signature and document and store them.
 A quick and dirty list of ECS APIS to abuse. I will be skipping the obvious ones like creating or deleting clusters, services, and tasks.
 
 - ecs:deregister-container-instance
-    - Degristers cluster instances to force re-scheduling of tasks.
+  - Degristers cluster instances to force re-scheduling of tasks.
 - ecs:register-container-instance
-    - Append a new instance to the cluster that is attacker-controlled.
+  - Append a new instance to the cluster that is attacker-controlled.
 - ecs:register-task-definition
-    - Backdoor and create a new task definition to be deployed to the cluster.
+  - Backdoor and create a new task definition to be deployed to the cluster.
 - ecs:submit-container-state-change
-    - Report running tasks as stopped while maintaining them on the host.
+  - Report running tasks as stopped while maintaining them on the host.
 - ecs:update-container-instances-state
-    - Change instance state to force rescheduling.
+  - Change instance state to force rescheduling.
 - ecs:update-service
-    - Update task placement strategy to force rescheduling.
+  - Update task placement strategy to force rescheduling.
 - ecs:execute-command
-    - Execute command on a container in the cluster.
+  - Execute command on a container in the cluster.
 - ssm:StartSession
-    - Start a session on a container in a cluster.
-- ec2:*
-    - Stopping, Terminating, or any other method of disrupting a worker node will cause ECS to reschedule to an available node.
+  - Start a session on a container in a cluster.
+- ec2:\*
+  - Stopping, Terminating, or any other method of disrupting a worker node will cause ECS to reschedule to an available node.
 
 -Ruse
