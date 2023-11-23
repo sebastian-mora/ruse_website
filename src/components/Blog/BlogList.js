@@ -21,10 +21,12 @@ const BlogList = () => {
     });
   }, []);
 
-  // DATE FORMAT IS MM/DD/YYYY
+  // DATE FORMAT IS 12-23-2022
   const convertStringToDate = (dateString) => {
     const date = dateString.split("-");
-    return new Date(date[2], date[0], date[1]);
+    // Subtract 1 from the month value
+    const parsedDate = new Date(date[2], date[0] - 1, date[1]);
+    return parsedDate;
   };
 
   const handleYearChange = (year) => {
@@ -34,6 +36,7 @@ const BlogList = () => {
   // Function to filter blogs based on the selected year
   const filterBlogsByYear = (blog) => {
     const datePosted = convertStringToDate(blog.metadata.dateposted);
+
     if (selectedYear === "ALL" || selectedYear === "") {
       return true; // Show all blogs when no year is selected
     } else {
@@ -41,7 +44,7 @@ const BlogList = () => {
     }
   };
 
-  const years = ["ALL", "2023", "2022", "2021"]; // Add more years as needed
+  const years = ["ALL", "2023", "2022", "2021", "2020"]; // Add more years as needed
 
   return (
     <div className={style.center}>
@@ -52,7 +55,9 @@ const BlogList = () => {
         {years.map((year) => (
           <button
             key={year}
-            className={selectedYear === year ? style.selectedYear : style.yearButton}
+            className={
+              selectedYear === year ? style.selectedYear : style.yearButton
+            }
             onClick={() => handleYearChange(year)}
           >
             {year}
