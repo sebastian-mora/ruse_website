@@ -27,7 +27,6 @@ const App = () => {
       title: location.pathname,
     });
 
-    console.log(location.pathname);
   }, [location]);
 
   return (
