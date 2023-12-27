@@ -27,7 +27,7 @@ This blog will unravel the intricacies of implementing the Private Link and ALB 
 
 In this code, I have abstracted the NLB and Service Endpoint configuration into a module that takes a traditional ALB architecture service as input. This demonstrates the simplicity to set up this configuration. However, in practice, I do not recommend this level of abstraction as it makes the module highly opinionated when it comes to configuration.
 
-![image](https://docs.aws.amazon.com/images/vpc/latest/privatelink/images/endpoint-services.png)
+![arch.png](https://cdn.ruse.tech/imgs/private-link/arch.png)
 
 ````terraform
 // create a mock service fronted by an internal ALB
