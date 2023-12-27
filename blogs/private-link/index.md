@@ -99,7 +99,7 @@ Furthermore, the default behavior of requiring approval for connection requests 
 
 When it comes to network security, Private Link service endpoints are intricately tied to specific Network Load Balancers. Leveraging this association, security groups can be configured to allow connections exclusively to the designated service. This level of configuration enables very fine-grained control over network shares, especially when onboarding new accounts. By aligning security groups with service endpoints, you create a secure networking environment where access is meticulously controlled, promoting a defense-in-depth strategy for your AWS architecture.
 
-## Access an Private Serbice Endpoint
+## Access an Private Service Endpoint
 
 In a client account, we can navigate to `Dashboard > Services > Request Service` and input the unique service identifier generated for our application. This action triggers a request to the author's authentication account, and we patiently wait for approval. Once approved, the connection will be established, and the Service Endpoint will become accessible within our Virtual Private Cloud (VPC).
 
