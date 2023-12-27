@@ -1,7 +1,7 @@
 ---
 id: private-link
 previewImageUrl: https://cdn.ruse.tech/assets/ruse-200x200.png
-datePosted: 03-02-2021
+datePosted: 12-27-2023
 description: Sharing internal AWS applications using AWS Private Link
 tags: dev
   aws
