@@ -104,30 +104,3 @@ When it comes to network security, Private Link service endpoints are intricatel
 In a client account, we can navigate to `Dashboard > Services > Request Service` and input the unique service identifier generated for our application. This action triggers a request to the author's authentication account, and we patiently wait for approval. Once approved, the connection will be established, and the Service Endpoint will become accessible within our Virtual Private Cloud (VPC).
 
 The service endpoints, in this case, utilize the XX protocol, allocating private IPs in Availability Zones (AZ). I've configured internal DNS to align with these settings. As a result, from a test service, I can seamlessly query the application hosted in account XYZ from my client account ZYV!
-
-```
-   +---------------------+             +---------------------+
-   |    Client Account   |             |  Author Authentication|
-   |                     |             |         Account       |
-   |    +------------+   |             |    +------------+     |
-   |    | Dashboard |   | Request     |    |   Approval |     |
-   |    |            |-------------------------->|           |
-   |    |  Services  |   |   Service   |    |           |     |
-   |    |            |<--------------->|    |           |     |
-   |    | Request    |   |   Approval  |    |           |     |
-   |    +------------+   |             |    +------------+     |
-   |                     |             |                       |
-   +---------------------+             +-----------------------+
-                |                                   |
-                v                                   v
-         +------------------+          +-----------------------+
-         |    Your VPC     |          |   Author's VPC        |
-         |                  |          |                       |
-         |   +------------+ |          |   +------------+      |
-         |   | Internal   | |          |   | Internal   |      |
-         |   | DNS Server | |          |   |  Auth App  |      |
-         |   +------------+ |          |   +------------+      |
-         |                  |          |                       |
-         +------------------+          +-----------------------+
-
-```
