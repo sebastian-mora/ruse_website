@@ -112,7 +112,9 @@ When it comes to network security, Private Link service endpoints are intricatel
 
 In this case only port 80/443 is allowed between the private link, nlb, and alb.
 
+```text
 Private Link <--80/443--> NLB <--80/443--> ALB <--80/443--> Target Group
+```
 
 ## Accessing a Private Service Endpoint
 
