@@ -15,19 +15,23 @@ This blog will cover the implementation details and architecture primarily using
 
 ## Why Private Link
 
-As organizations navigate the intricate web of AWS networking, the choice of a secure communication pattern between accounts becomes pivotal. While Virtual Private Network (VPN) connections, Virtual Private Cloud (VPC), and Transit Gateways for interconnecting AWS environments are common, the Private Link Service Endpoint pattern offers unique advantages. Unlike VPNs, which often come with the overhead of managing encryption keys and potential latency concerns, Private Link establishes direct, private connections, bypassing the public internet altogether.
+As organizations navigate the intricate web of AWS networking, the choice of a secure communication pattern between accounts becomes pivotal. While Virtual Private Network (VPN) connections, Virtual Private Cloud (VPC), and Transit Gateways for interconnecting AWS environments are common, the Private Link Service Endpoint pattern offers unique advantages.
 
-Similarly, while VPC peering provides a straightforward means of connecting VPCs, it lacks granular control over access and traffic that Private Link affords. Transit Gateways may not be the optimal choice for low complexity and external client scenarios. For external clients, the enhanced security, fine-tuned access controls, and reduced dependency on a centralized gateway offered by the Private Link and ALB pattern make it a more suitable and efficient solution.
+Unlike VPNs, which often come with the overhead of managing encryption keys and potential latency concerns, Private Link establishes direct, private connections, bypassing the public internet altogether.
+
+Similarly, VPC peering provides a straightforward means of connecting VPCs, it lacks granular control over access and traffic that Private Link afford and Transit Gateways may not be the optimal choice for low complexity and external client scenarios.
+
+For external clients, the enhanced security, fine-tuned access controls, and reduced dependency on a centralized gateway offered by the Private Link Service Endpoints make it a suitable and efficient solution.
 
 ## Implementation
 
-In this code, I have abstracted the NLB and Service Endpoint configuration into a module that takes a traditional ALB architecture service as input. This demonstrates the simplicity to set up this configuration. However, in practice, I do not recommend this level of abstraction as it makes the module highly opinionated when it comes to configuration.
+Service endpoints require either a Network Load Balancer or Gateway Load Balancer to receive service requests from consumers. Taking a look at the diagram we have added a Network Load Balancer in front of our service.
+
+Now the internal nlb is append to our existing service we can being configuring the service endpoint and accepting connections to our service. The accounts on the right side of the diagram represent consumer accounts with established Service endpoint connections. In this configuration no traffic traverses the public internet.
 
 ![arch.png](https://cdn.ruse.tech/imgs/private-link/Private-Link.png)
 
-Taking a look at the diagram we see we have added a NLB in front of our service. Service endpoints require either a Network Load Balancer or Gateway Load Balancer to receive service requests from consumers.
-
-Now the internal nlb is append to our existing service we can being configuring the service endpoint and accepting connections to our service.
+In this code, I have abstracted the NLB and Service Endpoint configuration into a module that takes a traditional ALB architecture service as input. This demonstrates the simplicity to set up this configuration. However, in practice, I do not recommend this level of abstraction as it makes the module highly opinionated when it comes to configuration.
 
 ````terraform
 // create a mock service fronted by an internal ALB

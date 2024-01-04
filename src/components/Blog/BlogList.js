@@ -44,7 +44,7 @@ const BlogList = () => {
     }
   };
 
-  const years = ["ALL", "2023", "2022", "2021", "2020"]; // Add more years as needed
+  const years = ["ALL", "2024", "2023", "2022", "2021", "2020"]; // Add more years as needed
 
   return (
     <div className={style.center}>
