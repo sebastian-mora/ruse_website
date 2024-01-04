@@ -99,7 +99,7 @@ Furthermore, the default behavior of requiring approval for connection requests 
 
 Some examples of valid arns
 
-```
+```text
 arn:aws:iam::account_id:root
 arn:aws:iam::account_id:role/role_name
 arn:aws:iam::account_id:user/user_name
