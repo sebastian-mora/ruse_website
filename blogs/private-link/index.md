@@ -11,7 +11,7 @@ As cloud infrastructures expand, so does the complexity to interconnect services
 
 Private Link Service Endpoints are a solution provided by AWS that allows for the creation of secure, private connections between Virtual Private Clouds (VPCs) without traversing the public internet. When combined with the flexibility and functionality of an Application Load Balancer (ALB), the result is a powerful and secure means of sharing internal services.
 
-This blog will cover the implementation details and architecture primarily using Terraform. This will be less of a step-by-step tutorial on configuration. For exact configuration steps, refer to the AWS Documentation [LINK].
+This blog will cover the implementation details and architecture primarily using Terraform. This will be less of a step-by-step tutorial on configuration. For exact configuration steps, refer to the AWS [Documentation](https://docs.aws.amazon.com/vpc/latest/privatelink/configure-endpoint-service.html)
 
 ## Why Private Link
 
