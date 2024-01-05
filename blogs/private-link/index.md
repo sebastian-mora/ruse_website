@@ -33,7 +33,7 @@ Now the internal NLB is append to our existing service we can being configuring 
 
 In this code, I have abstracted the NLB and Service Endpoint configuration into a module that takes a traditional ALB architecture service as input. This demonstrates the simplicity to set up this configuration. However, in practice, I do not recommend this level of abstraction as it makes the module highly opinionated when it comes to configuration.
 
-````terraform
+```terraform
 // create a mock service fronted by an internal ALB
 module "service" {
   source     = "./service"
@@ -81,7 +81,7 @@ resource "aws_vpc_endpoint_service_allowed_principal" "allow_principals" {
   principal_arn           = var.allowed_principals[count.index]
 }
 
-````
+```
 
 The `aws_vpc_endpoint_service` resource configures our VPC service endpoint. Note that I have set acceptance_requests=true. The second block configures the ARNs that allow requesting access to the service endpoint.
 
