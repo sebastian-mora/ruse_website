@@ -27,7 +27,7 @@ For external clients, the enhanced security, fine-tuned access controls, and red
 
 Service endpoints require either a Network Load Balancer or Gateway Load Balancer to receive service requests from consumers. Taking a look at the diagram we have added a Network Load Balancer in front of our service.
 
-Now the internal nlb is append to our existing service we can being configuring the service endpoint and accepting connections to our service. The accounts on the right side of the diagram represent consumer accounts with established Service endpoint connections. In this configuration no traffic traverses the public internet.
+Now the internal NLB is append to our existing service we can being configuring the service endpoint and accepting connections to our service. The accounts on the right side of the diagram represent consumer accounts with established Service endpoint connections. In this configuration no traffic traverses the public internet.
 
 ![arch.png](https://cdn.ruse.tech/imgs/private-link/Private-Link.png)
 
@@ -110,7 +110,7 @@ arn:aws:iam::account_id:user/user_name
 
 When it comes to network security, Private Link service endpoints are intricately tied to specific Network Load Balancers. Leveraging this association, security groups can be configured to allow connections exclusively to the designated service. This level of configuration enables very fine-grained control.
 
-In this case only port 80/443 is allowed between the private link, nlb, and alb.
+In this case only port 80/443 is allowed between the Private Link, NLB, and ALB.
 
 ```text
 Private Link <--80/443--> NLB <--80/443--> ALB <--80/443--> Target Group
