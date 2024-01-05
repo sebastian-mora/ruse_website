@@ -58,7 +58,7 @@ module "private-link" {
     "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
   ]
 }
-
+```
 
 Inside the module for the Private Link Service Endpoint there are two resources created that handle the primary lift of sharing the service.
 
@@ -83,7 +83,7 @@ resource "aws_vpc_endpoint_service_allowed_principal" "allow_principals" {
 
 ````
 
-The `aws_vpc_endpoint_service`` resource configures our VPC service endpoint. Note that I have set acceptance_requests=true. The second block configures the ARNs that allow requesting access to the service endpoint.
+The `aws_vpc_endpoint_service` resource configures our VPC service endpoint. Note that I have set acceptance_requests=true. The second block configures the ARNs that allow requesting access to the service endpoint.
 
 Once the resources are built, a service name is outputted for the Service Endpoint. This service name will be shared with clients or internal accounts to identify the internal services and request access from a client perspective.
 
