@@ -1,7 +1,7 @@
 ---
 id: private-link-sharing-internal-services
 previewImageUrl: https://cdn.ruse.tech/imgs/private-link/icon.png
-datePosted: 1-04-2024
+datePosted: 1-07-2024
 description: Sharing internal AWS applications using AWS Private Link
 tags: aws
 title: Sharing AWS Internal Services with Private Link
