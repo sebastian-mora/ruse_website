@@ -15,11 +15,11 @@ This blog will cover the implementation details and architecture primarily using
 
 ## Why Private Link
 
-As organizations navigate the intricate web of AWS networking, the choice of a secure communication pattern between accounts becomes pivotal. While Virtual Private Network (VPN) connections, Virtual Private Cloud (VPC), and Transit Gateways for interconnecting AWS environments are common, the Private Link Service Endpoint pattern offers unique advantages.
+As organizations navigate the intricate web of AWS networking, the choice of a secure communication pattern between accounts becomes pivotal. While Virtual Private Network (VPN) connections, Virtual Private Cloud (VPC) Peering, and Transit Gateways for interconnecting AWS environments are common, the Private Link Service Endpoint pattern offers unique advantages.
 
 Unlike VPNs, which often come with the overhead of managing encryption keys and potential latency concerns, Private Link establishes direct, private connections, bypassing the public internet altogether.
 
-Similarly, VPC peering provides a straightforward means of connecting VPCs, it lacks granular control over access and traffic that Private Link afford and Transit Gateways may not be the optimal choice for low complexity and external client scenarios.
+Similarly, VPC peering provides a straightforward means of connecting VPCs, but lacks granular control over access and traffic that Private Link afford. Additionally, Transit Gateways may not be the optimal choice for low complexity and external client scenarios.
 
 For external clients, the enhanced security, fine-tuned access controls, and reduced dependency on a centralized gateway offered by the Private Link Service Endpoints make it a suitable and efficient solution.
 
@@ -27,11 +27,11 @@ For external clients, the enhanced security, fine-tuned access controls, and red
 
 Service endpoints require either a Network Load Balancer or Gateway Load Balancer to receive service requests from consumers. Taking a look at the diagram we have added a Network Load Balancer in front of our service.
 
-Now the internal NLB is append to our existing service we can being configuring the service endpoint and accepting connections to our service. The accounts on the right side of the diagram represent consumer accounts with established Service endpoint connections. In this configuration no traffic traverses the public internet.
+Now that the internal NLB is appended to our existing service we can being configuring the service endpoint to accept connections to our service. The this case our service is a simple Nginx default page accessible over port 80. The accounts on the right side of the diagram represent consumer accounts with established Service endpoint connections. In this configuration no traffic traverses the public internet, the shared traffic is limited to only port 80 of the provider NLB.
 
 ![arch.png](https://cdn.ruse.tech/imgs/private-link/Private-Link.png)
 
-In this code, I have abstracted the NLB and Service Endpoint configuration into a module that takes a traditional ALB architecture service as input. This demonstrates the simplicity to set up this configuration. However, in practice, I do not recommend this level of abstraction as it makes the module highly opinionated when it comes to configuration.
+In this code, I have created a module that creates the simple Nginx server. The services is provisioned on a EC2 with an ALB to route the traffic on port 80. I have also abstracted the NLB and Service Endpoint configuration into another module that takes a traditional ALB architecture service as input. This demonstrates the simplicity to set up this configuration for existing services without significant re-architecture. However, in practice, I do not recommend this level of abstraction as it makes the module highly opinionated when it comes to configuration.
 
 ```terraform
 // create a mock service fronted by an internal ALB
@@ -60,7 +60,7 @@ module "private-link" {
 }
 ```
 
-Inside the module for the Private Link Service Endpoint there are two resources created that handle the primary lift of sharing the service.
+Taking a look inside the module for the Private Link Service Endpoint there are two resources created that handle the primary lift of sharing the service.
 
 ```terraform
 
@@ -87,17 +87,13 @@ The `aws_vpc_endpoint_service` resource configures our VPC service endpoint. Not
 
 Once the resources are built, a service name is outputted for the Service Endpoint. This service name will be shared with clients or internal accounts to identify the internal services and request access from a client perspective.
 
+All the code can be found on [Github](https://github.com/sebastian-mora/private-link-example)
+
 ## Access Controls Via Resource Policy
 
-Controlling access to the Private Link service endpoint is essential for ensuring secure and authorized communication. This is achieved through the use of a Resource Policy, providing a powerful means to define and manage access at a granular level. With Resource Policies, you can specify access scopes, whether to AWS accounts or roles. This centralized approach not only enhances security but also offers an auditable management interface for the specific service you intend to share.
+Controlling access to the Private Link service endpoint is essential for ensuring secure and authorized communication. This is achieved through the use of a Resource Policy, providing a powerful means to define and manage access at a granular level. With Resource Policies, you can specify access scopes to AWS accounts or roles. This centralized approach not only enhances security but also offers an auditable management interface for the specific service you intend to share.
 
-**WARNING**:
-
-Inputting "\*" will grant everyone permission to access the endpoint service and configure the endpoint service to accept all requests, your load balancer will be public even if it has no public IP address.
-
-Furthermore, the default behavior of requiring approval for connection requests adds an extra layer of control. This additional mechanism ensures that every connection is scrutinized and approved, contributing to a robust access governance model. By incorporating Resource Policies and connection request approvals, you establish a strong foundation for secure, controlled, and auditable access to your shared services.
-
-Some examples of valid arns
+Some examples of valid arns are
 
 ```text
 arn:aws:iam::account_id:root
@@ -106,16 +102,24 @@ arn:aws:iam::account_id:user/user_name
 *
 ```
 
+**WARNING**:
+
+Inputting "\*" will grant everyone permission to access the endpoint service and configure the endpoint service to accept all requests, your load balancer will be public even if it has no public IP address.
+
+Furthermore, the default behavior of the service endpoint requires manual approval for connection requests. This additional mechanism ensures that every connection is scrutinized and approved, contributing to a robust access governance model. By incorporating Resource Policies and connection request approvals, you establish a strong foundation for secure, controlled, and auditable access to your shared services.
+
 ## Network Security
 
 When it comes to network security, Private Link service endpoints are intricately tied to specific Network Load Balancers. Leveraging this association, security groups can be configured to allow connections exclusively to the designated service. This level of configuration enables very fine-grained control.
 
-In this case only port 80/443 is allowed between the Private Link, NLB, and ALB.
+In this case only port 80 is allowed between the Private Link, NLB, and ALB. Consuming clients will only be able to reach the NLB on port 80.
 
 ```text
-Private Link <--80/443--> NLB <--80/443--> ALB <--80/443--> Target Group
+Private Link <--80--> NLB <--80--> ALB <--80--> Target Group
 ```
 
 ## Accessing a Private Service Endpoint
 
 In a consumer account, we can navigate to `Dashboard > Services > Request Service` and input the unique service identifier generated for our application. This action triggers a request to the author's authentication account, and we patiently wait for approval. Once approved, the connection will be established, and the Service Endpoint will become accessible within our Virtual Private Cloud (VPC).
+
+- [Github](https://github.com/sebastian-mora/private-link-example)
