@@ -31,7 +31,7 @@ Now that the internal NLB is appended to our existing service we can being confi
 
 ![arch.png](https://cdn.ruse.tech/imgs/private-link/Private-Link.png)
 
-In this code, I have created a module that creates the simple Nginx server. The services is provisioned on a EC2 with an ALB to route the traffic on port 80. I have also abstracted the NLB and Service Endpoint configuration into another module that takes a traditional ALB architecture service as input. This demonstrates the simplicity to set up this configuration for existing services without significant re-architecture. However, in practice, I do not recommend this level of abstraction as it makes the module highly opinionated when it comes to configuration.
+In this code, I have created a module that creates the simple Nginx server. The service is provisioned on EC2 with an internal ALB to route the local vpc traffic on port 80. I also abstracted the NLB and Service Endpoint configuration into another module that takes a traditional ALB architecture service as input. However, in practice, I do not recommend this level of abstraction as it makes the module highly opinionated when it comes to configuration. This is to demonstrate the simplicity to set up this configuration without significant re-architecture for existing services.
 
 ```terraform
 // create a mock service fronted by an internal ALB
@@ -47,15 +47,15 @@ module "private-link" {
   depends_on = [module.service]
 
   vpc_id     = module.vpc.vpc_id
-  alb_arn    = module.service.alb_arn
+  alb_arn    = module.service.alb_arn // alb of the internal service
   subnet_ids = module.vpc.private_subnets
 
   security_groups = [
-    module.vpc.default_security_group_id
+    aws_security_group.allow_http_traffic.id
   ]
 
   allowed_principals = [
-    "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+    "arn:aws:iam::112233445566:root"
   ]
 }
 ```
