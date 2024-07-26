@@ -6,22 +6,17 @@ import BlogTree from './BlogTree';
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getAllBlogs()
-      .then((res) => {
-        res.data.sort((a, b) => {
-          return (
-            convertStringToDate(b.metadata.dateposted) -
-            convertStringToDate(a.metadata.dateposted)
-          );
-        });
-        setBlogs(res.data);
-      })
-      .catch((err) => {
-        setError('Failed to load blogs. Please try again later.');
+    getAllBlogs().then((res) => {
+      res.data.sort((a, b) => {
+        return (
+          convertStringToDate(b.metadata.dateposted) -
+          convertStringToDate(a.metadata.dateposted)
+        );
       });
+      setBlogs(res.data);
+    });
   }, []);
 
   const convertStringToDate = (dateString) => {
@@ -31,11 +26,7 @@ const BlogList = () => {
 
   return (
     <div className={style.center}>
-      {error ? (
-        <div className={style.error}>{error}</div>
-      ) : (
-        <BlogTree blogs={blogs} />
-      )}
+      <BlogTree blogs={blogs} />
     </div>
   );
 };

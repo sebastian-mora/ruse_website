@@ -5,8 +5,13 @@ import { Link } from 'react-router-dom'; // assuming you're using react-router f
 const BlogTree = ({ blogs }) => {
     const years = {};
 
+    const convertStringToDate = (dateString) => {
+        const [day, month, year] = dateString.split('-').map(Number);
+        return new Date(year, month - 1, day); // Correct month to zero-based index
+    };
+
     blogs.forEach(blog => {
-        const year = new Date(blog.metadata.dateposted).getFullYear();
+        const year = convertStringToDate(blog.metadata.dateposted).getFullYear();
 
         if (!years[year]) {
             years[year] = [];
@@ -15,6 +20,8 @@ const BlogTree = ({ blogs }) => {
     });
 
     const sortedYears = Object.keys(years).sort((a, b) => b - a); // Sort years from high to low
+
+
 
     return (
         <div className={style.tree}>
