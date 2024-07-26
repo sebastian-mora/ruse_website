@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./About.module.css";
-import ruse_dark from "./yeet.gif";
+import ruse_dark from "./ruse.gif";
 
 const About = () => {
   return (
