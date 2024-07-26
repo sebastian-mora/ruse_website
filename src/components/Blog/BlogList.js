@@ -48,7 +48,6 @@ const BlogList = () => {
 
   return (
     <div className={style.center}>
-      <h1 className={style.pageTitle}>Blogs</h1>
 
       {/* Year filter horizontal list */}
       <div className={style.horizontalList}>
