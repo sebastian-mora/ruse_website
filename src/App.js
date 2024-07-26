@@ -10,7 +10,6 @@ import Index from "./components/Index/index";
 import About from "./components/About/About";
 import BlogList from "./components/Blog/BlogList";
 import BlogPage from "./components/Blog/BlogPage";
-import Projects from "./components/Projects/index";
 import NotFound from "./components/NotFound";
 
 const TRACKING_ID = "G-VL1JR0CST3"; // YOUR_TRACKING_ID
