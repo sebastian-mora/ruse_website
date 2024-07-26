@@ -1,0 +1,61 @@
+.tree {
+  font-family: monospace;
+  color: white;
+  padding: 0; /* Reset padding if necessary */
+  margin-left: 5%;
+  font-size: 12px; /* Slightly smaller text size for density */
+}
+
+.root {
+  font-weight: bold;
+  color: #00ff00; /* Color for the root node */
+  margin-top: 10px; /* Space before the root node */
+}
+
+.year {
+  font-weight: bold;
+  margin-top: 10px; /* Space between years */
+  position: relative;
+  padding-left: 4ch; /* Add padding to align with the tree structure */
+}
+
+.year::before {
+  content: '├── '; /* Year tree line */
+  color: #00ff00; /* Line color */
+  position: absolute;
+  left: 0; /* Align the line to the start of the year text */
+}
+
+.blog {
+ 
+  margin-top: 5px; /* Space between blogs */
+  display: flex;
+  flex-direction: column; /* Allows wrapping of long titles */
+  position: relative;
+  padding-left: 6ch; /* Add padding to align with the tree structure */
+}
+
+.blog::before {
+  content: '│   ├── '; /* Default blog line */
+  color: #00ff00; /* Line color */
+  position: absolute;
+  left: 0; /* Align the line to the start of the blog text */
+}
+
+.blog:last-child::before {
+  content: '│   └── '; /* Last blog item */
+  color: #00ff00; /* Line color */
+  position: absolute;
+  left: 0; /* Align the line to the start of the blog text */
+}
+
+/* Ensure that wrapped text aligns correctly with the start of the line */
+.blogLink {
+  word-wrap: break-word; /* Enables word wrap for long titles */
+}
+
+/* Link styling */
+.tree a, .tree a:visited {
+  color: inherit; /* Link color matches text color */
+  text-decoration: underline; /* Add underline to links */
+}
