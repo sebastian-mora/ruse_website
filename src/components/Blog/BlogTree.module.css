@@ -3,7 +3,7 @@
   color: white;
   padding: 0; /* Reset padding if necessary */
   margin-left: 5%;
-  font-size: .75em; /* Slightly smaller text size for density */
+  font-size: 0.75em; /* Default text size for density */
 }
 
 .root {
@@ -27,7 +27,6 @@
 }
 
 .blog {
- 
   margin-top: 5px; /* Space between blogs */
   display: flex;
   flex-direction: column; /* Allows wrapping of long titles */
@@ -57,4 +56,23 @@
 /* Link styling */
 .tree a, .tree a:visited {
   color: inherit; /* Link color matches text color */
+}
+
+/* Responsive font sizes */
+@media (max-width: 600px) {
+  .tree {
+    font-size: 0.5em; /* Smaller text size for small screens */
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .tree {
+    font-size: 0.75em; /* Medium text size for tablets and small desktops */
+  }
+}
+
+@media (min-width: 1025px) {
+  .tree {
+    font-size: 1.25em; /* Larger text size for larger screens */
+  }
 }
