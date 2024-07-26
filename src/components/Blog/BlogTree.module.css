@@ -3,7 +3,7 @@
   color: white;
   padding: 0; /* Reset padding if necessary */
   margin-left: 5%;
-  font-size: 12px; /* Slightly smaller text size for density */
+  font-size: .75em; /* Slightly smaller text size for density */
 }
 
 .root {

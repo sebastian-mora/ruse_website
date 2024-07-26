@@ -20,9 +20,8 @@ const BlogList = () => {
   }, []);
 
   const convertStringToDate = (dateString) => {
-    const date = dateString.split('-');
-    const parsedDate = new Date(date[2], date[0] - 1, date[1]);
-    return parsedDate;
+    const [day, month, year] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day); // Correct month to zero-based index
   };
 
   return (
