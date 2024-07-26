@@ -2,13 +2,13 @@
   margin: 5%;
 }
 
-p.boxedAbout {
+div.boxedAbout {
   width: 100%;
   max-width: 600px;
   display: block;
   margin: 32px auto;
   border-radius: 8px;
-
+  color: white;
 }
 
 .ruseImg {
