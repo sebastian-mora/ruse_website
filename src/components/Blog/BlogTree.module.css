@@ -57,5 +57,4 @@
 /* Link styling */
 .tree a, .tree a:visited {
   color: inherit; /* Link color matches text color */
-  text-decoration: underline; /* Add underline to links */
 }
