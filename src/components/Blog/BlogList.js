@@ -9,20 +9,10 @@ const BlogList = () => {
 
   useEffect(() => {
     getAllBlogs().then((res) => {
-      res.data.sort((a, b) => {
-        return (
-          convertStringToDate(b.metadata.dateposted) -
-          convertStringToDate(a.metadata.dateposted)
-        );
-      });
       setBlogs(res.data);
     });
   }, []);
 
-  const convertStringToDate = (dateString) => {
-    const [day, month, year] = dateString.split('-').map(Number);
-    return new Date(year, month - 1, day); // Correct month to zero-based index
-  };
 
   return (
     <div className={style.center}>
